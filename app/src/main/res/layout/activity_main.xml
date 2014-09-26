@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_main_background"
+    >
+
+    <LinearLayout
+        android:layout_width="@dimen/activity_main_imageButtonAtBottom_RelativeWidth"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/activity_main_imageButtonAtBottom_marginBottom"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageButton
+            android:id="@+id/imageButton_cam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/main_cam_selector"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/imageButton_pic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/main_pic_selector"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/imageButton_word"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/main_word_selector"
+            android:background="@null"/>
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/imageButton_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/activity_main_imageButtonAtTop_marginLeft_Right"
+        android:layout_marginTop="@dimen/activity_main_imageButtonAtTop_marginTop"
+        android:background="@drawable/main_set_selector"/>
+    <ImageButton
+        android:id="@+id/imageButton_feeback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/activity_main_imageButtonAtTop_marginLeft_Right"
+        android:layout_marginTop="@dimen/activity_main_imageButtonAtTop_marginTop"
+        android:background="@drawable/main_feedback_selector"/>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:src="@drawable/mofa__0000_main" />
+
+</RelativeLayout>

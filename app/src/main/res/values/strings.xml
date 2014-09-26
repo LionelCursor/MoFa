@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MoFa</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="image_selected_MoFa">MoFa</string>
+    <string name="image_selected_Album">Album</string>
+
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/black_background_image_select"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <GridView
+        android:id="@+id/image_selected_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/fragment_image_selected_gridView_verticalSpacing"
+        android:horizontalSpacing="@dimen/fragment_image_selected_gridView_horizonSpacing"
+        android:columnWidth="@dimen/fragment_image_selected_gridView_columnWidth"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
+</LinearLayout>

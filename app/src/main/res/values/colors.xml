@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Cropper-->
+    <color name="black_translucent">#50000000</color>
+
+
+    <color name="text_shadow">#e6030303</color>
+
+    <color name="black_background_image_select">#ff1f1f20</color>
+    <color name="image_default_background">#ff363638</color>
+    <color name="transparent">#90000000</color>
+
+    <color name="switch_unselectedBG">#707070</color>
+    <color name="switch_selectedBG">#67bf67</color>
+    <color name="switch_selectedBG_zhong">#f36b63</color>
+    <color name="switch_unselectedBG_ying">#62838d</color>
+
+
+    <color name="color1">#ffffff</color>
+    <color name="color2">#666d73</color>
+    <color name="color3">#040605</color>
+    <color name="color4">#b8e1d9</color>
+    <color name="color5">#98d7de</color>
+    <color name="color6">#3fb8c9</color>
+    <color name="color7">#49a29c</color>
+    <color name="color8">#bfe2f5</color>
+    <color name="color9">#9cd4eb</color>
+    <color name="color10">#158fb4</color>
+    <color name="color11">#2d5592</color>
+    <color name="color12">#a68fc3</color>
+    <color name="color13">#c27db3</color>
+    <color name="color14">#7754a4</color>
+    <color name="color15">#642d92</color>
+    <color name="color16">#a11b58</color>
+    <color name="color17">#c21d3b</color>
+    <color name="color18">#d9dce1</color>
+    <color name="color19">#bdc2c8</color>
+    <color name="color20">#fbdd03</color>
+    <color name="color21">#fbce4f</color>
+    <color name="color22">#ed8621</color>
+    <color name="color23">#ed6b2f</color>
+    <color name="color24">#b7d43a</color>
+    <color name="color25">#c5ce97</color>
+    <color name="color26">#83b06b</color>
+    <color name="color27">#68b04a</color>
+    <color name="color28">#dbd1c7</color>
+    <color name="color29">#dab99a</color>
+    <color name="color30">#9ea196</color>
+    <color name="color31">#928f88</color>
+    <color name="color32">#22ac38</color>
+    <color name="color33">#89c997</color>
+    <color name="color34">#84ccc9</color>
+    <color name="color35">#13b5b1</color>
+
+
+
+    <!--second_color_from_Lei-->
+
+    <color name="seccolor1">#d9dce1</color>
+    <color name="seccolor2">#bdc2c8</color>
+    <color name="seccolor3">#9dafbd</color>
+    <color name="seccolor4">#96bad0</color>
+    <color name="seccolor5">#88d1ca</color>
+    <color name="seccolor6">#4dc0c3</color>
+    <color name="seccolor7">#0d7b96</color>
+    <color name="seccolor8">#73a3af</color>
+    <color name="seccolor9">#8abdd2</color>
+    <color name="seccolor10">#4f97c9</color>
+    <color name="seccolor11">#103762</color>
+    <color name="seccolor12">#c7bcde</color>
+    <color name="seccolor13">#a84798</color>
+    <color name="seccolor14">#87358a</color>
+    <color name="seccolor15">#df5f6e</color>
+    <color name="seccolor16">#ea6b64</color>
+    <color name="seccolor17">#e31b25</color>
+    <color name="seccolor18">#9a1b30</color>
+    <color name="seccolor19">#f5ef5b</color>
+    <color name="seccolor20">#f0da77</color>
+    <color name="seccolor21">#fbc980</color>
+    <color name="seccolor22">#f5a52a</color>
+    <color name="seccolor23">#dd7c2b</color>
+    <color name="seccolor24">#dae356</color>
+    <color name="seccolor25">#99ce98</color>
+    <color name="seccolor26">#a3cc6c</color>
+    <color name="seccolor27">#1c8a43</color>
+    <color name="seccolor28">#7a814e</color>
+    <color name="seccolor29">#a28e6d</color>
+    <color name="seccolor30">#afafaf</color>
+    <color name="seccolor31">#acd598</color>
+    <color name="seccolor32">#80c269</color>
+    <color name="seccolor33">#32b16c</color>
+    <color name="seccolor34">#009944</color>
+    <color name="seccolor35">#009e96</color>
+
+
+</resources>

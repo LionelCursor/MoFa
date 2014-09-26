@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--  设置背景色  -->
+    <item  android:id="@android:id/background" >
+        <shape>
+            <corners android:radius="5dip" />
+            <gradient android:startColor="#ffffff"
+                android:endColor="#ffffff" />
+        </shape>
+    </item>
+
+    <!--  设置进度条颜色  -->
+    <item  android:id="@android:id/progress" >
+        <clip>
+            <shape>
+                <corners android:radius="5dip" />
+                <gradient  android:startColor="#37cbf5"
+                    android:endColor="#37cbf5" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>
