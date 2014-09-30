@@ -30,9 +30,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.edmodo.cropper.cropwindow.CropOverlayView;
-import com.edmodo.cropper.cropwindow.edge.Edge;
-import com.edmodo.cropper.util.ImageViewUtil;
+import com.unique.mofaforhackday.R;
+import com.unique.mofaforhackday.view.cropper.cropwindow.CropOverlayView;
+import com.unique.mofaforhackday.view.cropper.cropwindow.edge.Edge;
+import com.unique.mofaforhackday.view.cropper.util.ImageViewUtil;
+
 
 /**
  * Custom view that provides cropping capabilities to an image.

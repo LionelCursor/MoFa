@@ -16,12 +16,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.unique.mofaforhackday.Adapter.ImageSelectedFragmentAdapter;
+import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Fragment.*;
+import com.unique.mofaforhackday.Utils.L;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +56,8 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     public static String INTENT_EXTRA_NAME_IMAGE_SELECTED = "ImageSelected";
 
     private ViewPager mPager;
+    private int keyCode;
+    private KeyEvent event;
 
     public ArrayList<Fragment> getFragmentList() {
         return fragmentList;
@@ -60,7 +65,8 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
 
     private ArrayList<Fragment> fragmentList;
 
-    public static final int INDEX_MOFA = 0;
+//    public static final int INDEX_MOFA = 0;
+    public static final int INDEX_RECOMMENDED = 0 ;
     public static final int INDEX_ALBUM = 1;
     public static final int INDEX_ALBUM_CLICKED = 2;
 
@@ -69,9 +75,11 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         return dataList;
     }
 
-    private ArrayList<HashMap<String, Object>> dataList;
-    private ArrayList<HashMap<String, Object>> AlbumList;
+    static public ArrayList<HashMap<String, Object>> dataList;
+    static public ArrayList<HashMap<String, Object>> AlbumList;
     private ArrayList<HashMap<String, Object>> mofaList;
+    static public ArrayList<HashMap<String, Object>> recommendedList;
+
     public static int DATA_STATE_UNFINISHED = 0;
     public static int DATA_STATE_FINISHED = 1;
     private ContentResolver cr = null;
@@ -112,20 +120,131 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            actionBar.addTab(actionBar.newTab().setTag("0").setText(R.string.image_selected_MoFa).setTabListener(this));
+//            actionBar.addTab(actionBar.newTab().setTag("0").setText(R.string.image_selected_MoFa).setTabListener(this));
+            actionBar.addTab(actionBar.newTab().setTag("0").setText(R.string.image_selected_Recommended).setTabListener(this));
             actionBar.addTab(actionBar.newTab().setTag("1").setText(R.string.image_selected_Album).setTabListener(this));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }else{
-            if(DEBUG) Log.e(TAG,"ActionBar is null");
+            L.e(TAG, "ActionBar is null");
         }
     }
+
 
     private void initData() {
         dataList = new ArrayList<HashMap<String, Object>>();
         AlbumList = new ArrayList<HashMap<String, Object>>();
-        mofaList = new ArrayList<HashMap<String, Object>>();
-
+//        mofaList = new ArrayList<HashMap<String, Object>>();
+        recommendedList = new ArrayList<HashMap<String, Object>>();
+        setRecommendedList();
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    private void setRecommendedList(){
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_1);
+        recommendedList.add(map);
+        map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_2);
+        recommendedList.add(map);
+        map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_3);
+        recommendedList.add(map);
+        map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_4);
+        recommendedList.add(map);
+        map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_5);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_6);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_7);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_8);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_9);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_10);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_11);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_12);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_13);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_14);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_15);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_16);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_17);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_18);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_19);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_20);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_21);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_22);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_23);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_24);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_25);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_26);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_27);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_28);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_29);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_30);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_31);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_32);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_33);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_34);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_35);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_36);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_37);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_38);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_39);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_40);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_41);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_42);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_43);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_44);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_45);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_46);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_47);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_48);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_49);
+        recommendedList.add(map);map = new HashMap<String, Object>();
+//        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_50);
+//        recommendedList.add(map);
     }
 
     private void initContentView() {
@@ -141,8 +260,9 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     private void initViewPager() {
         mPager = (ViewPager) findViewById(R.id.image_selected_viewpager);
         fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(INDEX_MOFA, new ImageSelectedMoFaFragment(mofaList));
-        fragmentList.add(INDEX_ALBUM, new ImageSelectedListFragment(AlbumList,dataList));
+//        fragmentList.add(INDEX_MOFA, new ImageSelectedMoFaFragment(mofaList));
+        fragmentList.add(INDEX_RECOMMENDED,new ImageSelectedRecommendedFragment(/*recommendedList*/));
+        fragmentList.add(INDEX_ALBUM, new ImageSelectedListFragment(/*AlbumList,dataList*/));
         //给ViewPager设置适配器
         mPager.setAdapter(new ImageSelectedFragmentAdapter(getSupportFragmentManager(), fragmentList));
         mPager.setCurrentItem(0);//设置当前显示标签页为第一页
@@ -162,7 +282,17 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
             returnClickedAlbum();
             return true;
         }
+
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -243,7 +373,7 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         public void onPageSelected(int i) {
             if (getActionBar() != null)
                 getActionBar().setSelectedNavigationItem(i);
-            if (DEBUG) Log.e(TAG, "Page." + i + " " + "was selected.");
+            L.e(TAG, "Page." + i + " " + "was selected.");
         }
 
 
@@ -291,7 +421,7 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
             if (data.moveToLast()) {
                 dataList.clear();
                 AlbumList.clear();
-                mofaList.clear();
+//                mofaList.clear();
                 do {
 //                    _id = data.getInt(_idColumn);
                     path = data.getString(dataColumn);
@@ -306,9 +436,9 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
                     map.put(MediaStore.Images.Media.BUCKET_DISPLAY_NAME, bucket_display_name);
                     dataList.add(map);
 
-                    if (bucket_display_name.equals(MOFA_BUCKET_NAME)) {
-                        mofaList.add(map);
-                    }
+//                    if (bucket_display_name.equals(MOFA_BUCKET_NAME)) {
+//                        mofaList.add(map);
+//                    }
 
                     if ((index = haveMapValue(AlbumList, bucket_id)) < 0) {
                         AlbumList.add(map);

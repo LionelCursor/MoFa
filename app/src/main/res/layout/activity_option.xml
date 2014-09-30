@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:padding="20dp"
+    >
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/mofa__0006_introduction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:layout_above="@+id/option_feedback"
+        android:id="@+id/option_share"
+        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/option_share_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:layout_margin="15dp"
+        android:id="@+id/option_feedback"
+        android:layout_above="@+id/option_back"
+        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/option_fb_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/option_back"
+        android:layout_alignParentBottom="true"
+        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/option_exit_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

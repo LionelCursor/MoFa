@@ -2,10 +2,13 @@ package com.unique.mofaforhackday.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -14,12 +17,15 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.text.BoringLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -32,6 +38,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SlidingDrawer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
@@ -40,7 +47,9 @@ import com.koushikdutta.ion.ProgressCallback;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.ImageAdjuster;
@@ -51,13 +60,14 @@ import com.unique.mofaforhackday.view.MoFaSeekBar;
 import com.unique.mofaforhackday.view.MoFaTextView;
 import com.unique.mofaforhackday.view.SwitchButton;
 import com.unique.mofaforhackday.view.WrapSlidingDrawer;
+import com.unique.mofaforhackday.view.cropper.CropImageView;
+import com.unique.mofaforhackday.view.cropper.cropwindow.handle.Handle;
 import com.unique.mofaforhackday.view.photoview.PhotoViewAttacher;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.unique.mofaforhackday.Utils.ImageAdjuster.ADJUSTER_TYPE;
@@ -66,7 +76,6 @@ import static com.unique.mofaforhackday.Utils.ImageAdjuster.ADJUSTER_TYPE;
  * Created by ldx on 2014/8/29.
  */
 public class HandleImageActivity extends Activity {
-
     private final static String TAG = "HandleImageActivity";
     private ImageView mMainImageView;
     private PhotoViewAttacher attacher;
@@ -83,11 +92,20 @@ public class HandleImageActivity extends Activity {
     private int NOW_STEP_DISPLAY = 0;
     private ArrayList<Modifitation> mStepMemory = null;
 
+    private ImageButton abandon;
+    private ImageButton save;
+    private ImageButton imageButtonForward;
+    private ImageButton imageButtonBackward;
+
 
     /***********************************************************************************************/
-    /**                           The WrapSlidingDrawer global views                              **/
+    /**
+     * The WrapSlidingDrawer global views                              *
+     */
     private Modifitation mModifitation = null;
-    /***********************************************************************************************/
+    /**
+     * *******************************************************************************************
+     */
     private WrapSlidingDrawer wrapSlidingDrawer;
     /**
      * Main Work Station
@@ -95,7 +113,38 @@ public class HandleImageActivity extends Activity {
      */
     private RelativeLayout mainLayout;
     private MoFaTextView textView;
-    private RelativeLayout.LayoutParams rl;
+    private ArrayList<MoFaTextView> TextList;
+    private static int SHADOWCOLOR = 0x3f000000;
+    private float mShadowRadius, mShadowX, mShadowY;
+    SharedPreferences sharedPreferences;
+
+    ImageView background;
+    Bitmap mBitmapBlur;
+    static Bitmap sBitmapBlur;
+    static Bitmap sBitmapMain;
+
+
+
+
+
+
+    private ImageButton wenziButton;
+    private ImageButton filterButton;
+    private ImageButton GaussButton;
+    private ImageButton AdjustButton;
+    private ImageButton xuhuaButton;
+    private ImageButton editButton;
+
+    ImageButton word_imageButton_color;
+    ImageButton word_imageButton_font;
+    ImageButton word_imageButton_shadow;
+    ImageButton word_imageButton_textsize;
+    ImageButton word_imageButton_tmd;
+    ImageButton word_imageButton_hor_ver;
+    ImageButton word_imageButton_move;
+    ImageButton word_imageButton_rotate;
+
+
     private ImageButton font01Button;
     private ImageButton font02Button;
     private ImageButton font03Button;
@@ -126,11 +175,11 @@ public class HandleImageActivity extends Activity {
     private ImageButton font28Button;
     private ImageButton font29Button;
     private ImageButton font30Button;
-    private ImageButton morenButton;
-    private ImageButton miaowuButton;
-    private ImageButton daofengButton;
-    private ImageButton shangheiButton;
-    private ImageButton yueheiButton;
+    private RelativeLayout morenButton;
+    private RelativeLayout miaowuButton;
+    private RelativeLayout daofengButton;
+    private RelativeLayout shangheiButton;
+    private RelativeLayout yueheiButton;
     /**
      * 顶级Layout
      */
@@ -147,7 +196,7 @@ public class HandleImageActivity extends Activity {
     private RelativeLayout rTextSizeDetailLayout;
     private RelativeLayout rTouMingDetailLayout;
     private HorizontalScrollView rColorDetailLayout;
-    private RelativeLayout rShadowDetailLayout;
+    private LinearLayout rShadowDetailLayout;
     private HorizontalScrollView rEnglishFontTypeLayout;
     private HorizontalScrollView rChineseFontTypeLayout;
     /**
@@ -178,6 +227,19 @@ public class HandleImageActivity extends Activity {
     //threadPool to make thread in an List.
     private MoFaSeekBar BlurSeekBar;
 
+    /**
+     * Bianji
+     */
+    private HorizontalScrollView scrollViewCrop;
+    private HorizontalScrollView scrollViewRotate;
+    private CropImageView cropImageView;
+    private float mRotateDegree;
+    private float mRotateXDegree;
+    private float mRotateYDegree;
+
+    private Matrix mDrawMatrix;
+    private Matrix mDisplayMatrix;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.gc();
@@ -196,20 +258,23 @@ public class HandleImageActivity extends Activity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+    }
 
     private void makeStep() {
         mStepMemory = new ArrayList<Modifitation>();
         mModifitation = new Modifitation();
         mStepMemory.clear();
-        final ImageButton imageButtonForward = ((ImageButton) findViewById(R.id.forward));
+        imageButtonForward = ((ImageButton) findViewById(R.id.forward));
         imageButtonForward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 L.e("NOW:" + NOW_STEP_DISPLAY + ";" + "SUM:" + SUM_STEP_SAVE);
                 if (NOW_STEP_DISPLAY < SUM_STEP_SAVE) {
                     imageButtonForward.setClickable(false);
-
                     final Modifitation modifitation = mStepMemory.get(NOW_STEP_DISPLAY);
 
                     switch (modifitation.getType()) {
@@ -272,7 +337,7 @@ public class HandleImageActivity extends Activity {
             }
         });
 
-        final ImageButton imageButtonBackward = ((ImageButton) findViewById(R.id.backward));
+        imageButtonBackward = ((ImageButton) findViewById(R.id.backward));
         imageButtonBackward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -377,6 +442,12 @@ public class HandleImageActivity extends Activity {
 
     private void initMain() {
         mainLayout = (RelativeLayout) findViewById(R.id.main_image);
+        mainLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mainLayout.postInvalidate();
+            }
+        });
     }
 
     private void setWrapSlidingMenu() {
@@ -389,10 +460,13 @@ public class HandleImageActivity extends Activity {
         setQuseDetailButton();
         setBlurDetail();
         setAdjustDetail();
+        setBianjiDetail();
+
+
     }
 
-    private void setWordDetail(){
-        //TODO-forward and backward no wrote
+    private void setWordDetail() {
+        //TODO-forward and backward no wrote   WORD
         setWordCtrlLayout();
 
         editTextEnsureButton();
@@ -401,12 +475,145 @@ public class HandleImageActivity extends Activity {
         setFontDetailButton();
         setTextSizeDetail();
         setTextAlpha();
-
+        setShadowDetail();
+        setWordRotateDetail();
 
         setAlignHorOrVerDetailButton();
+
+        setMoveDetail();
     }
-    private void editTextEnsureButton(){
-        final EditText text = (EditText)findViewById(R.id.adding_word_edit_text);
+
+    private void setWordRotateDetail() {
+        ((MoFaSeekBar) findViewById(R.id.seekBar_word_rotate)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (textView == null) {
+                    return;
+                }
+                textView.setRotate((progress - 127) / 127f * 180);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void setMoveDetail() {
+        findViewById(R.id.imageButton_move_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (textView == null) {
+                    return;
+                }
+                textView.setTranslation(-7, 0);
+            }
+        });
+
+        findViewById(R.id.imageButton_move_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (textView == null) {
+                    return;
+                }
+                textView.setTranslation(7, 0);
+            }
+        });
+        findViewById(R.id.imageButton_move_up).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (textView == null) {
+                    return;
+                }
+                textView.setTranslation(0, -7);
+            }
+        });
+
+        findViewById(R.id.imageButton_move_down).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (textView == null) {
+                    return;
+                }
+                textView.setTranslation(0, 7);
+            }
+        });
+    }
+
+    private void setShadowDetail() {
+        MoFaSeekBar SeekBarX = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_X);
+        MoFaSeekBar SeekBarY = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Y);
+        MoFaSeekBar SeekBarSize = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Size);
+        SeekBarX.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mShadowX = progress / 127f * 10;
+                setShadow();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        SeekBarY.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mShadowY = progress / 127f * 10;
+                setShadow();
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+        SeekBarSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mShadowRadius = progress / 127f * 9.99f + 0.01f;
+                setShadow();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+    private void setShadow() {
+        if (textView == null) {
+            return;
+        }
+        textView.setShadowLayer(mShadowRadius, mShadowX, mShadowY, 0x5f000000);
+
+    }
+
+    private void editTextEnsureButton() {
+        final EditText text = (EditText) findViewById(R.id.adding_word_edit_text);
 
         findViewById(R.id.button_word_ensure).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -417,10 +624,11 @@ public class HandleImageActivity extends Activity {
                     textView = new MoFaTextView(HandleImageActivity.this);
                     mainLayout.addView(textView);
                 }
+                textView.setMoFaText(s);
                 textView.post(new Runnable() {
                     @Override
                     public void run() {
-                        textView.setMoFaText(s);
+                        textView.SelfCenter();
                     }
                 });
             }
@@ -436,11 +644,11 @@ public class HandleImageActivity extends Activity {
                 final String s = text.getText().toString();
                 textView = new MoFaTextView(HandleImageActivity.this);
                 mainLayout.addView(textView);
-
+                textView.setMoFaText(s);
                 textView.post(new Runnable() {
                     @Override
                     public void run() {
-                        textView.setMoFaText(s);
+                        textView.SelfCenter();
                     }
                 });
             }
@@ -455,13 +663,138 @@ public class HandleImageActivity extends Activity {
         setDetailSeekBar();
     }
 
+    private void setBianjiDetail() {
+        cropImageView = (CropImageView) findViewById(R.id.crop_image_view);
+
+        setBianjiCtrlLayout();
+
+        setBianjiEnsureButton();
+        setCropDetail();
+        setRotateDetail();
+    }
+
+    private void setBianjiEnsureButton() {
+        findViewById(R.id.bianji_sure).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO-bug - bianji ensure logic
+                mOperatingBitmap = cropImageView.getCroppedImage();
+                mMainImageView.setImageBitmap(mOperatingBitmap);
+                wrapSlidingDrawer.toggle();
+                undoFCropperTPhotoView();
+            }
+        });
+        findViewById(R.id.bianji_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                allTopLayoutGONE();
+                undoFCropperTPhotoView();
+
+            }
+        });
+    }
+
+    private void setRotateDetail() {
+        findViewById(R.id.button_bianji_left_rotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRotate(-90);
+            }
+        });
+
+        findViewById(R.id.button_bianji_right_rotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRotate(90);
+            }
+        });
+
+        findViewById(R.id.button_bianji_hor_rotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cropImageView.setRotationY(mRotateYDegree += 180);
+            }
+        });
+
+        findViewById(R.id.button_bianji_ver_rotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cropImageView.setRotationX(mRotateXDegree += 180);
+            }
+        });
+    }
+
+    private void setRotate(float delta) {
+        cropImageView.rotateImage((int) delta);
+//        if (mMainImageView== null){
+//            return;
+//        }
+//
+//        mMainImageView.setRotation(mRotateDegree+=delta);
+//        Matrix m = new Matrix();
+//        m.setRotate(mRotateDegree-=delta,mMainImageView.getWidth()/2f,mMainImageView.getHeight()/2f);
+//        mMainImageView.setImageMatrix(m);
+    }
+
+    private void setCropDetail() {
+        CropDetailOnClickListener listener = new CropDetailOnClickListener();
+        findViewById(R.id.Button_free).setOnClickListener(listener);
+        findViewById(R.id.Button_1_to_1).setOnClickListener(listener);
+        findViewById(R.id.Button_3_to_4).setOnClickListener(listener);
+        findViewById(R.id.Button_4_to_6).setOnClickListener(listener);
+        findViewById(R.id.Button_5_to_7).setOnClickListener(listener);
+        findViewById(R.id.Button_8_to_10).setOnClickListener(listener);
+        findViewById(R.id.Button_9_to_16).setOnClickListener(listener);
+    }
+
+    private class CropDetailOnClickListener implements View.OnClickListener {
+        int ratioX, ratioY;
+
+        @Override
+        public void onClick(View v) {
+
+            switch (v.getId()) {
+                case R.id.Button_free:
+                    cropImageView.setFixedAspectRatio(false);
+                    return;
+                case R.id.Button_1_to_1:
+                    ratioX = 1;
+                    ratioY = 1;
+                    break;
+                case R.id.Button_3_to_4:
+                    ratioX = 3;
+                    ratioY = 4;
+                    break;
+                case R.id.Button_4_to_6:
+                    ratioX = 4;
+                    ratioY = 6;
+                    break;
+                case R.id.Button_5_to_7:
+                    ratioX = 5;
+                    ratioY = 7;
+                    break;
+                case R.id.Button_8_to_10:
+                    ratioX = 8;
+                    ratioY = 10;
+                    break;
+                case R.id.Button_9_to_16:
+                    ratioX = 9;
+                    ratioY = 16;
+                    break;
+                default:
+            }
+            cropImageView.setAspectRatio(ratioX, ratioY);
+            cropImageView.setFixedAspectRatio(true);
+        }
+    }
+
     private void setDetailSeekBar() {
         RuihuaSeekBar = (MoFaSeekBar) findViewById(R.id.ruihua_seekbar);
-        shadowSeekBar = (MoFaSeekBar) findViewById(R.id.shadow_seekbar);
-        wenheduSeekbar = (MoFaSeekBar) findViewById(R.id.wenhedu_seekbar);
+//        shadowSeekBar = (MoFaSeekBar) findViewById(R.id.shadow_seekbar);
+//        wenheduSeekbar = (MoFaSeekBar) findViewById(R.id.wenhedu_seekbar);
         RuihuaSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
-        shadowSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
-        wenheduSeekbar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
+//        shadowSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
+//        wenheduSeekbar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
     }
 
     private void setTiaoseSeekBar() {
@@ -493,14 +826,121 @@ public class HandleImageActivity extends Activity {
         }
 
     }
-    private void setWordCtrlLayout(){
+
+    private void setWordCtrlLayout() {
         WordClickListener listener = new WordClickListener();
-        findViewById(R.id.word_imageButton_color).setOnClickListener(listener);
-        findViewById(R.id.word_imageButton_font).setOnClickListener(listener);
-        findViewById(R.id.word_imageButton_shadow).setOnClickListener(listener);
-        findViewById(R.id.word_imageButton_textsize).setOnClickListener(listener);
-        findViewById(R.id.word_imageButton_tmd).setOnClickListener(listener);
-        findViewById(R.id.word_imageButton_hor_ver).setOnClickListener(listener);
+
+        word_imageButton_color = (ImageButton) findViewById(R.id.word_imageButton_color);
+        word_imageButton_color.setOnClickListener(listener);
+        word_imageButton_font = (ImageButton) findViewById(R.id.word_imageButton_font);
+        word_imageButton_font.setOnClickListener(listener);
+        word_imageButton_shadow = (ImageButton) findViewById(R.id.word_imageButton_shadow);
+        word_imageButton_shadow.setOnClickListener(listener);
+        word_imageButton_textsize = (ImageButton) findViewById(R.id.word_imageButton_textsize);
+        word_imageButton_textsize.setOnClickListener(listener);
+        word_imageButton_tmd = (ImageButton) findViewById(R.id.word_imageButton_tmd);
+        word_imageButton_tmd.setOnClickListener(listener);
+        word_imageButton_hor_ver = (ImageButton)
+                findViewById(R.id.word_imageButton_hor_ver);
+        word_imageButton_hor_ver.setOnClickListener(listener);
+        word_imageButton_move = (ImageButton) findViewById(R.id.word_imageButton_move);
+        word_imageButton_move.setOnClickListener(listener);
+        word_imageButton_rotate = (ImageButton) findViewById(R.id.word_imageButton_rotate);
+        word_imageButton_rotate.setOnClickListener(listener);
+    }
+
+    private void setBianjiCtrlLayout() {
+        scrollViewCrop = (HorizontalScrollView) findViewById(R.id.crop_scroll_view);
+        scrollViewRotate = (HorizontalScrollView) findViewById(R.id.rotate_scroll_view);
+        findViewById(R.id.bianji_crop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollViewCrop.setVisibility(View.VISIBLE);
+                scrollViewRotate.setVisibility(View.GONE);
+            }
+        });
+        findViewById(R.id.bianji_rotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollViewCrop.setVisibility(View.GONE);
+//                undoFCropperTPhotoView();
+                scrollViewRotate.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void changeTImageCropper() {
+        Bitmap b = getDrawingCache();
+        addCropView(b);
+        mMainImageView.setVisibility(View.GONE);
+        removeAllText();
+    }
+
+    private void addCropView(Bitmap b) {
+        if (b.isRecycled()) {
+            Toast.makeText(this, "出错了。。。", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        cropImageView.setImageBitmap(b);
+        cropImageView.setVisibility(View.VISIBLE);
+    }
+
+    private Bitmap getDrawingCache() {
+        mainLayout.setDrawingCacheEnabled(true);
+        Bitmap b = Bitmap.createBitmap(mainLayout.getDrawingCache());
+        mainLayout.setDrawingCacheEnabled(false);
+        return b;
+    }
+
+    private Bitmap getCuttedDrawingCache(){
+        Bitmap b = getDrawingCache();
+
+
+        int bitmapHeight,bitmapWidth;
+        bitmapHeight = mOperatingBitmap.getHeight();
+        bitmapWidth = mOperatingBitmap.getWidth();
+        float bitmapRadio = ((float)bitmapHeight)/bitmapWidth;
+
+        int displayHeight, displayWidth;
+        displayHeight = b.getHeight();
+        displayWidth  = b.getWidth();
+
+        float displayRadio = (float)displayHeight/displayWidth;
+        float scaleRadio;
+        int newBitmapHeight,newBitmapWidth;
+        if (bitmapRadio > displayRadio){
+            scaleRadio = ((float)displayHeight)/bitmapHeight;
+            newBitmapHeight = displayHeight;
+            newBitmapWidth = (int)(scaleRadio*bitmapWidth);
+        }else{
+            scaleRadio = ((float)displayWidth)/bitmapWidth;
+            newBitmapWidth = displayWidth;
+            newBitmapHeight = (int)(scaleRadio*bitmapHeight);
+        }
+
+        Bitmap result = Bitmap.createBitmap(b,
+                (b.getWidth()-newBitmapWidth)/2,(b.getHeight()-newBitmapHeight)/2,
+                newBitmapWidth,newBitmapHeight
+        );
+        b.recycle();
+        return result;
+    }
+
+    private void removeAllText() {
+        int count = mainLayout.getChildCount();
+        if (count > 3) {
+            for (int i = count - 1; i > 2; i--) {
+                L.e(mainLayout.getChildAt(i) + "");
+                TextList.add((MoFaTextView) mainLayout.getChildAt(i));
+                mainLayout.removeViewAt(i);
+            }
+        }
+    }
+
+    private void undoFCropperTPhotoView() {
+        cropImageView.setVisibility(View.GONE);
+        mMainImageView.setVisibility(View.VISIBLE);
+        attacher.update();
     }
 
     private void setAdjustCtrlLayout() {
@@ -569,10 +1009,10 @@ public class HandleImageActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //TODO-引用
-                if (textView == null){
+                if (textView == null) {
                     return;
                 }
-                textView.setAlpha(progress/255f);
+                textView.setMoFaAlpha(progress / 255f);
             }
 
             @Override
@@ -783,35 +1223,28 @@ public class HandleImageActivity extends Activity {
         rTextSizeDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_textsize);
         rTouMingDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_tmd);
         rColorDetailLayout = (HorizontalScrollView) findViewById(R.id.relativeLayout_color);
-        rShadowDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_shadow);
+        rShadowDetailLayout = (LinearLayout) findViewById(R.id.linearLayout_shadow);
 
         rEnglishFontTypeLayout = (HorizontalScrollView) findViewById(R.id.scrollView_font_English);
         rChineseFontTypeLayout = (HorizontalScrollView) findViewById(R.id.scrollView_font_Chinese);
-
     }
 
     private void setGroupTop() {
-        ImageButton wenziButton;
-        ImageButton filterButton;
-        ImageButton GaussButton;
-        ImageButton AdjustButton;
-        ImageButton xuhuaButton;
-        ImageButton editButton;
 
         GaussButton = (ImageButton) findViewById(R.id.gauss_layout_controller);
         wenziButton = (ImageButton) findViewById(R.id.adding_word_layout_controller);
-        filterButton = (ImageButton) findViewById(R.id.image_filter_layout_controller);
+//        filterButton = (ImageButton) findViewById(R.id.image_filter_layout_controller);
         AdjustButton = (ImageButton) findViewById(R.id.adjust_layout_controller);
-        xuhuaButton = (ImageButton) findViewById(R.id.xuhua);
+//        xuhuaButton = (ImageButton) findViewById(R.id.xuhua);
         editButton = (ImageButton) findViewById(R.id.bianji);
 
 
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quseVISIBLE();
-            }
-        });
+//        filterButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                quseVISIBLE();
+//            }
+//        });
         wenziButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -830,12 +1263,12 @@ public class HandleImageActivity extends Activity {
                 adjustVISIBLE();
             }
         });
-        xuhuaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                xuhuaVISIBLE();
-            }
-        });
+//        xuhuaButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                xuhuaVISIBLE();
+//            }
+//        });
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -857,11 +1290,44 @@ public class HandleImageActivity extends Activity {
 
         rXuhuaDetailLayout.setVisibility(View.GONE);
         rBianjiDetailLayout.setVisibility(View.GONE);
+
+        undoFCropperTPhotoView();
+        setUpButtonOnChoosenAndUnclickable(false);
+//        allMainCtrlButtonClickable();
+    }
+
+    public void setButtonOnChoosenAndUnclickable(View button, boolean enable) {
+        button.setClickable(!enable);
+        button.setPressed(enable);
+    }
+
+
+    private void setUpButtonOnChoosenAndUnclickable(boolean enable) {
+        imageButtonBackward.setPressed(enable);
+        imageButtonForward.setPressed(enable);
+        save.setPressed(enable);
+        abandon.setPressed(enable);
+
+        imageButtonBackward.setClickable(!enable);
+        imageButtonForward.setClickable(!enable);
+        save.setClickable(!enable);
+        abandon.setClickable(!enable);
     }
 
     private void bianjiVISIBLE() {
         allTopLayoutGONE();
+        setUpButtonOnChoosenAndUnclickable(true);
+        changeTImageCropper();
         rBianjiDetailLayout.setVisibility(View.VISIBLE);
+//        setButtonOnChoosenAndUnclickable(editButton,true);
+
+    }
+
+    private void allMainCtrlButtonClickable() {
+        setButtonOnChoosenAndUnclickable(editButton, true);
+        setButtonOnChoosenAndUnclickable(AdjustButton, true);
+        setButtonOnChoosenAndUnclickable(GaussButton, true);
+        setButtonOnChoosenAndUnclickable(wenziButton, true);
     }
 
     private void xuhuaVISIBLE() {
@@ -872,16 +1338,19 @@ public class HandleImageActivity extends Activity {
     private void adjustVISIBLE() {
         allTopLayoutGONE();
         rAdjustDetailLayout.setVisibility(View.VISIBLE);
+//        setButtonOnChoosenAndUnclickable(AdjustButton, true);
     }
 
     private void mohuVISIBLE() {
         allTopLayoutGONE();
         rBlurDetailLayout.setVisibility(View.VISIBLE);
+//        setButtonOnChoosenAndUnclickable(GaussButton, true);
     }
 
     private void wenziVISIBLE() {
         allTopLayoutGONE();
         rEditTextLayout.setVisibility(View.VISIBLE);
+//        setButtonOnChoosenAndUnclickable(wenziButton,true);
     }
 
     private void quseVISIBLE() {
@@ -920,18 +1389,13 @@ public class HandleImageActivity extends Activity {
                         R.drawable.mofa_up_down));
             }
         });
+
     }
 
     private void initTextView() {
+        TextList = new ArrayList<MoFaTextView>();
         textView = new MoFaTextView(this);
-        textView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mainLayout.addView(textView);
-        textView.post(new Runnable() {
-            @Override
-            public void run() {
-                textView.setMoFaText("Just do it");
-            }
-        });
     }
 
     /**
@@ -1157,27 +1621,32 @@ public class HandleImageActivity extends Activity {
         secondcolor34Button.setOnClickListener(lisner);
         secondcolor35Button.setOnClickListener(lisner);
     }
-    private void setAlignHorOrVerDetailButton(){
-        //TODO- avoid the textView was null- make it a function
-        //TODO- bug- change text don't OK;
-        if (textView == null){
-            return;
-        }
-        final SwitchButton switch_font;
 
-        switch_font = (SwitchButton) findViewById(R.id.switch_align_hor_ver);
-        switch_font.setStatus(SwitchButton.STATUS.OFF);
-        switch_font.setOnStatusChangeListener(new SwitchButton.OnStatusChangeListener() {
+    private void setAlignHorOrVerDetailButton() {
+
+        findViewById(R.id.imageButton_word_align_hor).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChange(SwitchButton.STATUS status) {
-                if (status == SwitchButton.STATUS.ON) {
-                    textView.setHorizontal();
-                } else {
-                    textView.setVertical();
+            public void onClick(View v) {
+                if (textView == null) {
+                    return;
                 }
+
+                textView.setHorizontal();
+            }
+        });
+
+        findViewById(R.id.imageButton_word_align_ver).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (textView == null) {
+                    return;
+                }
+
+                textView.setVertical();
             }
         });
     }
+
     private void setFontDetailButton() {
         final SwitchButton switch_font;
 
@@ -1187,11 +1656,11 @@ public class HandleImageActivity extends Activity {
             @Override
             public void onChange(SwitchButton.STATUS status) {
                 if (status == SwitchButton.STATUS.ON) {
-                    switch_font.setCursorDrawable(getResources().getDrawable(R.drawable.zhong));
+                    switch_font.setCursorDrawable(getResources().getDrawable(R.drawable.mofa__0019_font_ch));
                     rEnglishFontTypeLayout.setVisibility(View.GONE);
                     rChineseFontTypeLayout.setVisibility(View.VISIBLE);
                 } else {
-                    switch_font.setCursorDrawable(getResources().getDrawable(R.drawable.ying));
+                    switch_font.setCursorDrawable(getResources().getDrawable(R.drawable.mofa__0018_font_en));
                     rChineseFontTypeLayout.setVisibility(View.GONE);
                     rEnglishFontTypeLayout.setVisibility(View.VISIBLE);
                 }
@@ -1230,11 +1699,11 @@ public class HandleImageActivity extends Activity {
         font30Button = (ImageButton) findViewById(R.id.imageButton_font30);
 
 
-        morenButton = (ImageButton) findViewById(R.id.imageButton_miaowu);
-        miaowuButton = (ImageButton) findViewById(R.id.imageButton_zhiyi);
-        daofengButton = (ImageButton) findViewById(R.id.imageButton_changmei);
-        shangheiButton = (ImageButton) findViewById(R.id.imageButton_daofeng);
-        yueheiButton = (ImageButton) findViewById(R.id.imageButton_tianniu);
+        morenButton    = (RelativeLayout) findViewById(R.id.imageButton_moren);
+        miaowuButton   = (RelativeLayout) findViewById(R.id.imageButton_miaowu);
+        daofengButton  = (RelativeLayout) findViewById(R.id.imageButton_daofeng);
+        shangheiButton = (RelativeLayout) findViewById(R.id.imageButton_shanghei);
+        yueheiButton   = (RelativeLayout) findViewById(R.id.imageButton_yuehei);
 
 
         font01Button.setOnClickListener(new FontClickListener("font/f1.ttf"));
@@ -1275,52 +1744,139 @@ public class HandleImageActivity extends Activity {
 
         morenButton.setOnClickListener(new FontClickListener());
 
-        ImageButton yingbiButton = (ImageButton) findViewById(R.id.imageButton_font_yingbi);
-        yingbiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Ion.with(HandleImageActivity.this)
-                        .load(Config.url)
-                        .progressBar((ProgressBar) findViewById(R.id.progressBar_font_yingbi))
-                        .progressHandler(new ProgressCallback() {
-                            @Override
-                            public void onProgress(long downloaded, long total) {
-                                L.e("Progress" + downloaded + " / " + total);
-                            }
-                        })
-                                // write to a file
-                        .write(
-                                getFileStreamPath("yingbi" + ".ttf")
-                        )
-                                // run a callback on completion
-                        .setCallback(new FutureCallback<File>() {
-                            @Override
-                            public void onCompleted(Exception e, File result) {
-                                if (e != null) {
-                                    Toast.makeText(HandleImageActivity.this, "下载失败了哎~", Toast.LENGTH_LONG).show();
-                                    return;
-                                }
-                                Toast.makeText(HandleImageActivity.this, "下载成功了呐~", Toast.LENGTH_LONG).show();
-                                final File f = getFileStreamPath("yingbi" + ".ttf");
-                                Typeface typeface  = Typeface.createFromFile(f);
-                                findViewById(R.id.imageButton_font_yingbi).setOnClickListener(new FontClickListener(typeface));
-                            }
-                        });
-            }
-        });
+        RelativeLayout yingbiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_yingbi);
+        RelativeLayout fanyuanButton = (RelativeLayout)findViewById(R.id.RelativeLayout_font_download_fanyuan);
+        RelativeLayout gutiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_guti);
+        RelativeLayout hupoButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_hupo);
+        RelativeLayout kaitiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_kaiti);
+        RelativeLayout ruixianButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_ruixian);
+        RelativeLayout songtiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_songti);
+        RelativeLayout tianniuButton =(RelativeLayout) findViewById(R.id.RelativeLayout_font_download_tianniu);
+        RelativeLayout xiyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_xiyuan);
+        RelativeLayout xindiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_xindi);
+        RelativeLayout yaotiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_yaoti);
+        RelativeLayout youyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_youyuan);
+        RelativeLayout changmeiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_changmei);
+        RelativeLayout zhiyiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhiyi);
+//      //TODO-Image line gap
+        RelativeLayout zhongsongButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhongsong);
+        RelativeLayout zhongyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhongyuan);
+        RelativeLayout zhunyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhunyuan);
+        RelativeLayout zongyiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zongyi);
+
+        sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT,Context.MODE_PRIVATE);
+        boolean yingbiEnable = sharedPreferences.getBoolean(Config.yingbi, false);
+        boolean fanyuanEnable = sharedPreferences.getBoolean(Config.fanyuan, false);
+        boolean gutiEnable = sharedPreferences.getBoolean(Config.guti, false);
+        boolean hupoEnable = sharedPreferences.getBoolean(Config.hupo, false);
+        boolean kaitiEnable = sharedPreferences.getBoolean(Config.kaiti, false);
+        boolean ruixianEnable = sharedPreferences.getBoolean(Config.ruixian, false);
+        boolean songtiEnable = sharedPreferences.getBoolean(Config.songti, false);
+        boolean tianniuEnable = sharedPreferences.getBoolean(Config.tianniu, false);
+        boolean xiyuanEnable = sharedPreferences.getBoolean(Config.xiyuan, false);
+        boolean xindiEnable = sharedPreferences.getBoolean(Config.xindi,false);
+        boolean yaotiEnable = sharedPreferences.getBoolean(Config.yaoti,false);
+        boolean youyuanEnable = sharedPreferences.getBoolean(Config.youyuan,false);
+        boolean changmeiEnable = sharedPreferences.getBoolean(Config.changmei,false);
+        boolean zhiyiEnable = sharedPreferences.getBoolean(Config.zhiyi,false);
+        boolean zhongsongEnable = sharedPreferences.getBoolean(Config.zhongsong,false);
+        boolean zhongyuanEnable = sharedPreferences.getBoolean(Config.zhongyuan,false);
+        boolean zhunyuanEnable = sharedPreferences.getBoolean(Config.zhunyuan,false);
+        boolean zongyiEnable = sharedPreferences.getBoolean(Config.zongyi,false);
+
+
+        FontCtrlView(yingbiEnable,yingbiButton,Config.yingbi);
+        FontCtrlView(fanyuanEnable,fanyuanButton,Config.fanyuan);
+        FontCtrlView(gutiEnable,gutiButton,Config.guti);
+        FontCtrlView(hupoEnable,hupoButton,Config.hupo);
+        FontCtrlView(kaitiEnable,kaitiButton,Config.kaiti);
+        FontCtrlView(ruixianEnable,ruixianButton,Config.ruixian);
+        FontCtrlView(songtiEnable,songtiButton,Config.songti);
+        FontCtrlView(tianniuEnable,tianniuButton,Config.tianniu);
+        FontCtrlView(xiyuanEnable,xiyuanButton,Config.xiyuan);
+        FontCtrlView(xindiEnable,xindiButton,Config.xindi);
+        FontCtrlView(yaotiEnable,yaotiButton,Config.yaoti);
+        FontCtrlView(youyuanEnable,youyuanButton,Config.youyuan);
+        FontCtrlView(changmeiEnable,changmeiButton,Config.changmei);
+        FontCtrlView(zhiyiEnable,zhiyiButton,Config.zhiyi);
+        FontCtrlView(zhongsongEnable,zhongsongButton,Config.zhongsong);
+        FontCtrlView(zhongyuanEnable, zhongyuanButton, Config.zhongyuan);
+        FontCtrlView(zhunyuanEnable, zhunyuanButton, Config.zhunyuan);
+        FontCtrlView(zongyiEnable,zongyiButton,Config.zongyi);
 
     }
+
+    private void FontCtrlView(boolean bool,RelativeLayout layout,String name){
+        if (!bool) {
+            layout.setOnClickListener(new FontDownLoadClickListener(name
+                    , (ProgressBar) layout.getChildAt(2)));
+        }else{
+            layout.setClickable(true);
+            layout.removeViews(1,2);
+            layout.setOnClickListener(
+                    new FontClickListener(
+                            Typeface.createFromFile(
+                                    getFileStreamPath(name)
+                            )
+                    )
+            );
+        }
+    }
+
+    private void DownLoadCompleteToast(Exception e){
+        if (e != null) {
+            Toast.makeText(HandleImageActivity.this, "下载失败了哎~", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Toast.makeText(HandleImageActivity.this, "下载成功了呐~", Toast.LENGTH_SHORT).show();
+    }
+
+    private class FontDownLoadClickListener implements View.OnClickListener{
+        String mName;
+        ProgressBar mProgressbar;
+
+        public FontDownLoadClickListener(String name,ProgressBar progressBar){
+            mName = name;
+            mProgressbar = progressBar;
+        }
+
+        @Override
+        public void onClick(final View v) {
+            v.setClickable(false);
+            Ion.with(HandleImageActivity.this)
+                    .load(Config.url + mName)
+                    .progressBar(mProgressbar)
+                    .progress(new ProgressCallback() {
+                        @Override
+                        public void onProgress(long l, long l2) {
+                            L.e(l+"/"+l2);
+                        }
+                    })
+                    .write(getBaseContext().getFileStreamPath(mName))
+                    .setCallback(new FutureCallback<File>() {
+                        @Override
+                        public void onCompleted(Exception e, File result) {
+                            DownLoadCompleteToast(e);
+                            sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT,Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean(mName,true);
+                            editor.apply();
+                            ((RelativeLayout)v).removeViews(1, 2);
+                            v.setClickable(true);
+                            v.setOnClickListener(new FontClickListener(Typeface.createFromFile(result)));
+                        }
+                    });
+        }
+    }
+
 
     // Ensure the bitmap created and displayed on the screen. When it has created,mSrcMap = bitmap
     private void CreateSrcBitmap() {
         //Listener to ensure the bitmap created and displayed on the screen. When it has created,mSrcMap = bitmap
-        ImageLoadinglistener = new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-            }
-
+        ImageLoadinglistener = new SimpleImageLoadingListener() {
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                L.e(failReason.getType()+"");
                 if (failReason.getType().equals(FailReason.FailType.OUT_OF_MEMORY)) {
                     ImageLoader.getInstance().displayImage(imageUri, (ImageView) view, ImageLoadinglistener);
                 }
@@ -1330,45 +1886,78 @@ public class HandleImageActivity extends Activity {
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 mSrcBitmap = loadedImage;
                 mOperatingBitmap = Bitmap.createBitmap(mSrcBitmap, 0, 0, mSrcBitmap.getWidth(), mSrcBitmap.getHeight());
-                BlurMainImageForBackground();
+                mBitmapBlur = BlurMainImageForBackground();
                 mMainImageView.setImageBitmap(mOperatingBitmap);
+
+                attacher = new PhotoViewAttacher(mMainImageView);
+                attacher.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                attacher.setZoomable(true);
+                mDrawMatrix = attacher.getDrawMatrix();
             }
 
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-            }
         };
         mMainImageView = (ImageView) findViewById(R.id.handle_imageView);
         Intent intent = getIntent();
 
         String path = intent.getStringExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED);
 
-
+        boolean isNetwork = intent.getBooleanExtra("network", false);
+        boolean isFromCam = intent.getBooleanExtra("Cam", false);
+        //TODO-progressbar in ImageLoader
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
                 .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.ARGB_8888)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
                 .build();
         //if here use options maybe RGB_565 or any more makes.
         // the RenderScript shut down.
-        // with the Error  Unsupported element type.
-        //TODO-bug - Bitmap is low level
-        ImageLoader.getInstance().displayImage("file://" + path
-                , mMainImageView
-                , options
-                , ImageLoadinglistener);
-        attacher = new PhotoViewAttacher(mMainImageView);
+        // with the Error  Unsupported element type
+        if (isFromCam) {
+//            L.e(intent.getStringExtra("tem_pic"));
+            mSrcBitmap = MainActivity.bitmapFromCam;
+//            mSrcBitmap = BitmapFactory.decodeFile(intent.getStringExtra("tem_pic"));
+            mOperatingBitmap = Bitmap.createBitmap(mSrcBitmap, 0, 0, mSrcBitmap.getWidth(), mSrcBitmap.getHeight());
+            mBitmapBlur = BlurMainImageForBackground();
+            mMainImageView.setImageBitmap(mOperatingBitmap);
+            MainActivity.bitmapFromCam = null;
+            attacher = new PhotoViewAttacher(mMainImageView);
+            attacher.update();
+
+        } else {
+            String s;
+            if (isNetwork) {
+                s = "";
+                StringBuilder builder = new StringBuilder(path);
+                builder.deleteCharAt(25);
+                path = builder.toString();
+                ImageLoader.getInstance().displayImage("file://"+ intent.getStringExtra("tem_pic")
+                        , mMainImageView
+                        , new DisplayImageOptions.Builder().considerExifParams(true).build()
+                        , ImageLoadinglistener);
+                L.e(path);
+            } else {
+                s = "file://";
+            }
+
+            ImageLoader.getInstance().displayImage(s + path
+                    , mMainImageView
+                    , options
+                    , ImageLoadinglistener);
+
+        }
     }
 
     @Override
     protected void onDestroy() {
-        attacher.cleanup();
+        if (attacher !=null) {
+            attacher.cleanup();
+        }
         super.onDestroy();
     }
 
     //Use SrcBitmap from CreateSrcBitmap and Blur it for background.
     //There is something I don't know.
-    private void BlurMainImageForBackground() {
+    private Bitmap BlurMainImageForBackground() {
         Matrix matrix = new Matrix();
         matrix.postScale(0.15f, 0.15f); // 长和宽放大缩小的比例
 
@@ -1380,34 +1969,91 @@ public class HandleImageActivity extends Activity {
         Bitmap result2 = rsBlur(result1, this, 25);
         Bitmap result = rsBlur(result2, this, 25);
 
-        ImageView background = (ImageView) findViewById(R.id.background_blur);
+        background = (ImageView) findViewById(R.id.background_blur);
         background.setImageBitmap(result);
 
         resizeBmp.recycle();
         result0.recycle();
         result1.recycle();
         result2.recycle();
+        return result;
     }
     //\/ and x is two image button on up of the window, which is save and abandon.
     private void SaveAndAbandonClickListener() {
-        ImageButton save = (ImageButton) findViewById(R.id.save);
+        save = (ImageButton) findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO save the image
+                LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                RelativeLayout layout = (RelativeLayout) inflater
+                        .inflate(R.layout.layout_dialog, null);
+                final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
+                dialog.show();
+                dialog.getWindow().setContentView(layout);
+                ((TextView)layout.findViewById(R.id.dialog_text)).setText("确认保存吗？");
+                // 取消按钮
+                Button btnCancel = (Button) layout.findViewById(R.id.dialog_cancel);
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                // 确定按钮
+                Button btnOK = (Button) layout.findViewById(R.id.dialog_ok);
+                btnOK.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(HandleImageActivity.this, OkActivity.class);
+                        //TODO-word add has error!!!!!!!
+                        sBitmapMain = getCuttedDrawingCache();
+                        sBitmapBlur = mBitmapBlur;
+                        HandleImageActivity.this.startActivity(intent);
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+
             }
         });
 
-        ImageButton abandon = (ImageButton) findViewById(R.id.abandon);
+        abandon = (ImageButton) findViewById(R.id.abandon);
         abandon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSrcBitmap.recycle();
-                finish();
+                LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                RelativeLayout layout = (RelativeLayout) inflater
+                        .inflate(R.layout.layout_dialog, null);
+
+                final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
+                dialog.show();
+                dialog.getWindow().setContentView(layout);
+                // 取消按钮
+                Button btnCancel = (Button) layout.findViewById(R.id.dialog_cancel);
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                // 确定按钮
+                Button btnOK = (Button) layout.findViewById(R.id.dialog_ok);
+                btnOK.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mSrcBitmap != null) {
+                            mSrcBitmap.recycle();
+                        }
+                        finish();
+                    }
+                });
+
+
             }
         });
     }
-
     //Blur alg.
     private Bitmap rsBlur(Bitmap raw, Context context, int radius) {
         if (raw.getConfig().equals(Bitmap.Config.RGB_565)) {
@@ -1416,7 +2062,6 @@ public class HandleImageActivity extends Activity {
         RenderScript rs = RenderScript.create(context);
         Allocation alloc = Allocation.createFromBitmap(rs, raw);
         ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs
-//                , Element.U8_4(rs)
                 , alloc.getElement()
         );
         blur.setRadius(radius);
@@ -1478,7 +2123,6 @@ public class HandleImageActivity extends Activity {
 
                 @Override
                 public void onAdjustingFailed() {
-
                 }
 
                 @Override
@@ -1556,38 +2200,65 @@ public class HandleImageActivity extends Activity {
 
     }
 
-
-    private class WordClickListener implements View.OnClickListener{
-        private void wordLayoutAllGONE(){
+    private class WordClickListener implements View.OnClickListener {
+        private void wordLayoutAllGONE() {
             rFontDetailLayout.setVisibility(View.GONE);
             rTouMingDetailLayout.setVisibility(View.GONE);
             rColorDetailLayout.setVisibility(View.GONE);
             rShadowDetailLayout.setVisibility(View.GONE);
             rTextSizeDetailLayout.setVisibility(View.GONE);
             findViewById(R.id.relativeLayout_HorizontalOrVertical).setVisibility(View.GONE);
+            findViewById(R.id.linearlayout_move).setVisibility(View.GONE);
+            findViewById(R.id.relativeLayout_word_rotate).setVisibility(View.GONE);
+//            allButtonChoosenAndUnclickable();
         }
+
+        private void allButtonChoosenAndUnclickable() {
+            setButtonOnChoosenAndUnclickable(word_imageButton_color, false);
+            setButtonOnChoosenAndUnclickable(word_imageButton_font, false);
+            setButtonOnChoosenAndUnclickable(word_imageButton_hor_ver, false);
+            setButtonOnChoosenAndUnclickable(word_imageButton_tmd, false);
+            setButtonOnChoosenAndUnclickable(word_imageButton_shadow, false);
+            setButtonOnChoosenAndUnclickable(word_imageButton_rotate, false);
+            setButtonOnChoosenAndUnclickable(word_imageButton_font, false);
+            setButtonOnChoosenAndUnclickable(word_imageButton_move, false);
+        }
+
         @Override
         public void onClick(View v) {
             wordLayoutAllGONE();
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.word_imageButton_color:
+//                    setButtonOnChoosenAndUnclickable(v,true);
                     rColorDetailLayout.setVisibility(View.VISIBLE);
                     break;
                 case R.id.word_imageButton_shadow:
+//                    setButtonOnChoosenAndUnclickable(v,true);
                     rShadowDetailLayout.setVisibility(View.VISIBLE);
                     break;
                 case R.id.word_imageButton_tmd:
+//                    setButtonOnChoosenAndUnclickable(v,true);
                     rTouMingDetailLayout.setVisibility(View.VISIBLE);
                     break;
                 case R.id.word_imageButton_font:
+//                    setButtonOnChoosenAndUnclickable(v,true);
                     rFontDetailLayout.setVisibility(View.VISIBLE);
                     break;
                 case R.id.word_imageButton_textsize:
+//                    setButtonOnChoosenAndUnclickable(v,true);
                     rTextSizeDetailLayout.setVisibility(View.VISIBLE);
                     break;
                 case R.id.word_imageButton_hor_ver:
+//                    setButtonOnChoosenAndUnclickable(v,true);
                     findViewById(R.id.relativeLayout_HorizontalOrVertical).setVisibility(View.VISIBLE);
                     break;
+                case R.id.word_imageButton_move:
+//                    setButtonOnChoosenAndUnclickable(v,true);
+                    findViewById(R.id.linearlayout_move).setVisibility(View.VISIBLE);
+                    break;
+                case R.id.word_imageButton_rotate:
+//                    setButtonOnChoosenAndUnclickable(v,true);
+                    findViewById(R.id.relativeLayout_word_rotate).setVisibility(View.VISIBLE);
                 default:
             }
         }
@@ -1933,11 +2604,12 @@ public class HandleImageActivity extends Activity {
     private class FontClickListener implements View.OnClickListener {
         private String fontString;
         private Typeface typeFace;
+
         protected FontClickListener(String fontString) {
             this.fontString = fontString;
         }
 
-        protected FontClickListener(Typeface tf){
+        protected FontClickListener(Typeface tf) {
             typeFace = tf;
         }
 
@@ -1947,16 +2619,16 @@ public class HandleImageActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-            if (textView == null){
+            if (textView == null) {
                 textView = new MoFaTextView(HandleImageActivity.this);
                 mainLayout.addView(textView);
             }
             if (fontString != null) {
                 textView.setTypeface(fontString);
             } else {
-                if (typeFace == null){
+                if (typeFace == null) {
                     textView.setTypeface(Typeface.DEFAULT);
-                }else {
+                } else {
                     textView.setTypeface(typeFace);
                 }
             }

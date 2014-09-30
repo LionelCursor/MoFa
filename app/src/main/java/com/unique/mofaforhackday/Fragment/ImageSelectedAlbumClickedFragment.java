@@ -1,6 +1,7 @@
 package com.unique.mofaforhackday.Fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +22,8 @@ import java.util.HashMap;
  * Created by ldx on 2014/8/25.
  */
 public class ImageSelectedAlbumClickedFragment extends ImageSelectedGridViewFragment {
-    public ImageSelectedAlbumClickedFragment(ArrayList<HashMap<String, Object>> list) {
-        super(list);
-    }
+
+
     GestureDetector mGestureDetector;
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
@@ -31,4 +31,6 @@ public class ImageSelectedAlbumClickedFragment extends ImageSelectedGridViewFrag
         View view = super.onCreateView(inflater, container, savedInstanceState);
         return view;
     }
+
+
 }

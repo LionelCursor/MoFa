@@ -196,7 +196,13 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
     public boolean canZoom() {
         return mZoomEnabled;
     }
+    public Matrix getmBaseMatrix(){
+        return mBaseMatrix;
+    }
 
+    public Matrix getmSuppMatrix(){
+        return mSuppMatrix;
+    }
     /**
      * Clean-up the resources attached to this object. This needs to be called when the ImageView is
      * no longer used. A good example is from {@link android.view.View#onDetachedFromWindow()} or
@@ -616,7 +622,6 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
     public void setScaleType(ScaleType scaleType) {
         if (isSupportedScaleType(scaleType) && scaleType != mScaleType) {
             mScaleType = scaleType;
-
             // Finally update
             update();
         }
@@ -638,6 +643,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
                 // Update the base matrix using the current drawable
                 updateBaseMatrix(imageView.getDrawable());
+
             } else {
                 // Reset the Matrix...
                 resetMatrix();

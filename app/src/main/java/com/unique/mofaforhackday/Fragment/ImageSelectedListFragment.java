@@ -1,5 +1,6 @@
 package com.unique.mofaforhackday.Fragment;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -43,12 +44,13 @@ public class ImageSelectedListFragment extends Fragment {
 
     private ArrayList<HashMap<String,Object>> dataList;
     private ArrayList<HashMap<String,Object>> SrcList;
-
-    public ImageSelectedListFragment(ArrayList<HashMap<String, Object>> dataList,ArrayList<HashMap<String,Object>> SrcList) {
-        this.dataList = dataList;
-        this.SrcList = SrcList;
+    @SuppressLint("ValidFragment")
+    public ImageSelectedListFragment() {
+        this.dataList = ImageSelectedActivity.AlbumList;
+        this.SrcList = ImageSelectedActivity.dataList;
         AddNumKey();
     }
+
 
     private void AddNumKey(){
         int total =0;
@@ -77,13 +79,13 @@ public class ImageSelectedListFragment extends Fragment {
         listView.setOnItemClickListener(new ImageItemClickListener());
         return rootView;
     }
-
-    class ImageItemClickListener implements AdapterView.OnItemClickListener {
+    static ArrayList<HashMap<String,Object>> BucketDataList;
+    public class ImageItemClickListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             ArrayList<HashMap<String,Object>> Srclist  = ((ImageSelectedActivity)getActivity()).getAllDataList();
-            ArrayList<HashMap<String,Object>> BucketDataList = new ArrayList<HashMap<String, Object>>();
+            BucketDataList = new ArrayList<HashMap<String, Object>>();
             Integer i = (Integer)dataList.get(position).get(ImageSelectedActivity.KEY_BUCKET_ID);
             for (HashMap<String,Object> map:Srclist){
                 if (map.get(ImageSelectedActivity.KEY_BUCKET_ID ).equals(i)){
@@ -91,7 +93,8 @@ public class ImageSelectedListFragment extends Fragment {
                 }
             }
             ((ImageSelectedActivity)getActivity()).getmPager().setVisibility(View.GONE);
-            Fragment f = new ImageSelectedAlbumClickedFragment(BucketDataList);
+//            Fragment f = new ImageSelectedAlbumClickedFragment(BucketDataList);
+            Fragment f= new ImageSelectedGridViewFragment();
             getActivity().getSupportFragmentManager().beginTransaction().replace(android.R.id.content,f).commit();
 
         }

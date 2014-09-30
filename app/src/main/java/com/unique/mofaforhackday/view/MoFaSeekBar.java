@@ -33,10 +33,8 @@ public class MoFaSeekBar extends SeekBar {
     }
 
     public void setProgressAndDisplay(int progress){
-        L.e("setProgress");
         setProgress(progress);
         if (mListener != null){
-            L.e("stop");
             mListener.onStopTrackingTouch(this);
         }
     }

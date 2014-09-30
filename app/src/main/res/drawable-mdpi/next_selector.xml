@@ -2,12 +2,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/mofa__0003_next_2"/>
+        android:drawable="@drawable/next_2"/>
     <item
         android:state_focused="true"
         android:state_enabled="true"
         android:state_window_focused="true"
-        android:drawable="@drawable/mofa__0007_next_1"/>
+        android:drawable="@drawable/next_1"/>
     <item
-        android:drawable="@drawable/mofa__0007_next_1"/>
+        android:drawable="@drawable/next_1"/>
 </selector>

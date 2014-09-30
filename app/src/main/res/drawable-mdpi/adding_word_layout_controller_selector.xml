@@ -2,12 +2,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
 	<item 
 		android:state_pressed="true" 
-		android:drawable="@drawable/mofa__0010_wenzi_2"/>
+		android:drawable="@drawable/mofa__0005_word_main_ctrl_2"/>
 	<item 
 		android:state_focused="true" 
 		android:state_enabled="true" 
 		android:state_window_focused="true" 
-		android:drawable="@drawable/mofa__0011_wenzi_1"/>
+		android:drawable="@drawable/mofa__0011_word_main_ctrl_1"/>
 	<item 
-		android:drawable="@drawable/mofa__0011_wenzi_1"/>
+		android:drawable="@drawable/mofa__0011_word_main_ctrl_1"/>
 </selector>

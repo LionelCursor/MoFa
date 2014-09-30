@@ -5,7 +5,9 @@
     android:background="@drawable/activity_main_background"
     >
 
+
     <LinearLayout
+        android:id="@+id/activity_main_linearlayout_button"
         android:layout_width="@dimen/activity_main_imageButtonAtBottom_RelativeWidth"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -31,42 +33,35 @@
             android:layout_gravity="center"
             android:src="@drawable/main_pic_selector"
             android:background="@null"/>
-
         <ImageButton
-            android:id="@+id/imageButton_word"
+            android:id="@+id/imageButton_set"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/main_word_selector"
+            android:src="@drawable/main_set_selector"
             android:background="@null"/>
-    </LinearLayout>
-    <ImageButton
-        android:id="@+id/imageButton_set"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/activity_main_imageButtonAtTop_marginLeft_Right"
-        android:layout_marginTop="@dimen/activity_main_imageButtonAtTop_marginTop"
-        android:background="@drawable/main_set_selector"/>
-    <ImageButton
-        android:id="@+id/imageButton_feeback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/activity_main_imageButtonAtTop_marginLeft_Right"
-        android:layout_marginTop="@dimen/activity_main_imageButtonAtTop_marginTop"
-        android:background="@drawable/main_feedback_selector"/>
 
+    </LinearLayout>
+
+    <!--<ImageButton-->
+        <!--android:id="@+id/imageButton_feeback"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginLeft="@dimen/activity_main_imageButtonAtTop_marginLeft_Right"-->
+        <!--android:layout_marginTop="@dimen/activity_main_imageButtonAtTop_marginTop"-->
+        <!--android:background="@drawable/main_feedback_selector"/>-->
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/activity_main_linearlayout_button"
         android:layout_alignParentTop="true"
+        android:scaleType="centerInside"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp"
-        android:src="@drawable/mofa__0000_main" />
+        android:src="@drawable/mofa__0000_mainpage"
+        android:background="@null"/>
 
 </RelativeLayout>

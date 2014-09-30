@@ -22,20 +22,31 @@
         <attr name="shadow" format="reference" />
 
 
-        <!--CropImageView-->
-        <declare-styleable name="CropImageView">
-            <attr name="guidelines">
-                <enum name="on" value="2"/>
-                <enum name="onTouch" value="1"/>
-                <enum name="off" value="0"/>
-            </attr>
-            <attr name="fixAspectRatio" format="boolean"/>
-            <attr name="aspectRatioX" format="integer"/>
-            <attr name="aspectRatioY" format= "integer"/>
-            <attr name="imageResource" format="reference"/>
-        </declare-styleable>
-
     </declare-styleable>
 
+    <declare-styleable name="OkulusImageView">
+        <attr name="cornerRadius" format="dimension"/>
+        <attr name="borderWidth" format="dimension"/>
+        <attr name="borderColor" format="color"/>
+        <attr name="fullCircle" format="boolean"/>
+        <attr name="shadowWidth" format="dimension"/>
+        <attr name="shadowColor" format="color"/>
+        <attr name="shadowRadius" format="float"/>
+        <attr name="touchSelectorColor" format="color"/>
+        <attr name="touchSelectorEnabled" format="boolean"/>
+    </declare-styleable>
+
+    <!--CropImageView-->
+    <declare-styleable name="CropImageView">
+        <attr name="guidelines">
+            <enum name="on" value="2"/>
+            <enum name="onTouch" value="1"/>
+            <enum name="off" value="0"/>
+        </attr>
+        <attr name="fixAspectRatio" format="boolean"/>
+        <attr name="aspectRatioX" format="integer"/>
+        <attr name="aspectRatioY" format= "integer"/>
+        <attr name="imageResource" format="reference"/>
+    </declare-styleable>
 
 </resources>

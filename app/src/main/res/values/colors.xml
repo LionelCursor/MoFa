@@ -2,6 +2,11 @@
 <resources>
     <!--Cropper-->
     <color name="black_translucent">#50000000</color>
+    <!--bianji-->
+    <color name="bianji_text_color">#fff</color>
+    <!--dialog-->
+    <drawable name="pressed">#ebebeb</drawable>
+    <drawable name="nonpressed">#ffffff</drawable>
 
 
     <color name="text_shadow">#e6030303</color>

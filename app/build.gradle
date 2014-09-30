@@ -8,14 +8,23 @@ android {
         applicationId "com.unique.mofaforhackday"
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 3
-        versionName "2.0"
+        versionCode 4
+        versionName "2.1"
         renderscriptSupportMode true
     }
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        mofa {
+            storeFile file("../keystore")
+            storePassword "135810"
+            keyAlias "mofa"
+            keyPassword "135810"
         }
     }
 }
@@ -30,4 +39,17 @@ dependencies {
     compile files('libs/volley.jar')
     compile files('libs/androidasync-1.3.8.jar')
     compile files('libs/ion-1.3.8.jar')
+    compile files('libs/libs/httpmime-4.1.3.jar')
+    compile files('libs/libs/umeng_social_sdk.jar')
+    compile files('src/main/libs/httpmime-4.1.3.jar')
+    compile files('src/main/libs/SocialSDK_QQZone_1.jar')
+    compile files('src/main/libs/SocialSDK_QQZone_2.jar')
+    compile files('src/main/libs/SocialSDK_QQZone_3.jar')
+    compile files('src/main/libs/SocialSDK_Sina.jar')
+    compile files('src/main/libs/SocialSDK_tencentWB_1.jar')
+    compile files('src/main/libs/SocialSDK_tencentWB_2.jar')
+    compile files('src/main/libs/SocialSDK_tencentWB_3.jar')
+    compile files('src/main/libs/umeng_social_sdk.jar')
+    compile files('src/main/libs/SocialSDK_WeiXin_2.jar')
+    compile files('src/main/libs/SocialSDK_WeiXin_1.jar')
 }

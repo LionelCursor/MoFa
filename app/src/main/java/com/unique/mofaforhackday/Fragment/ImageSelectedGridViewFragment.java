@@ -1,5 +1,6 @@
 package com.unique.mofaforhackday.Fragment;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.LoaderManager;
 import android.content.Context;
@@ -35,6 +36,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.unique.mofaforhackday.Activity.HandleImageActivity;
 import com.unique.mofaforhackday.Activity.ImageSelectedActivity;
+import com.unique.mofaforhackday.Adapter.ImageSelectedFragmentAdapter;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
 
@@ -53,8 +55,12 @@ public class ImageSelectedGridViewFragment extends Fragment {
     private GridView gridView;
     private ArrayList<HashMap<String, Object>> dataList;
 
-    public ImageSelectedGridViewFragment(ArrayList<HashMap<String, Object>> list) {
-        this.dataList = list;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+            this.dataList = ImageSelectedListFragment.BucketDataList;
     }
 
     public GridView getGridView() {
