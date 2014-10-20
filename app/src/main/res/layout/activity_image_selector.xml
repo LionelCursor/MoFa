@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@color/black_background_image_select"
     android:layout_width="match_parent"
@@ -11,4 +11,53 @@
         android:layout_height="fill_parent"
         android:flipInterval="30"
         android:persistentDrawingCache="animation"/>
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout_dialog_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_translucent"
+        android:visibility="gone">
+        <com.unique.mofaforhackday.view.roundedimageview.RoundedImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rounded_imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            app:corner_radius="50dp"
+
+            />
+        <TextView
+            android:id="@+id/is_loading_hard"
+            android:layout_below="@id/rounded_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:text="努力加载中..."/>
+        <TextView
+            android:id="@+id/download_image_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textColor="#fff"
+            android:layout_below="@id/is_loading_hard"/>
+
+        <ProgressBar
+            android:id="@+id/download_image_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/download_image_textView"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerHorizontal="true"
+            android:minHeight="10dp"
+            android:maxHeight="10dp" />
+
+        </RelativeLayout>
+</RelativeLayout>

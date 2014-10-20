@@ -33,7 +33,7 @@ import com.unique.mofaforhackday.view.cropper.util.PaintUtil;
 
 
 /**
- * A custom View representing the crop window and the shaded background outside
+ * A custom View representing the crop window and the shaded actionbar_background outside
  * the crop window.
  */
 public class CropOverlayView extends View {
@@ -142,7 +142,7 @@ public class CropOverlayView extends View {
 
         super.onDraw(canvas);
 
-        // Draw translucent background for the cropped area.
+        // Draw translucent actionbar_background for the cropped area.
         drawBackground(canvas, mBitmapRect);
 
         if (showGuidelines()) {

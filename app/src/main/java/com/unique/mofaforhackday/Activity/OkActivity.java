@@ -20,12 +20,15 @@ import android.widget.Toast;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.utils.Log;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.unique.mofaforhackday.R;
 
 import java.io.File;
@@ -96,10 +99,13 @@ public class OkActivity extends Activity {
     }
 
     private void setUmeng(){
-
+        Log.LOG = true;
+        //TODO-UMeng has some bugs in QQ and QZone.
         mController = UMServiceFactory.getUMSocialService("com.umeng.share");
         mController.setShareContent("[来自mofa艺术]");
-        mController.getConfig().removePlatform(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE);
+        mController.setShareImage(new UMImage(this,mBitmapMain));
+        mController.setAppWebSite("http://www.wandoujia.com/apps/com.unique.mofaforhackday");
+        mController.getConfig().removePlatform(SHARE_MEDIA.WEIXIN/*,SHARE_MEDIA.WEIXIN_CIRCLE*/);
 
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
@@ -108,9 +114,20 @@ public class OkActivity extends Activity {
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
         qZoneSsoHandler.addToSocialSDK();
+
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
 
+
+//        String appId = "wx967daebe835fbeac";
+//        String appSecret = "5fa9e68ca3970e87a1f83e563c8dcbce";
+        // 添加微信平台
+//        UMWXHandler wxHandler = new UMWXHandler(this,appId,appSecret);
+//        wxHandler.addToSocialSDK();
+        // 支持微信朋友圈
+//        UMWXHandler wxCircleHandler = new UMWXHandler(this,appId,appSecret);
+//        wxCircleHandler.setToCircle(true);
+//        wxCircleHandler.addToSocialSDK();
     }
 
     // 保存到SD卡
@@ -191,7 +208,6 @@ public class OkActivity extends Activity {
             }
         });
     }
-
 
     private void setBackground() {
         ((ImageView) (findViewById(R.id.ok_blur))).setImageBitmap(mBitmapBlurBackground);

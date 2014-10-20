@@ -29,7 +29,7 @@
         <!--android:layout_centerVertical="true"-->
         <!--android:id="@+id/confirm"-->
         <!--android:layout_alignParentRight="true"-->
-        <!--android:background="@drawable/confirm_icon"-->
+        <!--android:actionbar_background="@drawable/confirm_icon"-->
         <!--android:layout_marginRight="15dp"-->
         <!--android:layout_width="@dimen/actionbar_icon_diameter"-->
         <!--android:layout_height="@dimen/actionbar_icon_diameter" />-->

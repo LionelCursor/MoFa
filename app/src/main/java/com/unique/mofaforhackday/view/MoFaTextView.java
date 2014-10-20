@@ -10,22 +10,15 @@ import android.util.AttributeSet;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.unique.mofaforhackday.R;
-import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.Utils.gesturedetector.MoveGestureDetector;
 import com.unique.mofaforhackday.Utils.gesturedetector.RotateGestureDetector;
-
-
 /**
  * Created by ldx on 2014/9/2.
  * <p/>
- * In real, it's actually an imageView. I'm sorry if it mislead you, haha~~
- * OK, now it's not only a view, but a relativeLayout.
- * shit code.
+ *
  */
 
 //TODO-BUG:scale/shove/rotate tremble when it relative to itself.
@@ -56,7 +49,7 @@ public class MoFaTextView extends TextView {
     private MoveGestureDetector mMoveDetector;
 
     private Drawable mBackgroundDrawable;
-
+    private OnFocusedListener mFocusedListener;
     private float mAlpha =1;
 
     public enum MOFA_TYPEFACE {
@@ -89,6 +82,20 @@ public class MoFaTextView extends TextView {
         mMoveDetector = new MoveGestureDetector(context.getApplicationContext(), new MoveListener());
         this.setOnTouchListener(new OnTouchListener());
 
+        setOnFocusedListener(new OnFocusedListener() {
+            @Override
+            public void onFocused(View view) {
+
+            }
+        });
+
+
+        this.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+            }
+        });
     }
     public void setMoFaAlpha(float alpha){
         mAlpha = alpha;
@@ -96,7 +103,6 @@ public class MoFaTextView extends TextView {
     }
 
     public void SelfCenter() {
-//        TODO-bug-selfCenter not center
         this.setAlpha(mAlpha);
         // Determine the center of the screen to center 'earth'
         Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
@@ -117,7 +123,6 @@ public class MoFaTextView extends TextView {
         float ImageCenterY = (mImageHeight) / 2f;
         setTranslationX(mFocusX - ImageCenterX - left);
         setTranslationY(mFocusY - ImageCenterY - top);
-
     }
 
 
@@ -127,7 +132,6 @@ public class MoFaTextView extends TextView {
         mImageHeight = this.getHeight();
         this.setTranslationX(mFocusX - mImageWidth / 2f);
         this.setTranslationY(mFocusY - mImageHeight / 2f);
-
         this.setRotation(mRotationDegrees);
     }
 
@@ -148,13 +152,31 @@ public class MoFaTextView extends TextView {
         display();
     }
 
-    public class OnTouchListener implements View.OnTouchListener {
+    /**
+     * make it on focused
+     * invoked by TouchEvent DOWN
+     */
+    public interface OnFocusedListener{
+        public void onFocused(View view);
+    }
 
+    public void setOnFocusedListener(OnFocusedListener listener){
+        this.mFocusedListener = listener;
+    }
+
+    public class OnTouchListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     v.setBackgroundDrawable(mBackgroundDrawable);
+                    if(mFocusedListener!=null){
+                        mFocusedListener.onFocused(v);
+                    }
+
+                    break;
+                case MotionEvent.ACTION_MOVE:
+
                     break;
                 case MotionEvent.ACTION_UP:
                     v.setBackgroundDrawable(null);

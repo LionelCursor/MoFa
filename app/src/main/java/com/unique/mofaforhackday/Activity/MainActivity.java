@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.unique.mofaforhackday.R;
+import com.unique.mofaforhackday.Utils.ImageCaptureUtils;
 import com.unique.mofaforhackday.Utils.L;
 
 import java.io.File;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
 
     private Uri mImageUri;
     File photo;
+    private String mCurrentPicturePath;
 
     private ImageButton mImageButtonPic;
     private ImageButton mImageButtonCam;
@@ -77,6 +79,7 @@ public class MainActivity extends Activity {
         mImageButtonSet = (ImageButton)findViewById(R.id.imageButton_set);
         mImageButtonPic = (ImageButton)findViewById(R.id.imageButton_pic);
     }
+
     private void setOption(){
         mImageButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,59 +88,47 @@ public class MainActivity extends Activity {
             }
         });
     }
+
     //init the Camera
     private void startCam(){
         mImageButtonCam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                try
-//                {   // place where to store camera taken picture
-//                    photo = createTemporaryFile("picture", ".jpg");
-//TODO-bug-Camera didn't return full size image.
-//                    photo.deleteOnExit();
-//                }catch(Exception e){
-//                    L.e(TAG, "Can't create file to take picture!");
-//                    Toast.makeText(MainActivity.this, "Please check SD card! Image shot is impossible!", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                mImageUri = Uri.fromFile(photo);
-//                L.e("photo:"+ mImageUri.getPath());
-//                L.e("absolute:"+photo.getAbsolutePath());
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-                startActivityForResult(intent, LOAD_IMAGE);
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = ImageCaptureUtils.createImageFile();
+                        mCurrentPicturePath = photoFile.getAbsolutePath();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                        Toast.makeText(getBaseContext(),"MoFa出了点问题",Toast.LENGTH_SHORT).show();
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(photoFile));
+                        startActivityForResult(takePictureIntent, LOAD_IMAGE);
+                    }
+                }
             }
         });
     }
 
 
-
-
-    private File createTemporaryFile(String part, String ext) throws Exception
-    {
-        File tempDir= new File(getCacheDir().getAbsolutePath());
-        tempDir=new File(tempDir.getAbsolutePath()
-                +"/.temp/"
-        );
-        if(!tempDir.exists())
-        {
-            tempDir.mkdir();
-        }
-        return File.createTempFile(part, ext, tempDir);
-    }
 
     private void imageSelected(){
         mImageButtonPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,ImageSelectedActivity.class));
-                //Main activity is not finished.
             }
         });
     }
     //use Media Camera to load a photo.
-
-    static Bitmap bitmapFromCam;
+//    static Bitmap bitmapFromCam;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -147,8 +138,8 @@ public class MainActivity extends Activity {
                     Intent intent = new Intent();
                     intent.setClass(this,HandleImageActivity.class);
                     intent.putExtra("Cam", true);
-                    bitmapFromCam = (Bitmap)data.getExtras().get("data");
-//                    intent.putExtra("tem_pic",photo.getAbsolutePath());
+//                    bitmapFromCam = (Bitmap)data.getExtras().get("data");
+                    intent.putExtra("tem_pic",mCurrentPicturePath);
                     startActivity(intent);
                     break;
                 default:

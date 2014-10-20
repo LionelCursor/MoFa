@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--actionBar background-->
+    <color name="actionbar_background">#4886ba</color>
+
     <!--Cropper-->
-    <color name="black_translucent">#50000000</color>
+    <!--ImageSelectedDialog-->
+    <color name="black_translucent">#e0000000</color>
     <!--bianji-->
     <color name="bianji_text_color">#fff</color>
     <!--dialog-->

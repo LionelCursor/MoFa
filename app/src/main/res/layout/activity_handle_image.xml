@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.HandleImageActivity">
-    <!--image blurred background-->
+    <!--image blurred actionbar_background-->
     <RelativeLayout
         android:id="@+id/main_image"
         android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                         <!--android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"-->
                         <!--android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"-->
                         <!--android:src="@drawable/lvjing_selector"-->
-                        <!--android:background="@null"-->
+                        <!--android:actionbar_background="@null"-->
                         <!--android:visibility="gone" />-->
 
                     <ImageButton
@@ -144,7 +144,7 @@
                         <!--android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"-->
                         <!--android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"-->
                         <!--android:src="@drawable/xuhua_selector"-->
-                        <!--android:background="@null"-->
+                        <!--android:actionbar_background="@null"-->
                         <!--android:visibility="gone" />-->
 
                     <ImageButton
@@ -711,7 +711,7 @@
                                 <!--android:id="@+id/imageButton_moren"-->
                                 <!--android:layout_width="wrap_content"-->
                                 <!--android:layout_height="wrap_content"-->
-                                <!--android:background="@drawable/moren" />-->
+                                <!--android:actionbar_background="@drawable/moren" />-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_miaowu"
                                 android:layout_width="50dp"
@@ -733,7 +733,7 @@
                                 <!--android:layout_width="wrap_content"-->
                                 <!--android:layout_height="wrap_content"-->
                                 <!--android:layout_marginLeft="30dp"-->
-                                <!--android:background="@drawable/miaowu" />-->
+                                <!--android:actionbar_background="@drawable/miaowu" />-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_daofeng"
                                 android:layout_width="50dp"
@@ -755,7 +755,7 @@
                                 <!--android:layout_width="wrap_content"-->
                                 <!--android:layout_height="wrap_content"-->
                                 <!--android:layout_marginLeft="30dp"-->
-                                <!--android:background="@drawable/daofeng" />-->
+                                <!--android:actionbar_background="@drawable/daofeng" />-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_shanghei"
                                 android:layout_width="50dp"
@@ -778,7 +778,7 @@
                                 <!--android:layout_height="wrap_content"-->
                                 <!--android:layout_marginLeft="30dp"-->
                                 <!--android:src="@drawable/shanghei"-->
-                                <!--android:background="@null"/>-->
+                                <!--android:actionbar_background="@null"/>-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_yuehei"
                                 android:layout_width="50dp"
@@ -801,7 +801,7 @@
                                 <!--android:layout_height="wrap_content"-->
                                 <!--android:layout_marginLeft="30dp"-->
                                 <!--android:src="@drawable/yuehei"-->
-                                <!--android:background="@null"/>-->
+                                <!--android:actionbar_background="@null"/>-->
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_yingbi"
                                 android:layout_width="50dp"
@@ -1995,7 +1995,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone">
-                    <!--TODO-background and cursor-->
+                    <!--TODO-actionbar_background and cursor-->
                     <!--shadow-X-->
                     <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekbar_word_shadow_X"

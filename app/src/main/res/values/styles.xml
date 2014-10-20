@@ -19,4 +19,24 @@
     </style>
 
 
+<!--Test to modify the color style of the actionBar-->
+    <style name="Theme.AndroidDevelopers" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionBarTabStyle">@style/MyActionBarTabStyle</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+    <style name="MyActionBarTabStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab</item>
+        <item name="android:divider">@null</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+    <style name="MyActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@drawable/actionbar_background</item>
+        <item name="android:backgroundStacked">#4886ba</item>
+        <item name="android:backgroundSplit">#4886ba</item>
+
+    </style>
+
 </resources>
+
+

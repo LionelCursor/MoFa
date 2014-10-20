@@ -52,7 +52,7 @@
         <!--android:layout_alignParentTop="true"-->
         <!--android:layout_marginLeft="@dimen/activity_main_imageButtonAtTop_marginLeft_Right"-->
         <!--android:layout_marginTop="@dimen/activity_main_imageButtonAtTop_marginTop"-->
-        <!--android:background="@drawable/main_feedback_selector"/>-->
+        <!--android:actionbar_background="@drawable/main_feedback_selector"/>-->
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"

@@ -1,26 +1,40 @@
 package com.unique.mofaforhackday.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.ProgressCallback;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.unique.mofaforhackday.Activity.HandleImageActivity;
 import com.unique.mofaforhackday.Activity.ImageSelectedActivity;
+import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
+import com.unique.mofaforhackday.Utils.L;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,16 +51,19 @@ public class ImageSelectedRecommendedFragment extends Fragment {
     public ImageSelectedRecommendedFragment(ArrayList<HashMap<String, Object>> list) {
         this.dataList = list;
     }
+    SharedPreferences sharedPreferences ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataList = ImageSelectedActivity.recommendedList;
+        sharedPreferences = getActivity().getSharedPreferences(Config.PREFERENCE_NAME_IMAGE,Context.MODE_PRIVATE);
     }
 
     public ImageSelectedRecommendedFragment() {
         this.dataList = new ArrayList<HashMap<String, Object>>();
     }
+
 
     public GridView getGridView() {
         return gridView;
@@ -64,19 +81,112 @@ public class ImageSelectedRecommendedFragment extends Fragment {
     }
 
 
-
     private class MyOnClickListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(getActivity(), HandleImageActivity.class);
-//            intent.setType("ImageSelected");
-            intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, (String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
-            intent.putExtra("network",true);
-            startActivity(intent);
-            getActivity().finish();
+            String name = handleString((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
+            boolean hasFile = hasFile(Config.SDCARD_MOFA + name);
+            if (!hasFile) {
+                DownLoadImageFilesWithIon(
+                        (String) dataList.get(position).get(
+                                ImageSelectedActivity.KEY_SRC_DATA_PATH
+                        )
+                );
+            }else{
+                Intent intent = new Intent(getActivity(), HandleImageActivity.class);
+                intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, name);
+                intent.putExtra("network", true);
+                startActivity(intent);
+                getActivity().finish();
+            }
         }
     }
+
+    private boolean hasFile(String url){
+        try{
+            File f=new File(url);
+            if(!f.exists()){
+                return false;
+            }
+
+        }catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    public void DownLoadImageFilesWithIon(String url){
+        showDialog();
+        showTempImage(url);
+        final TextView textView = ((TextView)getActivity().findViewById(R.id.download_image_textView));
+        final String name = handleString(url);
+        url = Config.url+name ;
+        Ion.with(this)
+            .load(url)
+            .progressBar((ProgressBar) getActivity().findViewById(R.id.download_image_progress_bar))
+            .progressHandler(new ProgressCallback() {
+                @Override
+                public void onProgress(long l, long l2) {
+                    double percent = ((double)l)/l2;
+                    NumberFormat format = NumberFormat.getInstance();
+                    format.setMaximumFractionDigits(2);
+                    textView.setText("" + format.format(percent*100)+"%");
+                }
+            })
+            .write(new File(Config.SDCARD_MOFA + name))
+            .setCallback(new FutureCallback<File>() {
+                @Override
+                public void onCompleted(Exception e, File file) {
+                    Intent intent = new Intent(getActivity(), HandleImageActivity.class);
+                    intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, name);
+                    intent.putExtra("network", true);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
+    }
+    private void showTempImage(String url){
+        ImageView imageView = getRoundedImage();
+        ImageLoader.getInstance().
+            displayImage(
+                    url
+                    , imageView
+                    , ((MoFaApplication) getActivity().getApplication()).getOptions()
+            );
+    }
+    private ImageView getRoundedImage(){
+        return (ImageView)getActivity().findViewById(R.id.rounded_imageView);
+    }
+
+    //handle url to have exact name
+    private String handleString(String url){
+        StringBuilder stringBuilder = new StringBuilder(url);
+        return stringBuilder.substring(19);
+    }
+
+    private void dismissDialog(){
+        RelativeLayout dialog = (RelativeLayout) getActivity().findViewById(R.id.relativeLayout_dialog_fullscreen);
+        dialog.setVisibility(View.GONE);
+    }
+
+
+
+    private void showDialog(){
+        RelativeLayout dialog = (RelativeLayout) getActivity().findViewById(R.id.relativeLayout_dialog_fullscreen);
+        dialog.setVisibility(View.VISIBLE);
+        dialog.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+    }
+
+
+
 
     private class GridViewAdapter extends BaseAdapter {
 
@@ -134,7 +244,6 @@ public class ImageSelectedRecommendedFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
 
             ViewHolder holder = null;
-
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.item_gridview, null);
                 holder = new ViewHolder();

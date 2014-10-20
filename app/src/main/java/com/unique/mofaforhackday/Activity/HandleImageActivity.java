@@ -68,6 +68,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.unique.mofaforhackday.Utils.ImageAdjuster.ADJUSTER_TYPE;
@@ -122,11 +123,6 @@ public class HandleImageActivity extends Activity {
     Bitmap mBitmapBlur;
     static Bitmap sBitmapBlur;
     static Bitmap sBitmapMain;
-
-
-
-
-
 
     private ImageButton wenziButton;
     private ImageButton filterButton;
@@ -622,6 +618,7 @@ public class HandleImageActivity extends Activity {
                 final String s = text.getText().toString();
                 if (textView == null) {
                     textView = new MoFaTextView(HandleImageActivity.this);
+                    textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
                     mainLayout.addView(textView);
                 }
                 textView.setMoFaText(s);
@@ -643,6 +640,7 @@ public class HandleImageActivity extends Activity {
                 // The logic is hard really
                 final String s = text.getText().toString();
                 textView = new MoFaTextView(HandleImageActivity.this);
+                textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
                 mainLayout.addView(textView);
                 textView.setMoFaText(s);
                 textView.post(new Runnable() {
@@ -892,35 +890,37 @@ public class HandleImageActivity extends Activity {
         return b;
     }
 
-    private Bitmap getCuttedDrawingCache(){
+    private Bitmap getCuttedDrawingCache() {
         Bitmap b = getDrawingCache();
-
-
-        int bitmapHeight,bitmapWidth;
+        int bitmapHeight, bitmapWidth;
         bitmapHeight = mOperatingBitmap.getHeight();
         bitmapWidth = mOperatingBitmap.getWidth();
-        float bitmapRadio = ((float)bitmapHeight)/bitmapWidth;
+        float bitmapRadio = ((float) bitmapHeight) / bitmapWidth;
 
         int displayHeight, displayWidth;
         displayHeight = b.getHeight();
-        displayWidth  = b.getWidth();
+        displayWidth = b.getWidth();
+        int newBitmapHeight, newBitmapWidth;
 
-        float displayRadio = (float)displayHeight/displayWidth;
-        float scaleRadio;
-        int newBitmapHeight,newBitmapWidth;
-        if (bitmapRadio > displayRadio){
-            scaleRadio = ((float)displayHeight)/bitmapHeight;
-            newBitmapHeight = displayHeight;
-            newBitmapWidth = (int)(scaleRadio*bitmapWidth);
+        if (bitmapHeight>displayHeight||bitmapWidth>displayWidth) {
+            float displayRadio = (float) displayHeight / displayWidth;
+            float scaleRadio;
+            if (bitmapRadio > displayRadio) {
+                scaleRadio = ((float) displayHeight) / bitmapHeight;
+                newBitmapHeight = displayHeight;
+                newBitmapWidth = (int) (scaleRadio * bitmapWidth);
+            } else {
+                scaleRadio = ((float) displayWidth) / bitmapWidth;
+                newBitmapWidth = displayWidth;
+                newBitmapHeight = (int) (scaleRadio * bitmapHeight);
+            }
         }else{
-            scaleRadio = ((float)displayWidth)/bitmapWidth;
-            newBitmapWidth = displayWidth;
-            newBitmapHeight = (int)(scaleRadio*bitmapHeight);
+            newBitmapHeight = bitmapHeight;
+            newBitmapWidth = bitmapWidth;
         }
-
         Bitmap result = Bitmap.createBitmap(b,
-                (b.getWidth()-newBitmapWidth)/2,(b.getHeight()-newBitmapHeight)/2,
-                newBitmapWidth,newBitmapHeight
+                (b.getWidth() - newBitmapWidth) / 2, (b.getHeight() - newBitmapHeight) / 2,
+                newBitmapWidth, newBitmapHeight
         );
         b.recycle();
         return result;
@@ -1392,10 +1392,22 @@ public class HandleImageActivity extends Activity {
 
     }
 
+    private MoFaTextViewOnFocusedListener mMoFaTextViewOnFocusedListener;
+
     private void initTextView() {
+        mMoFaTextViewOnFocusedListener = new MoFaTextViewOnFocusedListener();
         TextList = new ArrayList<MoFaTextView>();
         textView = new MoFaTextView(this);
+        textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
         mainLayout.addView(textView);
+    }
+
+
+    private class MoFaTextViewOnFocusedListener implements MoFaTextView.OnFocusedListener {
+        @Override
+        public void onFocused(View view) {
+            textView = (MoFaTextView) view;
+        }
     }
 
     /**
@@ -1699,11 +1711,11 @@ public class HandleImageActivity extends Activity {
         font30Button = (ImageButton) findViewById(R.id.imageButton_font30);
 
 
-        morenButton    = (RelativeLayout) findViewById(R.id.imageButton_moren);
-        miaowuButton   = (RelativeLayout) findViewById(R.id.imageButton_miaowu);
-        daofengButton  = (RelativeLayout) findViewById(R.id.imageButton_daofeng);
+        morenButton = (RelativeLayout) findViewById(R.id.imageButton_moren);
+        miaowuButton = (RelativeLayout) findViewById(R.id.imageButton_miaowu);
+        daofengButton = (RelativeLayout) findViewById(R.id.imageButton_daofeng);
         shangheiButton = (RelativeLayout) findViewById(R.id.imageButton_shanghei);
-        yueheiButton   = (RelativeLayout) findViewById(R.id.imageButton_yuehei);
+        yueheiButton = (RelativeLayout) findViewById(R.id.imageButton_yuehei);
 
 
         font01Button.setOnClickListener(new FontClickListener("font/f1.ttf"));
@@ -1745,13 +1757,13 @@ public class HandleImageActivity extends Activity {
         morenButton.setOnClickListener(new FontClickListener());
 
         RelativeLayout yingbiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_yingbi);
-        RelativeLayout fanyuanButton = (RelativeLayout)findViewById(R.id.RelativeLayout_font_download_fanyuan);
+        RelativeLayout fanyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_fanyuan);
         RelativeLayout gutiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_guti);
         RelativeLayout hupoButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_hupo);
         RelativeLayout kaitiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_kaiti);
         RelativeLayout ruixianButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_ruixian);
         RelativeLayout songtiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_songti);
-        RelativeLayout tianniuButton =(RelativeLayout) findViewById(R.id.RelativeLayout_font_download_tianniu);
+        RelativeLayout tianniuButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_tianniu);
         RelativeLayout xiyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_xiyuan);
         RelativeLayout xindiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_xindi);
         RelativeLayout yaotiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_yaoti);
@@ -1764,7 +1776,7 @@ public class HandleImageActivity extends Activity {
         RelativeLayout zhunyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhunyuan);
         RelativeLayout zongyiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zongyi);
 
-        sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT,Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT, Context.MODE_PRIVATE);
         boolean yingbiEnable = sharedPreferences.getBoolean(Config.yingbi, false);
         boolean fanyuanEnable = sharedPreferences.getBoolean(Config.fanyuan, false);
         boolean gutiEnable = sharedPreferences.getBoolean(Config.guti, false);
@@ -1774,56 +1786,63 @@ public class HandleImageActivity extends Activity {
         boolean songtiEnable = sharedPreferences.getBoolean(Config.songti, false);
         boolean tianniuEnable = sharedPreferences.getBoolean(Config.tianniu, false);
         boolean xiyuanEnable = sharedPreferences.getBoolean(Config.xiyuan, false);
-        boolean xindiEnable = sharedPreferences.getBoolean(Config.xindi,false);
-        boolean yaotiEnable = sharedPreferences.getBoolean(Config.yaoti,false);
-        boolean youyuanEnable = sharedPreferences.getBoolean(Config.youyuan,false);
-        boolean changmeiEnable = sharedPreferences.getBoolean(Config.changmei,false);
-        boolean zhiyiEnable = sharedPreferences.getBoolean(Config.zhiyi,false);
-        boolean zhongsongEnable = sharedPreferences.getBoolean(Config.zhongsong,false);
-        boolean zhongyuanEnable = sharedPreferences.getBoolean(Config.zhongyuan,false);
-        boolean zhunyuanEnable = sharedPreferences.getBoolean(Config.zhunyuan,false);
-        boolean zongyiEnable = sharedPreferences.getBoolean(Config.zongyi,false);
+        boolean xindiEnable = sharedPreferences.getBoolean(Config.xindi, false);
+        boolean yaotiEnable = sharedPreferences.getBoolean(Config.yaoti, false);
+        boolean youyuanEnable = sharedPreferences.getBoolean(Config.youyuan, false);
+        boolean changmeiEnable = sharedPreferences.getBoolean(Config.changmei, false);
+        boolean zhiyiEnable = sharedPreferences.getBoolean(Config.zhiyi, false);
+        boolean zhongsongEnable = sharedPreferences.getBoolean(Config.zhongsong, false);
+        boolean zhongyuanEnable = sharedPreferences.getBoolean(Config.zhongyuan, false);
+        boolean zhunyuanEnable = sharedPreferences.getBoolean(Config.zhunyuan, false);
+        boolean zongyiEnable = sharedPreferences.getBoolean(Config.zongyi, false);
 
 
-        FontCtrlView(yingbiEnable,yingbiButton,Config.yingbi);
-        FontCtrlView(fanyuanEnable,fanyuanButton,Config.fanyuan);
-        FontCtrlView(gutiEnable,gutiButton,Config.guti);
-        FontCtrlView(hupoEnable,hupoButton,Config.hupo);
-        FontCtrlView(kaitiEnable,kaitiButton,Config.kaiti);
-        FontCtrlView(ruixianEnable,ruixianButton,Config.ruixian);
-        FontCtrlView(songtiEnable,songtiButton,Config.songti);
-        FontCtrlView(tianniuEnable,tianniuButton,Config.tianniu);
-        FontCtrlView(xiyuanEnable,xiyuanButton,Config.xiyuan);
-        FontCtrlView(xindiEnable,xindiButton,Config.xindi);
-        FontCtrlView(yaotiEnable,yaotiButton,Config.yaoti);
-        FontCtrlView(youyuanEnable,youyuanButton,Config.youyuan);
-        FontCtrlView(changmeiEnable,changmeiButton,Config.changmei);
-        FontCtrlView(zhiyiEnable,zhiyiButton,Config.zhiyi);
-        FontCtrlView(zhongsongEnable,zhongsongButton,Config.zhongsong);
+        FontCtrlView(yingbiEnable, yingbiButton, Config.yingbi);
+        FontCtrlView(fanyuanEnable, fanyuanButton, Config.fanyuan);
+        FontCtrlView(gutiEnable, gutiButton, Config.guti);
+        FontCtrlView(hupoEnable, hupoButton, Config.hupo);
+        FontCtrlView(kaitiEnable, kaitiButton, Config.kaiti);
+        FontCtrlView(ruixianEnable, ruixianButton, Config.ruixian);
+        FontCtrlView(songtiEnable, songtiButton, Config.songti);
+        FontCtrlView(tianniuEnable, tianniuButton, Config.tianniu);
+        FontCtrlView(xiyuanEnable, xiyuanButton, Config.xiyuan);
+        FontCtrlView(xindiEnable, xindiButton, Config.xindi);
+        FontCtrlView(yaotiEnable, yaotiButton, Config.yaoti);
+        FontCtrlView(youyuanEnable, youyuanButton, Config.youyuan);
+        FontCtrlView(changmeiEnable, changmeiButton, Config.changmei);
+        FontCtrlView(zhiyiEnable, zhiyiButton, Config.zhiyi);
+        FontCtrlView(zhongsongEnable, zhongsongButton, Config.zhongsong);
         FontCtrlView(zhongyuanEnable, zhongyuanButton, Config.zhongyuan);
         FontCtrlView(zhunyuanEnable, zhunyuanButton, Config.zhunyuan);
-        FontCtrlView(zongyiEnable,zongyiButton,Config.zongyi);
-
+        FontCtrlView(zongyiEnable, zongyiButton, Config.zongyi);
     }
 
-    private void FontCtrlView(boolean bool,RelativeLayout layout,String name){
+    private void FontCtrlView(boolean bool, RelativeLayout layout, String name) {
+
         if (!bool) {
             layout.setOnClickListener(new FontDownLoadClickListener(name
                     , (ProgressBar) layout.getChildAt(2)));
-        }else{
+        } else {
             layout.setClickable(true);
-            layout.removeViews(1,2);
+
+            File file = getFileStreamPath(name);
+            if (!file.exists()) {
+                layout.setOnClickListener(new FontDownLoadClickListener(name
+                        , (ProgressBar) layout.getChildAt(2)));
+                return;
+            }
+            layout.removeViews(1, 2);
             layout.setOnClickListener(
                     new FontClickListener(
                             Typeface.createFromFile(
-                                    getFileStreamPath(name)
+                                    file
                             )
                     )
             );
         }
     }
 
-    private void DownLoadCompleteToast(Exception e){
+    private void DownLoadCompleteToast(Exception e) {
         if (e != null) {
             Toast.makeText(HandleImageActivity.this, "下载失败了哎~", Toast.LENGTH_SHORT).show();
             return;
@@ -1831,11 +1850,11 @@ public class HandleImageActivity extends Activity {
         Toast.makeText(HandleImageActivity.this, "下载成功了呐~", Toast.LENGTH_SHORT).show();
     }
 
-    private class FontDownLoadClickListener implements View.OnClickListener{
+    private class FontDownLoadClickListener implements View.OnClickListener {
         String mName;
         ProgressBar mProgressbar;
 
-        public FontDownLoadClickListener(String name,ProgressBar progressBar){
+        public FontDownLoadClickListener(String name, ProgressBar progressBar) {
             mName = name;
             mProgressbar = progressBar;
         }
@@ -1849,7 +1868,7 @@ public class HandleImageActivity extends Activity {
                     .progress(new ProgressCallback() {
                         @Override
                         public void onProgress(long l, long l2) {
-                            L.e(l+"/"+l2);
+                            L.e(l + "/" + l2);
                         }
                     })
                     .write(getBaseContext().getFileStreamPath(mName))
@@ -1857,11 +1876,11 @@ public class HandleImageActivity extends Activity {
                         @Override
                         public void onCompleted(Exception e, File result) {
                             DownLoadCompleteToast(e);
-                            sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT,Context.MODE_PRIVATE);
+                            sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean(mName,true);
+                            editor.putBoolean(mName, true);
                             editor.apply();
-                            ((RelativeLayout)v).removeViews(1, 2);
+                            ((RelativeLayout) v).removeViews(1, 2);
                             v.setClickable(true);
                             v.setOnClickListener(new FontClickListener(Typeface.createFromFile(result)));
                         }
@@ -1876,7 +1895,7 @@ public class HandleImageActivity extends Activity {
         ImageLoadinglistener = new SimpleImageLoadingListener() {
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                L.e(failReason.getType()+"");
+                L.e(failReason.getType() + "");
                 if (failReason.getType().equals(FailReason.FailType.OUT_OF_MEMORY)) {
                     ImageLoader.getInstance().displayImage(imageUri, (ImageView) view, ImageLoadinglistener);
                 }
@@ -1913,49 +1932,46 @@ public class HandleImageActivity extends Activity {
         // the RenderScript shut down.
         // with the Error  Unsupported element type
         if (isFromCam) {
-//            L.e(intent.getStringExtra("tem_pic"));
-            mSrcBitmap = MainActivity.bitmapFromCam;
-//            mSrcBitmap = BitmapFactory.decodeFile(intent.getStringExtra("tem_pic"));
-            mOperatingBitmap = Bitmap.createBitmap(mSrcBitmap, 0, 0, mSrcBitmap.getWidth(), mSrcBitmap.getHeight());
-            mBitmapBlur = BlurMainImageForBackground();
-            mMainImageView.setImageBitmap(mOperatingBitmap);
-            MainActivity.bitmapFromCam = null;
-            attacher = new PhotoViewAttacher(mMainImageView);
-            attacher.update();
+            String PicturePath = intent.getStringExtra("tem_pic");
+
+
+            ImageLoader.getInstance().displayImage("file://" + PicturePath
+                    , mMainImageView
+                    , options
+                    , ImageLoadinglistener);
 
         } else {
             String s;
             if (isNetwork) {
-                s = "";
-                StringBuilder builder = new StringBuilder(path);
-                builder.deleteCharAt(25);
-                path = builder.toString();
-                ImageLoader.getInstance().displayImage("file://"+ intent.getStringExtra("tem_pic")
+                s = "file://";
+
+                path = "/sdcard/mofa/" + path;
+
+                ImageLoader.getInstance().displayImage(s + path
                         , mMainImageView
-                        , new DisplayImageOptions.Builder().considerExifParams(true).build()
+                        , options
                         , ImageLoadinglistener);
-                L.e(path);
+
             } else {
                 s = "file://";
+                ImageLoader.getInstance().displayImage(s + path
+                        , mMainImageView
+                        , options
+                        , ImageLoadinglistener);
             }
-
-            ImageLoader.getInstance().displayImage(s + path
-                    , mMainImageView
-                    , options
-                    , ImageLoadinglistener);
 
         }
     }
 
     @Override
     protected void onDestroy() {
-        if (attacher !=null) {
+        if (attacher != null) {
             attacher.cleanup();
         }
         super.onDestroy();
     }
 
-    //Use SrcBitmap from CreateSrcBitmap and Blur it for background.
+    //Use SrcBitmap from CreateSrcBitmap and Blur it for actionbar_background.
     //There is something I don't know.
     private Bitmap BlurMainImageForBackground() {
         Matrix matrix = new Matrix();
@@ -1978,6 +1994,7 @@ public class HandleImageActivity extends Activity {
         result2.recycle();
         return result;
     }
+
     //\/ and x is two image button on up of the window, which is save and abandon.
     private void SaveAndAbandonClickListener() {
         save = (ImageButton) findViewById(R.id.save);
@@ -1990,7 +2007,7 @@ public class HandleImageActivity extends Activity {
                 final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
                 dialog.show();
                 dialog.getWindow().setContentView(layout);
-                ((TextView)layout.findViewById(R.id.dialog_text)).setText("确认保存吗？");
+                ((TextView) layout.findViewById(R.id.dialog_text)).setText("确认保存吗？");
                 // 取消按钮
                 Button btnCancel = (Button) layout.findViewById(R.id.dialog_cancel);
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -2054,6 +2071,7 @@ public class HandleImageActivity extends Activity {
             }
         });
     }
+
     //Blur alg.
     private Bitmap rsBlur(Bitmap raw, Context context, int radius) {
         if (raw.getConfig().equals(Bitmap.Config.RGB_565)) {
@@ -2621,6 +2639,7 @@ public class HandleImageActivity extends Activity {
         public void onClick(View v) {
             if (textView == null) {
                 textView = new MoFaTextView(HandleImageActivity.this);
+                textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
                 mainLayout.addView(textView);
             }
             if (fontString != null) {
