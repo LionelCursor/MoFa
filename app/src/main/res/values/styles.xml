@@ -1,8 +1,9 @@
+
 <resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
     </style>
     <!--copy from V1.0-->
     <style name="mydialog">
@@ -24,6 +25,7 @@
         <item name="android:actionBarTabStyle">@style/MyActionBarTabStyle</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="MyActionBarTabStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab</item>

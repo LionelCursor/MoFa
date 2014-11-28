@@ -2,7 +2,9 @@ package com.unique.mofaforhackday;
 
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.Display;
+import android.view.WindowManager;
 
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -27,6 +29,7 @@ public class MoFaApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+
         config = new ImageLoaderConfiguration.Builder(this)
 //                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
                 .denyCacheImageMultipleSizesInMemory()

@@ -52,6 +52,9 @@ public class ImageSelectedListFragment extends Fragment {
     }
 
 
+
+
+
     private void AddNumKey(){
         int total =0;
         for (HashMap<String,Object> map:dataList){
@@ -95,8 +98,7 @@ public class ImageSelectedListFragment extends Fragment {
             ((ImageSelectedActivity)getActivity()).getmPager().setVisibility(View.GONE);
 //            Fragment f = new ImageSelectedAlbumClickedFragment(BucketDataList);
             Fragment f= new ImageSelectedGridViewFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().replace(android.R.id.content,f).commit();
-
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.relativeLayout_container_image_selector,f).commit();
         }
     }
 

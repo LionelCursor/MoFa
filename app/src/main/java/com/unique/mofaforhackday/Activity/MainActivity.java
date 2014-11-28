@@ -124,6 +124,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,ImageSelectedActivity.class));
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
         });
     }
@@ -141,6 +142,7 @@ public class MainActivity extends Activity {
 //                    bitmapFromCam = (Bitmap)data.getExtras().get("data");
                     intent.putExtra("tem_pic",mCurrentPicturePath);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                     break;
                 default:
             }

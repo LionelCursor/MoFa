@@ -4,7 +4,6 @@
     android:background="#4886ba"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <ImageButton
         android:layout_centerVertical="true"
         android:id="@+id/back"
@@ -15,8 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@drawable/option_actionbar_back_shadow"/>
-
-
     <TextView
         android:id="@+id/vice_text"
         android:textColor="#fff"
@@ -25,12 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <!--<Button-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:id="@+id/confirm"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:actionbar_background="@drawable/confirm_icon"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:layout_width="@dimen/actionbar_icon_diameter"-->
-        <!--android:layout_height="@dimen/actionbar_icon_diameter" />-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#2c6697"
+        />
 </RelativeLayout>

@@ -7,6 +7,7 @@
     <string name="image_selected_Recommended">推荐</string>
     <string name="image_selected_MoFa">MoFa</string>
     <string name="image_selected_Album">相册</string>
+    <string name="image_selected">选择图片</string>
 
     <string name="bianji_free">自由比例</string>
     <string name="bianji_1_t_1">1:1</string>

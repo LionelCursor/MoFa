@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout_container_image_selector"
     android:orientation="vertical"
     android:background="@color/black_background_image_select"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.astuetz.PagerSlidingTabStrip
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <com.unique.mofaforhackday.view.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="48dip"/>
+        android:layout_height="48dip"
+        android:background="@color/actionbar_background"
+        />
     <android.support.v4.view.ViewPager
         android:id="@+id/image_selected_viewpager"
+        android:layout_below="@id/tabs"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:flipInterval="30"
         android:persistentDrawingCache="animation"/>
     <RelativeLayout
         android:id="@+id/relativeLayout_dialog_fullscreen"
+        android:layout_below="@id/tabs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black_translucent"

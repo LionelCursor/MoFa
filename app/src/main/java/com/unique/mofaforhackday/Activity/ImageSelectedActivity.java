@@ -6,9 +6,12 @@ import android.app.LoaderManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -16,16 +19,22 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.unique.mofaforhackday.Adapter.ImageSelectedFragmentAdapter;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Fragment.*;
 import com.unique.mofaforhackday.Utils.L;
+import com.unique.mofaforhackday.view.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +49,6 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
 
     private static final String TAG = "ImageSelectedActivity";
     private static final boolean DEBUG = true;
-
 
     /**
      * HashMap of Image has 6 Key:
@@ -59,6 +67,7 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     private ViewPager mPager;
     private int keyCode;
     private KeyEvent event;
+    private TextView viceText;
 
     public ArrayList<Fragment> getFragmentList() {
         return fragmentList;
@@ -116,24 +125,41 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         initData();
     }
     private void initActionBar(){
-        initTab();
+        ActionBar actionBar = getActionBar();
+        if (null != actionBar) {
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayShowCustomEnabled(true);
+            LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = mInflater.inflate(R.layout.vice_actionbar, null);
+            ImageButton back = (ImageButton) view.findViewById(R.id.back);
+            viceText = (TextView) view.findViewById(R.id.vice_text);
+            viceText.getPaint().setFakeBoldText(true);
+//            Button confirm = (Button) view.findViewById(R.id.confirm);
+            ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            actionBar.setCustomView(view, layout);
+            viceText.setText(R.string.image_selected);
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+//            confirm.setVisibility(View.GONE);
+        }
+//        initTab();
     }
 
-    private void initTab() {
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            actionBar.addTab(actionBar.newTab().setTag("0").setText(R.string.image_selected_Recommended).setTabListener(this));
-            actionBar.addTab(actionBar.newTab().setTag("1").setText(R.string.image_selected_Album).setTabListener(this));
-            actionBar.setDisplayHomeAsUpEnabled(false);
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setTitle("选择图片");
-            actionBar.setLogo(R.drawable.back_icon);
-        } else {
-            L.e(TAG, "ActionBar is null");
+    private class BackClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if (mPager.getVisibility() == View.GONE) {
+                returnClickedAlbum();
+            }
         }
     }
-
 
     private void initData() {
         dataList = new ArrayList<HashMap<String, Object>>();
@@ -298,8 +324,15 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     }
 
     private void initContentView() {
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);// 去掉信息栏
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // create our manager instance after the content view is set
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            // enable status bar tint
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setTintColor(Color.parseColor("#4886ba"));
+        }
         setContentView(R.layout.activity_image_selector);
     }
 
@@ -314,10 +347,19 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         fragmentList.add(INDEX_RECOMMENDED, new ImageSelectedRecommendedFragment(/*recommendedList*/));
         fragmentList.add(INDEX_ALBUM, new ImageSelectedListFragment(/*AlbumList,dataList*/));
         //给ViewPager设置适配器
-        mPager.setAdapter(new ImageSelectedFragmentAdapter(getSupportFragmentManager(), fragmentList));
+        mPager.setAdapter(new ImageSelectedFragmentAdapter(getSupportFragmentManager(), this, fragmentList));
         mPager.setCurrentItem(0);//设置当前显示标签页为第一页
-        mPager.setOnPageChangeListener(new MyOnPageChangListener());//页面变化时的监听器
 
+
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs.setTextColor(0xFFFFFFFF);
+        tabs.setDividerColor(0xFFFFFFFF);
+        tabs.setIndicatorColor(0xFFFFFFFF);
+        tabs.setTextSize(45);
+        tabs.setIndicatorHeight(10);
+        tabs.setDividerColor(0x00000000);
+        tabs.setShouldExpand(true);
+        tabs.setViewPager(mPager);
     }
 
 

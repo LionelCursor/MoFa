@@ -66,6 +66,7 @@ public class ImageSelectedGridViewFragment extends Fragment {
 //            intent.setType("ImageSelected");
             intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, (String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             getActivity().finish();
         }
     }
