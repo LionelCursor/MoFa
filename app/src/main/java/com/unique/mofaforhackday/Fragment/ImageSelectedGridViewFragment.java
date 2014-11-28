@@ -1,47 +1,25 @@
 package com.unique.mofaforhackday.Fragment;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.LoaderManager;
-import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.gesture.Gesture;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.drawable.ColorDrawable;
-import android.media.ExifInterface;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.util.LruCache;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.unique.mofaforhackday.Activity.HandleImageActivity;
 import com.unique.mofaforhackday.Activity.ImageSelectedActivity;
-import com.unique.mofaforhackday.Adapter.ImageSelectedFragmentAdapter;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

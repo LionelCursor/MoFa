@@ -4,6 +4,8 @@ package com.unique.mofaforhackday;
  * Created by ldx on 2014/9/26.
  */
 public class Config {
+
+    public final static String SHARE_URL = "http://www.wandoujia.com/apps/com.unique.mofaforhackday";
     public final static String url = "http://learn.qiniudn.com/";
     public final static String url_assets = "assets://temimage/";
     public final static String SDCARD_MOFA = "/sdcard/mofa/";

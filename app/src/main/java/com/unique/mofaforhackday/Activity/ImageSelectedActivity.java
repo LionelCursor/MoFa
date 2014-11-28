@@ -123,13 +123,12 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//            actionBar.addTab(actionBar.newTab().setTag("0").setText(R.string.image_selected_MoFa).setTabListener(this));
             actionBar.addTab(actionBar.newTab().setTag("0").setText(R.string.image_selected_Recommended).setTabListener(this));
             actionBar.addTab(actionBar.newTab().setTag("1").setText(R.string.image_selected_Album).setTabListener(this));
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Title");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle("选择图片");
             actionBar.setLogo(R.drawable.back_icon);
-
         } else {
             L.e(TAG, "ActionBar is null");
         }

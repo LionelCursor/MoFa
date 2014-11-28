@@ -622,6 +622,7 @@ public class HandleImageActivity extends Activity {
                     mainLayout.addView(textView);
                 }
                 textView.setMoFaText(s);
+                textView.setAlpha(0);
                 textView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -1635,14 +1636,12 @@ public class HandleImageActivity extends Activity {
     }
 
     private void setAlignHorOrVerDetailButton() {
-
         findViewById(R.id.imageButton_word_align_hor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (textView == null) {
                     return;
                 }
-
                 textView.setHorizontal();
             }
         });

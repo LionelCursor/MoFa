@@ -10,11 +10,11 @@ android {
         targetSdkVersion 19
         versionCode 4
         versionName "2.2"
-        renderscriptSupportMode true
+        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,6 +31,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile files('libs/umeng-analytics-v5.2.4.jar')
     compile files('libs/umeng-fb-v4.3.2.jar')
     compile files('libs/umeng-update-v2.4.2.jar')

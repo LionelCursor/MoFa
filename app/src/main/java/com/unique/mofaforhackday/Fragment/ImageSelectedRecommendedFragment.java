@@ -88,6 +88,10 @@ public class ImageSelectedRecommendedFragment extends Fragment {
             String name = handleString((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
             boolean hasFile = hasFile(Config.SDCARD_MOFA + name);
             if (!hasFile) {
+                if (!hasFile(Config.SDCARD_MOFA)){
+                    File f = new File(Config.SDCARD_MOFA);
+                    f.mkdirs();
+                }
                 DownLoadImageFilesWithIon(
                         (String) dataList.get(position).get(
                                 ImageSelectedActivity.KEY_SRC_DATA_PATH
@@ -115,9 +119,6 @@ public class ImageSelectedRecommendedFragment extends Fragment {
         }
         return true;
     }
-
-
-
     public void DownLoadImageFilesWithIon(String url){
         showDialog();
         showTempImage(url);
@@ -162,7 +163,7 @@ public class ImageSelectedRecommendedFragment extends Fragment {
     }
 
     //handle url to have exact name
-    private String handleString(String url){
+    public static String handleString(String url){
         StringBuilder stringBuilder = new StringBuilder(url);
         return stringBuilder.substring(19);
     }

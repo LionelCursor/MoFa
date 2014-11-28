@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.umeng.fb.FeedbackAgent;
@@ -25,6 +24,7 @@ import com.unique.mofaforhackday.R;
 public class Option extends Activity implements View.OnClickListener {
     private ImageButton optionOut, optionFeedback, optionShare;
     private UMSocialService mController;
+
     private FeedbackAgent agent;
     private ImageButton back;
 
@@ -42,7 +42,6 @@ public class Option extends Activity implements View.OnClickListener {
         optionShare.setOnClickListener(this);
         back.setOnClickListener(this);
     }
-
     private void init() {
         optionOut = (ImageButton) findViewById(R.id.option_back);
         optionFeedback = (ImageButton) findViewById(R.id.option_feedback);
@@ -58,7 +57,7 @@ public class Option extends Activity implements View.OnClickListener {
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayShowCustomEnabled(true);
             LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = mInflater.inflate(R.layout .vice_actionbar, null);
+            View view = mInflater.inflate(R.layout.vice_actionbar, null);
             back = (ImageButton) view.findViewById(R.id.back);
             TextView viceText = (TextView) view.findViewById(R.id.vice_text);
             viceText.getPaint().setFakeBoldText(true);

@@ -17,10 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.connect.share.QzoneShare;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.QQShareContent;
+import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
@@ -29,6 +31,9 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.utils.Log;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
+import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 
 import java.io.File;
@@ -99,35 +104,64 @@ public class OkActivity extends Activity {
     }
 
     private void setUmeng(){
+        UMImage umImage = new UMImage(this,mBitmapMain);
         Log.LOG = true;
         //TODO-UMeng has some bugs in QQ and QZone.
         mController = UMServiceFactory.getUMSocialService("com.umeng.share");
         mController.setShareContent("[来自mofa艺术]");
-        mController.setShareImage(new UMImage(this,mBitmapMain));
+        mController.setShareImage(umImage);
         mController.setAppWebSite("http://www.wandoujia.com/apps/com.unique.mofaforhackday");
-        mController.getConfig().removePlatform(SHARE_MEDIA.WEIXIN/*,SHARE_MEDIA.WEIXIN_CIRCLE*/);
 
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
+
+        QQShareContent qqShareContent = new QQShareContent();
+        qqShareContent.setShareImage(umImage);
+        qqShareContent.setTargetUrl(Config.SHARE_URL);
+        qqShareContent.setAppWebSite(Config.SHARE_URL);
+        qqShareContent.setTitle("[来自mofa艺术]");
+        mController.setShareMedia(qqShareContent);
         qqSsoHandler.addToSocialSDK();
 
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
         qZoneSsoHandler.addToSocialSDK();
 
+        QZoneShareContent qZone = new QZoneShareContent();
+        qZone.setTitle("[来自mofa艺术]");
+        qZone.setTargetUrl(Config.SHARE_URL);
+        qZone.setShareContent("Art is long, and time is fleeting. ");
+        mController.setShareMedia(qZone);
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
 
 
-//        String appId = "wx967daebe835fbeac";
-//        String appSecret = "5fa9e68ca3970e87a1f83e563c8dcbce";
-        // 添加微信平台
-//        UMWXHandler wxHandler = new UMWXHandler(this,appId,appSecret);
-//        wxHandler.addToSocialSDK();
+        String appId = "wx07deedae03518a47";
+        String appSecret = "c5805cb9071fce9c4bbe55a80c15aece";
+//        添加微信平台
+        UMWXHandler wxHandler = new UMWXHandler(this,appId,appSecret);
+        wxHandler.addToSocialSDK();
+
+        //设置微信好友分享内容
+        WeiXinShareContent weixinContent = new WeiXinShareContent();
+        //设置title
+        weixinContent.setTitle("[来自mofa艺术]");
+        //设置分享内容跳转URL
+        weixinContent.setTargetUrl(Config.SHARE_URL);
+        //设置分享图片
+        weixinContent.setShareImage(umImage);
+        mController.setShareMedia(weixinContent);
         // 支持微信朋友圈
-//        UMWXHandler wxCircleHandler = new UMWXHandler(this,appId,appSecret);
-//        wxCircleHandler.setToCircle(true);
-//        wxCircleHandler.addToSocialSDK();
+        UMWXHandler wxCircleHandler = new UMWXHandler(this,appId,appSecret);
+        wxCircleHandler.setToCircle(true);
+        wxCircleHandler.addToSocialSDK();
+        //设置微信朋友圈分享内容
+        CircleShareContent circleMedia = new CircleShareContent();
+        //设置朋友圈title
+        circleMedia.setTitle("[来自mofa艺术]");
+        circleMedia.setShareImage(umImage);
+        circleMedia.setTargetUrl(Config.SHARE_URL);
+        mController.setShareMedia(circleMedia);
     }
 
     // 保存到SD卡

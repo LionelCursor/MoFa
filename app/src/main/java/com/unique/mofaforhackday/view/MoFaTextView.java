@@ -198,7 +198,6 @@ public class MoFaTextView extends TextView {
             return;
         }
         mRawText = text.toString();
-        this.setAlpha(0);
     }
 
     //attr of TextView
