@@ -50,10 +50,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int shadow_right=0x7f010004;
     }
     public static final class drawable {
-        public static int ic_launcher=0x7f020000;
-        public static int shadow_bottom=0x7f020001;
-        public static int shadow_left=0x7f020002;
-        public static int shadow_right=0x7f020003;
+        public static int shadow_bottom=0x7f020000;
+        public static int shadow_left=0x7f020001;
+        public static int shadow_right=0x7f020002;
     }
     public static final class id {
         public static int all=0x7f050000;

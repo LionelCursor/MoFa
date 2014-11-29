@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.umeng.fb.FeedbackAgent;
@@ -20,6 +21,7 @@ import com.umeng.update.UmengUpdateAgent;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.ImageCaptureUtils;
 import com.unique.mofaforhackday.Utils.L;
+import com.unique.mofaforhackday.view.MoFaButton;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,7 +42,7 @@ public class MainActivity extends Activity {
     File photo;
     private String mCurrentPicturePath;
 
-    private ImageButton mImageButtonPic;
+    private MoFaButton mImageButtonPic;
     private ImageButton mImageButtonCam;
     private ImageButton mImageButtonWord;
     private ImageButton mImageButtonSet;
@@ -76,7 +78,7 @@ public class MainActivity extends Activity {
         mImageButtonCam = (ImageButton)findViewById(R.id.imageButton_cam);
 //        mImageButtonWord = (ImageButton)findViewById(R.id.imageButton_word);
         mImageButtonSet = (ImageButton)findViewById(R.id.imageButton_set);
-        mImageButtonPic = (ImageButton)findViewById(R.id.imageButton_pic);
+        mImageButtonPic = (MoFaButton)findViewById(R.id.imageButton_pic);
     }
 
     private void setOption(){
@@ -123,8 +125,10 @@ public class MainActivity extends Activity {
         mImageButtonPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(MainActivity.this,ImageSelectedActivity.class));
                 overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
+
             }
         });
     }

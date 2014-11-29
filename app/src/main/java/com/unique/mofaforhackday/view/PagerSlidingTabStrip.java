@@ -193,27 +193,22 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		tabsContainer.removeAllViews();
 
 		tabCount = pager.getAdapter().getCount();
-        Log.e("tabCount",""+tabCount);
         for (int i = 0; i < tabCount; i++) {
 
 			if (pager.getAdapter() instanceof IconTabProvider) {
 				addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
 			} else {
 				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
-                Log.e("tabCount",""+i);
 			}
 
 		}
-
 		updateTabStyles();
-
 		getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
 			@SuppressWarnings("deprecation")
 			@SuppressLint("NewApi")
 			@Override
 			public void onGlobalLayout() {
-
 				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 					getViewTreeObserver().removeGlobalOnLayoutListener(this);
 				} else {
