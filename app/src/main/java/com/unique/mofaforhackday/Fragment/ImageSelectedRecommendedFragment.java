@@ -103,7 +103,7 @@ public class ImageSelectedRecommendedFragment extends Fragment {
                 intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, name);
                 intent.putExtra("network", true);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
                 getActivity().finish();
             }
         }

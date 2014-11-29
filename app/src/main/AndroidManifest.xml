@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.unique.mofaforhackday">
+    package="com.unique.mofaforhackday" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -8,19 +8,20 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 检测网络状态 -->
     <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
-
     <application
-        android:name=".MoFaApplication"
+        android:name="com.unique.mofaforhackday.MoFaApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".Activity.MainActivity"
-            android:label="@string/app_name">
+            android:name="com.unique.mofaforhackday.Activity.MainActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,19 +29,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.ImageSelectedActivity"
+            android:name="com.unique.mofaforhackday.Activity.ImageSelectedActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AndroidDevelopers"/>
+            />
         <activity
-            android:name=".Activity.HandleImageActivity"
+            android:name="com.unique.mofaforhackday.Activity.HandleImageActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".Activity.OkActivity"
+            android:name="com.unique.mofaforhackday.Activity.OkActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".Activity.Option"
+            android:name="com.unique.mofaforhackday.Activity.Option"
             android:label="@string/app_name" />
-        <!--Umeng-->
+        <!-- Umeng -->
         <activity
             android:name="com.umeng.fb.ConversationActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
@@ -51,7 +52,7 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="53f6c239fd98c57c62000919" />
-        <!--<meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>-->
+        <!-- <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/> -->
 
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
@@ -70,7 +71,7 @@
             android:name="com.tencent.tauth.AuthActivity"
             android:configChanges="orientation|keyboard"
             android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -87,12 +88,15 @@
 
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService"></service>
+            android:process=":DownloadingService" />
+
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.unique.mofaforhackday.Activity.ImageSelectedDetailActivity"
+            android:label="@string/title_activity_image_selected_detail" >
+        </activity>
     </application>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 </manifest>

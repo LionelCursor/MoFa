@@ -55,7 +55,6 @@ public class MainActivity extends Activity {
         initContentView();
 
         UmengUpdateAgent.update(this);
-//        UmengUpdateAgent.setUpdateCheckConfig(false);
 
         findView();
 
@@ -111,6 +110,7 @@ public class MainActivity extends Activity {
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                                 Uri.fromFile(photoFile));
                         startActivityForResult(takePictureIntent, LOAD_IMAGE);
+                        overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
                     }
                 }
             }
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,ImageSelectedActivity.class));
-                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
             }
         });
     }
@@ -142,10 +142,12 @@ public class MainActivity extends Activity {
 //                    bitmapFromCam = (Bitmap)data.getExtras().get("data");
                     intent.putExtra("tem_pic",mCurrentPicturePath);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
                     break;
                 default:
             }
         }
     }
+
+
 }

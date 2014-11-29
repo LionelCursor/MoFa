@@ -10,7 +10,5 @@ import java.util.HashMap;
  */
 public class ImageSelectedMoFaFragment extends ImageSelectedGridViewFragment {
     public ImageSelectedMoFaFragment(){super();}
-//    public ImageSelectedMoFaFragment(ArrayList<HashMap<String, Object>> list) {
-//        super(list);
-//    }
+
 }

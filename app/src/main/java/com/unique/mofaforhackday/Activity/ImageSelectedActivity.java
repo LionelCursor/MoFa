@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -45,7 +46,7 @@ import java.util.HashMap;
  * In MoFa , GridView
  * In Album , First ListView ,After Click GridView. When you need to go back to ListView ,press KeyEvent.KEYCODE_BACK
  */
-public class ImageSelectedActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor>, ActionBar.TabListener {
+public class ImageSelectedActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "ImageSelectedActivity";
     private static final boolean DEBUG = true;
@@ -67,7 +68,7 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     private ViewPager mPager;
     private int keyCode;
     private KeyEvent event;
-    private TextView viceText;
+    public TextView viceText;
 
     public ArrayList<Fragment> getFragmentList() {
         return fragmentList;
@@ -119,11 +120,11 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
 
         initContentView();
 
-//        initViewPager();
         initActionBar();
 
         initData();
     }
+
     private void initActionBar(){
         ActionBar actionBar = getActionBar();
         if (null != actionBar) {
@@ -136,28 +137,22 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
             ImageButton back = (ImageButton) view.findViewById(R.id.back);
             viceText = (TextView) view.findViewById(R.id.vice_text);
             viceText.getPaint().setFakeBoldText(true);
-//            Button confirm = (Button) view.findViewById(R.id.confirm);
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             actionBar.setCustomView(view, layout);
             viceText.setText(R.string.image_selected);
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-//            confirm.setVisibility(View.GONE);
+            viceText.setEms(10);
+            viceText.setGravity(Gravity.CENTER);
+            back.setOnClickListener(new BackClickListener());
+
         }
-//        initTab();
+
     }
 
     private class BackClickListener implements View.OnClickListener{
-
         @Override
         public void onClick(View v) {
-            if (mPager.getVisibility() == View.GONE) {
-                returnClickedAlbum();
-            }
+            finish();
+            overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
         }
     }
 
@@ -366,14 +361,12 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     public void returnClickedAlbum() {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().getFragments().get(2)).commit();
         mPager.setVisibility(View.VISIBLE);
+        viceText.setText(R.string.image_selected);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mPager.getVisibility() == View.GONE) {
-                returnClickedAlbum();
-            }
             RelativeLayout relativeLayout  =(RelativeLayout)findViewById(R.id.relativeLayout_dialog_fullscreen);
             if (relativeLayout.getVisibility()== View.VISIBLE){
                 relativeLayout.setVisibility(View.GONE);
@@ -383,15 +376,6 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
 
 
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -414,71 +398,6 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         data_state = DATA_STATE_UNFINISHED;
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        int c = Integer.valueOf((String) tab.getTag());
-        if (mPager != null) {
-            switch (c) {
-                case 0:
-                    if (mPager.getVisibility() == View.GONE)
-                        returnClickedAlbum();
-                    mPager.setCurrentItem(0);
-                    break;
-                case 1:
-                    if (mPager.getVisibility() == View.GONE)
-                        returnClickedAlbum();
-                    mPager.setCurrentItem(1);
-                    break;
-                default:
-            }
-        }
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-        int c = Integer.valueOf((String) tab.getTag());
-        if (mPager != null) {
-            switch (c) {
-                case 0:
-                    if (mPager.getVisibility() == View.GONE)
-                        returnClickedAlbum();
-                    mPager.setCurrentItem(0);
-                    break;
-                case 1:
-                    if (mPager.getVisibility() == View.GONE)
-                        returnClickedAlbum();
-                    mPager.setCurrentItem(1);
-                    break;
-                default:
-            }
-        }
-    }
-
-    private class MyOnPageChangListener implements ViewPager.OnPageChangeListener {
-
-        @Override
-        public void onPageScrolled(int i, float v, int i2) {
-
-        }
-
-        @Override
-        public void onPageSelected(int i) {
-            if (getActionBar() != null)
-                getActionBar().setSelectedNavigationItem(i);
-            L.e(TAG, "Page." + i + " " + "was selected.");
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int i) {
-
-        }
     }
 
     private class ImageDataAsyncTask extends AsyncTask<Cursor, Object, Object> {
@@ -609,8 +528,6 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
                 } while (cur.moveToNext());
 
 
-                if (DEBUG) Log.e(TAG, "AddThumbnailFinished");
-                if (DEBUG) Log.i("Lei", cur.getCount() + "");
             }
         }
     }

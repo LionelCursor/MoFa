@@ -2,6 +2,7 @@ package com.unique.mofaforhackday.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.unique.mofaforhackday.Activity.ImageSelectedActivity;
+import com.unique.mofaforhackday.Activity.ImageSelectedDetailActivity;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
 
@@ -95,10 +97,19 @@ public class ImageSelectedListFragment extends Fragment {
                     BucketDataList.add(map);
                 }
             }
-            ((ImageSelectedActivity)getActivity()).getmPager().setVisibility(View.GONE);
-//            Fragment f = new ImageSelectedAlbumClickedFragment(BucketDataList);
-            Fragment f= new ImageSelectedGridViewFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.relativeLayout_container_image_selector,f).commit();
+//            ((ImageSelectedActivity)getActivity()).getmPager().setVisibility(View.GONE);
+            Intent intent = new Intent(getActivity(),ImageSelectedDetailActivity.class);
+            intent.putExtra("folder",(String)dataList.get(position).get(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
+
+//            Fragment f= new ImageSelectedGridViewFragment();
+//
+//            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.relativeLayout_container_image_selector,f).commit();
+//            TextView tv= ((ImageSelectedActivity) getActivity()).viceText;
+//            if (tv!= null){
+//                tv.setText((String)dataList.get(position).get(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
+//            }
         }
     }
 

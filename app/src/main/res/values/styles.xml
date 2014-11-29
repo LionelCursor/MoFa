@@ -3,7 +3,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-
+        <item name="android:windowIsTranslucent">true</item>
     </style>
     <!--copy from V1.0-->
     <style name="mydialog">

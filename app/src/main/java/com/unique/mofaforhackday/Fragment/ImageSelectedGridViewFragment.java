@@ -53,6 +53,7 @@ public class ImageSelectedGridViewFragment extends Fragment {
         GridViewAdapter adapter = new GridViewAdapter(inflater, dataList);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new MyOnClickListener());
+
         return rootView;
     }
 
@@ -66,7 +67,7 @@ public class ImageSelectedGridViewFragment extends Fragment {
 //            intent.setType("ImageSelected");
             intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, (String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
             startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+            getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
             getActivity().finish();
         }
     }
