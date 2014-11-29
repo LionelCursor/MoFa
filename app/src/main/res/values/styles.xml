@@ -5,6 +5,9 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="AppTheme.NoTranslucent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
     <!--copy from V1.0-->
     <style name="mydialog">
         <item name="android:windowFullscreen">true</item>

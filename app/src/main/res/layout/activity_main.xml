@@ -16,13 +16,13 @@
         android:layout_centerHorizontal="true"
         >
 
-        <ImageButton
+        <com.unique.mofaforhackday.view.MoFaButton
             android:id="@+id/imageButton_cam"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/main_cam_selector"
+            android:src="@drawable/camera_1"
             android:background="@null"/>
 
         <com.unique.mofaforhackday.view.MoFaButton
@@ -33,13 +33,13 @@
             android:layout_gravity="center"
             android:src="@drawable/pic_1"
             android:background="@null"/>
-        <ImageButton
+        <com.unique.mofaforhackday.view.MoFaButton
             android:id="@+id/imageButton_set"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/main_set_selector"
+            android:src="@drawable/mofa__0003_set_1"
             android:background="@null"/>
 
     </LinearLayout>

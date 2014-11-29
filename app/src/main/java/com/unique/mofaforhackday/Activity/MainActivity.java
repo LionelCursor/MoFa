@@ -43,9 +43,9 @@ public class MainActivity extends Activity {
     private String mCurrentPicturePath;
 
     private MoFaButton mImageButtonPic;
-    private ImageButton mImageButtonCam;
+    private MoFaButton mImageButtonCam;
     private ImageButton mImageButtonWord;
-    private ImageButton mImageButtonSet;
+    private MoFaButton mImageButtonSet;
     private ImageButton mImageButtonFeedback;
 
     private FeedbackAgent agent;
@@ -75,9 +75,9 @@ public class MainActivity extends Activity {
     }
 
     private void findView(){
-        mImageButtonCam = (ImageButton)findViewById(R.id.imageButton_cam);
+        mImageButtonCam = (MoFaButton)findViewById(R.id.imageButton_cam);
 //        mImageButtonWord = (ImageButton)findViewById(R.id.imageButton_word);
-        mImageButtonSet = (ImageButton)findViewById(R.id.imageButton_set);
+        mImageButtonSet = (MoFaButton)findViewById(R.id.imageButton_set);
         mImageButtonPic = (MoFaButton)findViewById(R.id.imageButton_pic);
     }
 
@@ -125,7 +125,6 @@ public class MainActivity extends Activity {
         mImageButtonPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(MainActivity.this,ImageSelectedActivity.class));
                 overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
 

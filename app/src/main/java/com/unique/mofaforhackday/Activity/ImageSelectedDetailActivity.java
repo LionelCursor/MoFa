@@ -31,6 +31,8 @@ public class ImageSelectedDetailActivity extends SwipeBackActivity{
         initActionBar();
     }
     private void initContentView() {
+
+        setContentView(R.layout.activity_image_selected_detail);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -41,7 +43,6 @@ public class ImageSelectedDetailActivity extends SwipeBackActivity{
             tintManager.setTintColor(Color.parseColor("#4886ba"));
         }
 
-        setContentView(R.layout.activity_image_selected_detail);
     }
 
     private void initActionBar(){
