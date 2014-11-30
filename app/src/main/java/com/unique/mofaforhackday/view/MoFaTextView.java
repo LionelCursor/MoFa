@@ -1,5 +1,7 @@
 package com.unique.mofaforhackday.view;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -7,21 +9,24 @@ import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.gesturedetector.MoveGestureDetector;
 import com.unique.mofaforhackday.Utils.gesturedetector.RotateGestureDetector;
+import com.unique.mofaforhackday.view.interpolator.easeOutElasticInterpolator;
+
 /**
  * Created by ldx on 2014/9/2.
  * <p/>
- *
  */
 
-//TODO-BUG:scale/shove/rotate tremble when it relative to itself.
 public class MoFaTextView extends TextView {
 
     private final static String TAG = "MoFaTextView";
@@ -43,18 +48,18 @@ public class MoFaTextView extends TextView {
     private float mRotationDegrees = 0.f;
     private float mFocusX = 0.f;
     private float mFocusY = 0.f;
-    private int mImageHeight, mImageWidth;
+    private int mViewHeight, mViewWidth;
+
+
+    private Typeface typeFace;
+    private float mAlpha =1;
+    private Drawable mBackgroundDrawable;
+
 
     private RotateGestureDetector mRotateDetector;
     private MoveGestureDetector mMoveDetector;
 
-    private Drawable mBackgroundDrawable;
     private OnFocusedListener mFocusedListener;
-    private float mAlpha =1;
-
-    public enum MOFA_TYPEFACE {
-
-    }
 
     public MoFaTextView(Context context) {
         this(context, null);
@@ -103,15 +108,14 @@ public class MoFaTextView extends TextView {
     }
 
     public void SelfCenter() {
-        this.setAlpha(mAlpha);
         // Determine the center of the screen to center 'earth'
         Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
 
         mFocusX = display.getWidth() / 2f;
         mFocusY = display.getHeight() / 2f;
 
-        mImageWidth = getWidth();
-        mImageHeight = getHeight();
+        mViewWidth = getWidth();
+        mViewHeight = getHeight();
 
         int left = getLeft();
         int top = getTop();
@@ -119,21 +123,30 @@ public class MoFaTextView extends TextView {
         int bottom = getBottom();
 
         // View is scaled and translated by matrix, so scale and translate initially
-        float ImageCenterX = (mImageWidth) / 2f;
-        float ImageCenterY = (mImageHeight) / 2f;
-        setTranslationX(mFocusX - ImageCenterX - left);
-        setTranslationY(mFocusY - ImageCenterY - top);
+        float ViewCenterX = (mViewWidth) / 2f;
+        float ViewCenterY = (mViewHeight) / 2f;
+        setTranslationX(mFocusX - ViewCenterX - left);
+        setTranslationY(mFocusY - ViewCenterY - top);
+        this.AlphaWithAnim();
+    }
+
+    public void AlphaWithAnim(){
+        ObjectAnimator animAppear = ObjectAnimator.ofFloat(this,"alpha",0,mAlpha);
+        animAppear.setDuration(400);
+        animAppear.setInterpolator(new DecelerateInterpolator());
+        animAppear.start();
     }
 
 
     //onTouchEvent's priority is higher than OnTouchListener's onTouch
     private void display() {
-        mImageWidth = this.getWidth();
-        mImageHeight = this.getHeight();
-        this.setTranslationX(mFocusX - mImageWidth / 2f);
-        this.setTranslationY(mFocusY - mImageHeight / 2f);
+        mViewWidth = this.getWidth();
+        mViewHeight = this.getHeight();
+        this.setX(mFocusX - mViewWidth / 2f);
+        this.setY(mFocusY - mViewHeight / 2f);
         this.setRotation(mRotationDegrees);
     }
+
 
     public void setTranslation(float deltaX, float deltaY) {
         mFocusX += deltaX;
@@ -142,14 +155,15 @@ public class MoFaTextView extends TextView {
     }
 
     public void setDeltaRotate(float deltaDegree) {
-        //TODO-rotate-layout
         mRotationDegrees -= deltaDegree;
         display();
     }
 
     public void setRotate(float Degree) {
         this.mRotationDegrees = Degree;
+
         display();
+
     }
 
     /**
@@ -173,10 +187,8 @@ public class MoFaTextView extends TextView {
                     if(mFocusedListener!=null){
                         mFocusedListener.onFocused(v);
                     }
-
                     break;
                 case MotionEvent.ACTION_MOVE:
-
                     break;
                 case MotionEvent.ACTION_UP:
                     v.setBackgroundDrawable(null);
@@ -184,11 +196,49 @@ public class MoFaTextView extends TextView {
                 default:
             }
             mMoveDetector.onTouchEvent(event);
-
             //use all the attribute to change and display the ImageView.
             display();
             return true;
         }
+    }
+
+    public MoFaTextView copy(){
+        MoFaTextView textNew = new MoFaTextView(context);
+        textNew.setMoFaText(getText());
+        textNew.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize());
+        textNew.setTextColor(this.getCurrentTextColor());
+        textNew.mOrientation = mOrientation;
+        //setRotate has to be used before setX
+        //there is a setX()&setY() in display() in setRotate();
+        textNew.setRotate(mRotationDegrees);
+        textNew.setX(this.getX());
+        textNew.setY(this.getY());
+        if (typeFace != null){
+            textNew.setTypeface(this.typeFace);
+        }
+        textNew.setmFocusX(mFocusX);
+        textNew.setmFocusY(mFocusY);
+        textNew.setOnFocusedListener(this.mFocusedListener);
+        return textNew;
+    }
+
+    public void setmFocusX(float focusX){
+        this.mFocusX = focusX;
+    }
+    public void setmFocusY(float focusY){
+        this.mFocusY = focusY;
+    }
+
+    public void CopyAnim(){
+        AnimatorSet anim = new AnimatorSet();
+        ObjectAnimator animTranX = ObjectAnimator.ofFloat( this, "x", getX(), getX()+30f );
+        ObjectAnimator animTranY = ObjectAnimator.ofFloat( this, "y", getY(), getY()+30f );
+        anim.playTogether(animTranX,animTranY);
+        anim.setDuration(200);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.start();
+        mFocusX +=30f;
+        mFocusY +=30f;
     }
 
 
@@ -202,7 +252,7 @@ public class MoFaTextView extends TextView {
 
     //attr of TextView
     public void setTypeface(String typeface) {
-        Typeface typeFace = Typeface.createFromAsset(assetManager, typeface);
+        this.typeFace = Typeface.createFromAsset(assetManager, typeface);
         this.setTypeface(typeFace);
     }
 

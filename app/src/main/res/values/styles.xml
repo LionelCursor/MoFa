@@ -4,9 +4,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="AppTheme.NoTranslucent" parent="AppTheme">
         <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
     <!--copy from V1.0-->
     <style name="mydialog">

@@ -319,8 +319,6 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     }
 
     private void initContentView() {
-
-        setContentView(R.layout.activity_image_selector);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -329,7 +327,11 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
             // enable status bar tint
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setTintColor(Color.parseColor("#4886ba"));
+        }else{
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+        setContentView(R.layout.activity_image_selector);
+
     }
 
     public ViewPager getmPager() {

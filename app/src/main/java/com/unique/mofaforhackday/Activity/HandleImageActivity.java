@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -17,12 +16,9 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
-import android.text.BoringLayout;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,14 +57,9 @@ import com.unique.mofaforhackday.view.MoFaTextView;
 import com.unique.mofaforhackday.view.SwitchButton;
 import com.unique.mofaforhackday.view.WrapSlidingDrawer;
 import com.unique.mofaforhackday.view.cropper.CropImageView;
-import com.unique.mofaforhackday.view.cropper.cropwindow.handle.Handle;
 import com.unique.mofaforhackday.view.photoview.PhotoViewAttacher;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.unique.mofaforhackday.Utils.ImageAdjuster.ADJUSTER_TYPE;
@@ -99,7 +90,6 @@ public class HandleImageActivity extends Activity {
     private ImageButton imageButtonBackward;
 
 
-    /***********************************************************************************************/
     /**
      * The WrapSlidingDrawer global views                              *
      */
@@ -188,6 +178,7 @@ public class HandleImageActivity extends Activity {
     /**
      * EditText Details
      */
+    private EditText mEditTextInWord;
     private RelativeLayout rFontDetailLayout;
     private RelativeLayout rTextSizeDetailLayout;
     private RelativeLayout rTouMingDetailLayout;
@@ -198,8 +189,6 @@ public class HandleImageActivity extends Activity {
     /**
      * Adjust Detail layout
      */
-
-
     private MoFaSeekBar SaturationseekBar = null;
     private MoFaSeekBar BrightnessseekBar = null;
     private MoFaSeekBar ContrastseekBar = null;
@@ -609,20 +598,20 @@ public class HandleImageActivity extends Activity {
     }
 
     private void editTextEnsureButton() {
-        final EditText text = (EditText) findViewById(R.id.adding_word_edit_text);
+        mEditTextInWord = (EditText) findViewById(R.id.adding_word_edit_text);
 
         findViewById(R.id.button_word_ensure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO-button_word_ensure_onClick
-                final String s = text.getText().toString();
+                final String s = mEditTextInWord.getText().toString();
                 if (textView == null) {
                     textView = new MoFaTextView(HandleImageActivity.this);
                     textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
+                    textView.setAlpha(0);
                     mainLayout.addView(textView);
                 }
                 textView.setMoFaText(s);
-                textView.setAlpha(0);
                 textView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -639,17 +628,30 @@ public class HandleImageActivity extends Activity {
                 //TODO- ListView to save reference of MoFaTextView
                 //TODO- bug- TextView can't center itself
                 // The logic is hard really
-                final String s = text.getText().toString();
-                textView = new MoFaTextView(HandleImageActivity.this);
-                textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
-                mainLayout.addView(textView);
-                textView.setMoFaText(s);
-                textView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView.SelfCenter();
-                    }
-                });
+                final String s = mEditTextInWord.getText().toString();
+                if (textView == null) {
+                    textView = new MoFaTextView(HandleImageActivity.this);
+                    textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
+                    textView.setAlpha(0);
+                    mainLayout.addView(textView);
+                    textView.setMoFaText(s);
+                    textView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            textView.SelfCenter();
+                        }
+                    });
+                }else{
+                    textView = textView.copy();
+                    mainLayout.addView(textView);
+                    textView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                             textView.CopyAnim();
+                        }
+                    });
+                }
+
             }
         });
     }
@@ -1400,6 +1402,7 @@ public class HandleImageActivity extends Activity {
         TextList = new ArrayList<MoFaTextView>();
         textView = new MoFaTextView(this);
         textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
+        textView.setAlpha(0);
         mainLayout.addView(textView);
     }
 
@@ -1408,6 +1411,7 @@ public class HandleImageActivity extends Activity {
         @Override
         public void onFocused(View view) {
             textView = (MoFaTextView) view;
+            mEditTextInWord.setText(textView.getText());
         }
     }
 
