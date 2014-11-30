@@ -1,5 +1,6 @@
 package com.unique.mofaforhackday.view;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -108,26 +109,49 @@ public class MoFaTextView extends TextView {
     }
 
     public void SelfCenter() {
-        // Determine the center of the screen to center 'earth'
-        Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+        animate().setDuration(100).alpha(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
 
-        mFocusX = display.getWidth() / 2f;
-        mFocusY = display.getHeight() / 2f;
+            }
 
-        mViewWidth = getWidth();
-        mViewHeight = getHeight();
+            @Override
+            public void onAnimationEnd(Animator animation) {
 
-        int left = getLeft();
-        int top = getTop();
-        int right = getRight();
-        int bottom = getBottom();
+                // Determine the center of the screen to center 'earth'
+                Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
 
-        // View is scaled and translated by matrix, so scale and translate initially
-        float ViewCenterX = (mViewWidth) / 2f;
-        float ViewCenterY = (mViewHeight) / 2f;
-        setTranslationX(mFocusX - ViewCenterX - left);
-        setTranslationY(mFocusY - ViewCenterY - top);
-        this.AlphaWithAnim();
+                mFocusX = display.getWidth() / 2f;
+                mFocusY = display.getHeight() / 2f;
+
+                mViewWidth = getWidth();
+                mViewHeight = getHeight();
+
+                int left = getLeft();
+                int top = getTop();
+                int right = getRight();
+                int bottom = getBottom();
+
+                // View is scaled and translated by matrix, so scale and translate initially
+                float ViewCenterX = (mViewWidth) / 2f;
+                float ViewCenterY = (mViewHeight) / 2f;
+                setTranslationX(mFocusX - ViewCenterX - left);
+                setTranslationY(mFocusY - ViewCenterY - top);
+                AlphaWithAnim();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).start();
+
+
     }
 
     public void AlphaWithAnim(){
@@ -136,7 +160,6 @@ public class MoFaTextView extends TextView {
         animAppear.setInterpolator(new DecelerateInterpolator());
         animAppear.start();
     }
-
 
     //onTouchEvent's priority is higher than OnTouchListener's onTouch
     private void display() {
