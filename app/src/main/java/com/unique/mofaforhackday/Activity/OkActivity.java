@@ -205,7 +205,6 @@ public class OkActivity extends Activity {
                         try {
                             wallpaperManager = WallpaperManager.getInstance(OkActivity.this);
                             wallpaperManager.setBitmap(mBitmapMain);
-
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -213,31 +212,18 @@ public class OkActivity extends Activity {
 
                     ;
                 }.start();
-
-                final ProgressDialog mProgressDialog = new ProgressDialog(
-                        OkActivity.this);
-                mProgressDialog.setIcon(R.drawable.ic_launcher);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-                mProgressDialog.setContentView(R.layout.layout_progress);
-
                 new Thread(new Runnable() {
                     public void run() {
                         Message message = new Message();
                         message.what = 1;
                         mHandler.sendMessage(message);// 告诉主线程执行任务
-                        mProgressDialog.cancel();
                     }
                 }).start();
-
             }
         });
         (findViewById(R.id.ok_main_page)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(OkActivity.this, MainActivity.class);
-//                startActivity(intent);
                 finish();
             }
         });

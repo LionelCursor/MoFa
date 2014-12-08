@@ -4,10 +4,9 @@ int attr edge_size 0x7f010001
 int attr shadow_bottom 0x7f010005
 int attr shadow_left 0x7f010003
 int attr shadow_right 0x7f010004
-int drawable ic_launcher 0x7f020000
-int drawable shadow_bottom 0x7f020001
-int drawable shadow_left 0x7f020002
-int drawable shadow_right 0x7f020003
+int drawable shadow_bottom 0x7f020000
+int drawable shadow_left 0x7f020001
+int drawable shadow_right 0x7f020002
 int id all 0x7f050000
 int id bottom 0x7f050001
 int id left 0x7f050002

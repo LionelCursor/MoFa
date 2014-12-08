@@ -15,13 +15,15 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.gesturedetector.MoveGestureDetector;
 import com.unique.mofaforhackday.Utils.gesturedetector.RotateGestureDetector;
-import com.unique.mofaforhackday.view.interpolator.easeOutElasticInterpolator;
 
 /**
  * Created by ldx on 2014/9/2.
@@ -83,7 +85,6 @@ public class MoFaTextView extends TextView {
 
         assetManager = context.getApplicationContext().getAssets();
 
-
         // Setup Gesture Detectors
         mMoveDetector = new MoveGestureDetector(context.getApplicationContext(), new MoveListener());
         this.setOnTouchListener(new OnTouchListener());
@@ -94,14 +95,48 @@ public class MoFaTextView extends TextView {
 
             }
         });
+    }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+    }
 
-        this.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 
-            }
-        });
+    public void setDismissWhenFocusOnTouchOutside(){
+        ViewParent parent = getParent();
+        //Now parent is a ViewGroup
+        while (!((parent = parent.getParent()) instanceof MoFaRelativeLayout));
+//        parent = getParent();
+//            Log.e(TAG,parent.toString());
+//        parent  = getParent().getParent();
+//        Log.e(TAG,parent.toString());
+        if (parent instanceof MoFaRelativeLayout){
+            ((MoFaRelativeLayout) parent).addOnInterceptTouchListener(new MoFaRelativeLayout.OnInterceptTouchListener() {
+                @Override
+                public void InterceptTouchListener(MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN && isOutOfBounds(event) ){
+                        dismissFocus();
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean isOutOfBounds(MotionEvent event) {
+        final int x = (int) event.getX();
+        final int y = (int) event.getY();
+        final int slop = ViewConfiguration.get(context).getScaledWindowTouchSlop();
+        return (x < this.getX()-slop) || (y < this.getY()-slop)
+                || (x > (this.getWidth()+slop))
+                || (y > (this.getHeight()+slop));
+    }
+    public void dismissFocus(){
+        this.setBackgroundDrawable(null);
     }
     public void setMoFaAlpha(float alpha){
         mAlpha = alpha;
@@ -112,7 +147,6 @@ public class MoFaTextView extends TextView {
         animate().setDuration(100).alpha(0).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
             }
 
             @Override
@@ -150,8 +184,6 @@ public class MoFaTextView extends TextView {
 
             }
         }).start();
-
-
     }
 
     public void AlphaWithAnim(){
@@ -184,10 +216,10 @@ public class MoFaTextView extends TextView {
 
     public void setRotate(float Degree) {
         this.mRotationDegrees = Degree;
-
         display();
-
     }
+
+
 
     /**
      * make it on focused
@@ -214,7 +246,6 @@ public class MoFaTextView extends TextView {
                 case MotionEvent.ACTION_MOVE:
                     break;
                 case MotionEvent.ACTION_UP:
-                    v.setBackgroundDrawable(null);
                     break;
                 default:
             }
@@ -223,6 +254,11 @@ public class MoFaTextView extends TextView {
             display();
             return true;
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
     }
 
     public MoFaTextView copy(){

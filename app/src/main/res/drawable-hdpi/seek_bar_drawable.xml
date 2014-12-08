@@ -4,8 +4,8 @@
 <item  android:id="@android:id/background" >                  
 <shape>    
     <corners android:radius="5dip" />                   
-        <gradient android:startColor="#ffffff"                  
-              android:endColor="#ffffff" />                  
+        <gradient android:startColor="#7dffffff"
+              android:endColor="#7dffffff" />
 </shape>                 
 </item>                                    
     

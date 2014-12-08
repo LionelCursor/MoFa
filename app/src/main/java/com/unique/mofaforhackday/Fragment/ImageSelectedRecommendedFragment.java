@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -47,23 +48,24 @@ public class ImageSelectedRecommendedFragment extends Fragment {
 
     private GridView gridView;
     private ArrayList<HashMap<String, Object>> dataList;
+
     @SuppressLint("ValidFragment")
     public ImageSelectedRecommendedFragment(ArrayList<HashMap<String, Object>> list) {
         this.dataList = list;
     }
-    SharedPreferences sharedPreferences ;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataList = ImageSelectedActivity.recommendedList;
-        sharedPreferences = getActivity().getSharedPreferences(Config.PREFERENCE_NAME_IMAGE,Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(Config.PREFERENCE_NAME_IMAGE, Context.MODE_PRIVATE);
     }
 
     public ImageSelectedRecommendedFragment() {
         this.dataList = new ArrayList<HashMap<String, Object>>();
     }
-
 
 
     public GridView getGridView() {
@@ -83,22 +85,21 @@ public class ImageSelectedRecommendedFragment extends Fragment {
 
 
     private class MyOnClickListener implements AdapterView.OnItemClickListener {
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String name = handleString((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
             boolean hasFile = hasFile(Config.SDCARD_MOFA + name);
             if (!hasFile) {
-                if (!hasFile(Config.SDCARD_MOFA)){
+                if (!hasFile(Config.SDCARD_MOFA)) {
                     File f = new File(Config.SDCARD_MOFA);
                     f.mkdirs();
                 }
-                DownLoadImageFilesWithIon(
-                        (String) dataList.get(position).get(
-                                ImageSelectedActivity.KEY_SRC_DATA_PATH
-                        )
-                );
-            }else{
+                if (ImageSelectedActivity.isNetworkConnected(getActivity())) {
+                    DownLoadImageFilesWithIon((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
+                } else {
+                    Toast.makeText(getActivity(), "美美的图片联网就可以下载哦~亲~~", Toast.LENGTH_SHORT).show();
+                }
+            } else {
                 Intent intent = new Intent(getActivity(), HandleImageActivity.class);
                 intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, name);
                 intent.putExtra("network", true);
@@ -109,75 +110,77 @@ public class ImageSelectedRecommendedFragment extends Fragment {
         }
     }
 
-    private boolean hasFile(String url){
-        try{
-            File f=new File(url);
-            if(!f.exists()){
+    private boolean hasFile(String url) {
+        try {
+            File f = new File(url);
+            if (!f.exists()) {
                 return false;
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
-    public void DownLoadImageFilesWithIon(String url){
+
+    public void DownLoadImageFilesWithIon(String url) {
         showDialog();
         showTempImage(url);
-        final TextView textView = ((TextView)getActivity().findViewById(R.id.download_image_textView));
+        final TextView textView = ((TextView) getActivity().findViewById(R.id.download_image_textView));
         final String name = handleString(url);
-        url = Config.url+name ;
+        url = Config.url + name;
         Ion.with(this)
-            .load(url)
-            .progressBar((ProgressBar) getActivity().findViewById(R.id.download_image_progress_bar))
-            .progressHandler(new ProgressCallback() {
-                @Override
-                public void onProgress(long l, long l2) {
-                    double percent = ((double)l)/l2;
-                    NumberFormat format = NumberFormat.getInstance();
-                    format.setMaximumFractionDigits(2);
-                    textView.setText("" + format.format(percent*100)+"%");
-                }
-            })
-            .write(new File(Config.SDCARD_MOFA + name))
-            .setCallback(new FutureCallback<File>() {
-                @Override
-                public void onCompleted(Exception e, File file) {
-                    Intent intent = new Intent(getActivity(), HandleImageActivity.class);
-                    intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, name);
-                    intent.putExtra("network", true);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            });
+                .load(url)
+                .progressBar((ProgressBar) getActivity().findViewById(R.id.download_image_progress_bar))
+                .progressHandler(new ProgressCallback() {
+                    @Override
+                    public void onProgress(long l, long l2) {
+                        double percent = ((double) l) / l2;
+                        NumberFormat format = NumberFormat.getInstance();
+                        format.setMaximumFractionDigits(2);
+                        textView.setText("" + format.format(percent * 100) + "%");
+                    }
+                })
+                .write(new File(Config.SDCARD_MOFA + name))
+                .setCallback(new FutureCallback<File>() {
+                    @Override
+                    public void onCompleted(Exception e, File file) {
+                        Intent intent = new Intent(getActivity(), HandleImageActivity.class);
+                        intent.putExtra(ImageSelectedActivity.INTENT_EXTRA_NAME_IMAGE_SELECTED, name);
+                        intent.putExtra("network", true);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                });
     }
-    private void showTempImage(String url){
+
+    private void showTempImage(String url) {
         ImageView imageView = getRoundedImage();
         ImageLoader.getInstance().
-            displayImage(
-                    url
-                    , imageView
-                    , ((MoFaApplication) getActivity().getApplication()).getOptions()
-            );
+                displayImage(
+                        url
+                        , imageView
+                        , ((MoFaApplication) getActivity().getApplication()).getOptions()
+                );
     }
-    private ImageView getRoundedImage(){
-        return (ImageView)getActivity().findViewById(R.id.rounded_imageView);
+
+    private ImageView getRoundedImage() {
+        return (ImageView) getActivity().findViewById(R.id.rounded_imageView);
     }
 
     //handle url to have exact name
-    public static String handleString(String url){
+    public static String handleString(String url) {
         StringBuilder stringBuilder = new StringBuilder(url);
         return stringBuilder.substring(19);
     }
 
-    private void dismissDialog(){
+    private void dismissDialog() {
         RelativeLayout dialog = (RelativeLayout) getActivity().findViewById(R.id.relativeLayout_dialog_fullscreen);
         dialog.setVisibility(View.GONE);
     }
 
 
-
-    private void showDialog(){
+    private void showDialog() {
         RelativeLayout dialog = (RelativeLayout) getActivity().findViewById(R.id.relativeLayout_dialog_fullscreen);
         dialog.setVisibility(View.VISIBLE);
         dialog.setOnTouchListener(new View.OnTouchListener() {
@@ -187,8 +190,6 @@ public class ImageSelectedRecommendedFragment extends Fragment {
             }
         });
     }
-
-
 
 
     private class GridViewAdapter extends BaseAdapter {
@@ -208,8 +209,8 @@ public class ImageSelectedRecommendedFragment extends Fragment {
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    if (failReason.getType().equals(FailReason.FailType.OUT_OF_MEMORY)){
-                        ImageLoader.getInstance().displayImage(imageUri,(ImageView)view,((MoFaApplication)getActivity().getApplication()).getOptions(),listener);
+                    if (failReason.getType().equals(FailReason.FailType.OUT_OF_MEMORY)) {
+                        ImageLoader.getInstance().displayImage(imageUri, (ImageView) view, ((MoFaApplication) getActivity().getApplication()).getOptions(), listener);
                     }
                 }
 
@@ -257,7 +258,7 @@ public class ImageSelectedRecommendedFragment extends Fragment {
             }
 
             ImageLoader.getInstance().displayImage(
-                    ""+list.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH)
+                    "" + list.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH)
                     , holder.imageView
                     , ((MoFaApplication) getActivity().getApplication()).getOptions()
                     , listener

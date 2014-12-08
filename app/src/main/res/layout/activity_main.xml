@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/activity_main_background"
     >
-
-
     <LinearLayout
         android:id="@+id/activity_main_linearlayout_button"
         android:layout_width="@dimen/activity_main_imageButtonAtBottom_RelativeWidth"
@@ -22,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/camera_1"
+            android:src="@drawable/camera"
             android:background="@null"/>
 
         <com.unique.mofaforhackday.view.MoFaButton
@@ -31,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/pic_1"
+            android:src="@drawable/picture"
             android:background="@null"/>
         <com.unique.mofaforhackday.view.MoFaButton
             android:id="@+id/imageButton_set"
@@ -39,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:src="@drawable/mofa__0003_set_1"
+            android:src="@drawable/settings"
             android:background="@null"/>
 
     </LinearLayout>

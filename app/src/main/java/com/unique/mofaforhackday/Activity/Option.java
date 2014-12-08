@@ -3,7 +3,9 @@ package com.unique.mofaforhackday.Activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +22,10 @@ import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.unique.mofaforhackday.R;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-public class Option extends Activity implements View.OnClickListener {
+
+public class Option extends SwipeBackActivity implements View.OnClickListener {
     private ImageButton optionOut, optionFeedback, optionShare;
     private UMSocialService mController;
 
@@ -92,7 +96,7 @@ public class Option extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.option_back:
-                System.exit(0);
+                imitatePressHome(this);
                 break;
             case R.id.option_feedback:
                 agent.startFeedbackActivity();
@@ -101,5 +105,18 @@ public class Option extends Activity implements View.OnClickListener {
                 mController.openShare(this, false);
                 break;
         }
+    }
+
+    /**
+     * 模拟按home键
+     * 程序退到后台运行
+     * @param context
+     */
+    private void imitatePressHome(Context context)
+    {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        context.startActivity(intent);
     }
 }

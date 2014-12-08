@@ -53,14 +53,10 @@ public class ImageSelectedGridViewFragment extends Fragment {
         GridViewAdapter adapter = new GridViewAdapter(inflater, dataList);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new MyOnClickListener());
-
         return rootView;
     }
 
-
-
     private class MyOnClickListener implements AdapterView.OnItemClickListener {
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(getActivity(), HandleImageActivity.class);

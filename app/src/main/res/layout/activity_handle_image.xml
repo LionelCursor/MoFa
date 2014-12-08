@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.unique.mofaforhackday.view.MoFaRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/all"
@@ -12,12 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/background_blur"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/background_blur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#14000000" />
+        </RelativeLayout>
         <!--image Main-->
         <ImageView
             android:id="@+id/handle_imageView"
@@ -25,7 +32,6 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-
             />
 
         <com.unique.mofaforhackday.view.cropper.CropImageView
@@ -37,16 +43,16 @@
 
     </RelativeLayout>
 
-    <com.unique.mofaforhackday.view.WrapSlidingDrawer
+    <com.unique.mofaforhackday.view.MoFaSlidingDrawer
         android:id="@+id/slidingDrawer1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:content="@+id/content"
         android:focusable="true"
-        android:handle="@+id/handle"
-        android:orientation="vertical"
-        android:topOffset="0dp">
+        app:content="@+id/content"
+        app:handle="@+id/handle"
+        app:orientation="vertical"
+        app:topOffset="0dp">
         <!--button to ctrl the buttongroup-->
         <RelativeLayout
             android:id="@+id/handle"
@@ -60,6 +66,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0.8dp"
                 android:background="#80ffffff" />
+
             <ImageButton
                 android:id="@+id/handle_selector"
                 android:layout_width="wrap_content"
@@ -67,12 +74,14 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/mofa_up_down" />
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="0.8dp"
                 android:layout_alignParentBottom="true"
                 android:background="#80ffffff" />
         </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
@@ -81,82 +90,84 @@
             android:orientation="vertical">
             <!--main button-->
             <LinearLayout
-                    android:id="@+id/relativeLayout_ctrl_layout_button"
-                    android:layout_width="match_parent"
+                android:id="@+id/relativeLayout_ctrl_layout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/adding_word_layout_controller"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageButton
-                        android:id="@+id/adding_word_layout_controller"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
-                        android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
-                        android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
-                        android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
-                        android:src="@drawable/adding_word_layout_controller_selector"
-                        android:background="@null"/>
-                    <!--Now change to Image filter-->
-                    <!--<ImageButton-->
-                        <!--android:id="@+id/image_filter_layout_controller"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"-->
-                        <!--android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"-->
-                        <!--android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"-->
-                        <!--android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"-->
-                        <!--android:src="@drawable/lvjing_selector"-->
-                        <!--android:actionbar_background="@null"-->
-                        <!--android:visibility="gone" />-->
+                    android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
+                    android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
+                    android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
+                    android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:src="@drawable/adding_word_layout_controller_selector" />
+                <!--Now change to Image filter-->
+                <!--<ImageButton-->
+                <!--android:id="@+id/image_filter_layout_controller"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"-->
+                <!--android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"-->
+                <!--android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"-->
+                <!--android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"-->
+                <!--android:src="@drawable/lvjing_selector"-->
+                <!--android:actionbar_background="@null"-->
+                <!--android:visibility="gone" />-->
 
-                    <ImageButton
-                        android:id="@+id/adjust_layout_controller"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
-                        android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
-                        android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
-                        android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
-                        android:src="@drawable/tiaozheng_selector"
-                        android:background="@null"/>
-                    <!--Named Gauss-->
-                    <ImageButton
-                        android:id="@+id/gauss_layout_controller"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
-                        android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
-                        android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
-                        android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
-                        android:src="@drawable/gaosi_selector"
-                        android:background="@null"/>
+                <ImageButton
+                    android:id="@+id/adjust_layout_controller"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
+                    android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
+                    android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
+                    android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:src="@drawable/tiaozheng_selector" />
+                <!--Named Gauss-->
+                <ImageButton
+                    android:id="@+id/gauss_layout_controller"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
+                    android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
+                    android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
+                    android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:src="@drawable/gaosi_selector" />
 
-                    <!--<ImageButton-->
-                        <!--android:id="@+id/xuhua"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"-->
-                        <!--android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"-->
-                        <!--android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"-->
-                        <!--android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"-->
-                        <!--android:src="@drawable/xuhua_selector"-->
-                        <!--android:actionbar_background="@null"-->
-                        <!--android:visibility="gone" />-->
+                <!--<ImageButton-->
+                <!--android:id="@+id/xuhua"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"-->
+                <!--android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"-->
+                <!--android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"-->
+                <!--android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"-->
+                <!--android:src="@drawable/xuhua_selector"-->
+                <!--android:actionbar_background="@null"-->
+                <!--android:visibility="gone" />-->
 
-                    <ImageButton
-                        android:id="@+id/bianji"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
-                        android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
-                        android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
-                        android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
-                        android:src="@drawable/bianji_selector"
-                        android:background="@null"/>
-                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/bianji"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
+                    android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
+                    android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
+                    android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:src="@drawable/bianji_selector" />
+            </LinearLayout>
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="0.8dp"
@@ -240,12 +251,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
+
                 <RelativeLayout
                     android:id="@+id/adding_word_layout_detail_controller_layout_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
                     android:layout_marginBottom="15dp"
+                    android:layout_marginTop="3dp"
+                    android:paddingBottom="5dp"
                     android:paddingTop="5dp">
 
                     <EditText
@@ -259,9 +272,11 @@
                         android:background="@drawable/rounded_edittext"
                         android:ems="10"
                         android:gravity="center"
-                        android:hint="请输入文字"
+                        android:hint="点击输入文字"
                         android:textColor="#fff"
-                        android:textColorHint="#fff"/>
+                        android:textColorHint="#fff"
+                        android:textCursorDrawable="@null"
+                        android:textSize="15sp" />
 
                     <ImageButton
                         android:id="@+id/button_word_ensure"
@@ -281,6 +296,7 @@
                         android:layout_marginRight="30dp"
                         android:background="@drawable/word_text_copy_selector" />
                 </RelativeLayout>
+
                 <HorizontalScrollView
                     android:id="@+id/adding_word_layout_detail_controller_layout_down"
                     android:layout_width="match_parent"
@@ -335,28 +351,30 @@
                         <ImageButton
                             android:id="@+id/word_imageButton_font"
                             android:layout_width="wrap_content"
-                            android:layout_marginLeft="@dimen/word_button_margin_left"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/word_button_margin_left"
                             android:layout_marginRight="10dp"
                             android:background="@null"
                             android:src="@drawable/word_word_selector" />
 
                         <ImageButton
                             android:id="@+id/word_imageButton_hor_ver"
-                            android:layout_marginLeft="@dimen/word_button_margin_left"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/word_button_margin_left"
                             android:layout_marginRight="10dp"
                             android:background="@null"
                             android:src="@drawable/mofa_align_selector" />
+
                         <ImageButton
                             android:id="@+id/word_imageButton_move"
                             android:layout_width="wrap_content"
-                            android:layout_marginLeft="@dimen/word_button_margin_left"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/word_button_margin_left"
                             android:layout_marginRight="10dp"
                             android:background="@null"
                             android:src="@drawable/word_move_selector" />
+
                         <ImageButton
                             android:id="@+id/word_imageButton_rotate"
                             android:layout_width="wrap_content"
@@ -378,44 +396,48 @@
                 <!--word rotate-->
                 <RelativeLayout
                     android:id="@+id/relativeLayout_word_rotate"
-                    android:layout_below="@id/slip_line"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/slip_line"
+                    android:visibility="gone">
+
                     <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekBar_word_rotate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/mofa_seekbar_margin_bottom"
+                        android:layout_marginTop="@dimen/mofa_seekbar_margin_top"
                         android:max="254"
                         android:maxHeight="@dimen/mofa_seekbar_height"
                         android:minHeight="@dimen/mofa_seekbar_height"
-                        android:layout_marginTop="@dimen/mofa_seekbar_margin_top"
-                        android:layout_marginBottom="@dimen/mofa_seekbar_margin_bottom"
                         android:progress="127"
-                        android:progressDrawable="@drawable/seek_drawable_brightness"
-                        android:thumb="@drawable/mofa__0009_cursor_6"/>
-                    </RelativeLayout>
+                        android:progressDrawable="@drawable/seek_bar_drawable"
+                        android:thumb="@drawable/mofa__0009_cursor_6" />
+                </RelativeLayout>
                 <!--Text Align Horizontal or Vertical-->
                 <LinearLayout
                     android:id="@+id/relativeLayout_HorizontalOrVertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:layout_below="@+id/slip_line"
+                    android:padding="10dp"
                     android:visibility="gone">
+
                     <ImageButton
                         android:id="@+id/imageButton_word_align_ver"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@null"
-                        android:src="@drawable/word_align_ver_selector"/>
+                        android:src="@drawable/word_align_ver_selector" />
+
                     <ImageButton
                         android:id="@+id/imageButton_word_align_hor"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@null"
-                        android:src="@drawable/word_align_hor_selector"/>
+                        android:src="@drawable/word_align_hor_selector" />
                 </LinearLayout>
                 <!--font-->
                 <RelativeLayout
@@ -425,8 +447,7 @@
                     android:layout_below="@id/slip_line"
                     android:visibility="gone">
 
-                    <com.unique.mofaforhackday.view.SwitchButton
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.unique.mofaforhackday.view.SwitchButton xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/switch_font"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -439,16 +460,15 @@
                         app:moveDuration="50"
                         app:selectedBG="@color/switch_selectedBG_zhong"
                         app:status="OFF"
-                        app:trackPadding="1px"
+                        app:trackPadding="3dp"
                         app:trackWidth="50dp"
                         app:unselectedBG="@color/switch_unselectedBG_ying" />
 
                     <HorizontalScrollView
                         android:id="@+id/scrollView_font_English"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="9.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/switch_font"
                         android:focusable="false">
@@ -456,6 +476,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <ImageButton
@@ -674,18 +695,16 @@
                     <HorizontalScrollView
                         android:id="@+id/scrollView_font_Chinese"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
-                        android:layout_marginBottom="7.5dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="27dp"
                         android:layout_toRightOf="@+id/switch_font"
                         android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
                             <!--TODO-ImageButton revert to RelativeLayout/Chinese is OK ,but English-->
 
@@ -694,134 +713,137 @@
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginRight="3dp"
-                                android:src="@drawable/moren"
-                                android:background="@null"
-                                android:layout_marginBottom="5dp"/>
+                                android:focusable="true">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:src="@drawable/moren" />
                             </RelativeLayout>
                             <!--<ImageButton-->
-                                <!--android:id="@+id/imageButton_moren"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:actionbar_background="@drawable/moren" />-->
+                            <!--android:id="@+id/imageButton_moren"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:actionbar_background="@drawable/moren" />-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_miaowu"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/miaowu"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/miaowu" />
                             </RelativeLayout>
                             <!--<ImageButton-->
-                                <!--android:id="@+id/imageButton_miaowu"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginLeft="30dp"-->
-                                <!--android:actionbar_background="@drawable/miaowu" />-->
+                            <!--android:id="@+id/imageButton_miaowu"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="30dp"-->
+                            <!--android:actionbar_background="@drawable/miaowu" />-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_daofeng"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/daofeng"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/daofeng" />
                             </RelativeLayout>
                             <!--<ImageButton-->
-                                <!--android:id="@+id/imageButton_daofeng"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginLeft="30dp"-->
-                                <!--android:actionbar_background="@drawable/daofeng" />-->
+                            <!--android:id="@+id/imageButton_daofeng"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="30dp"-->
+                            <!--android:actionbar_background="@drawable/daofeng" />-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_shanghei"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/shanghei"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/shanghei" />
                             </RelativeLayout>
                             <!--<ImageButton-->
-                                <!--android:id="@+id/imageButton_shanghei"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginLeft="30dp"-->
-                                <!--android:src="@drawable/shanghei"-->
-                                <!--android:actionbar_background="@null"/>-->
+                            <!--android:id="@+id/imageButton_shanghei"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="30dp"-->
+                            <!--android:src="@drawable/shanghei"-->
+                            <!--android:actionbar_background="@null"/>-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_yuehei"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/yuehei"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/yuehei" />
                             </RelativeLayout>
                             <!--<ImageButton-->
-                                <!--android:id="@+id/imageButton_yuehei"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginLeft="30dp"-->
-                                <!--android:src="@drawable/yuehei"-->
-                                <!--android:actionbar_background="@null"/>-->
+                            <!--android:id="@+id/imageButton_yuehei"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="30dp"-->
+                            <!--android:src="@drawable/yuehei"-->
+                            <!--android:actionbar_background="@null"/>-->
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_yingbi"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/yingbi"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/yingbi" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     android:id="@+id/progressBar_font_yingbi"
                                     style="?android:attr/progressBarStyleHorizontal"
@@ -829,553 +851,580 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_fanyuan"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:layout_marginRight="3dp"
-                                    android:src="@drawable/fanyuan"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/fanyuan" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_guti"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:layout_marginRight="3dp"
-                                    android:src="@drawable/guti"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/guti" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_hupo"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/hupo"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/hupo" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_kaiti"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/kaiti"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/kaiti" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_ruixian"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/ruixian"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/ruixian" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_songti"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/songti"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/songti" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_tianniu"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/tianniu"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/tianniu" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_xiyuan"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/xiyuan"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/xiyuan" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_xindi"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/xindi"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/xindi" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_yaoti"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/yaoti"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/yaoti" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_youyuan"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/youyuan"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/youyuan" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_changmei"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/changmei"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/changmei" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_zhiyi"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/zhiyi"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/zhiyi" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_zhongsong"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/zhongsong"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/zhongsong" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_zhongyuan"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/zhongyuan"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/zhongyuan" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_zhunyuan"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/zhunyuan"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/zhunyuan" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_zongyi"
                                 android:layout_width="50dp"
                                 android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
                                 android:clickable="true"
-                                android:focusable="true"
-                                android:layout_marginLeft="30dp">
+                                android:focusable="true">
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="3dp"
-                                    android:src="@drawable/zongyi"
+                                    android:layout_marginTop="3dp"
                                     android:background="@null"
-                                    android:layout_marginBottom="5dp"/>
+                                    android:src="@drawable/zongyi" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/mofa__0000_download"
-                                    android:layout_alignParentTop="true"
                                     android:layout_alignParentRight="true"
-                                    />
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
                                 <ProgressBar
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:minHeight="10dp"
                                     android:maxHeight="10dp"
-                                    />
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
 
                         </LinearLayout>
@@ -1385,61 +1434,61 @@
                 <RelativeLayout
                     android:id="@+id/relativeLayout_textsize"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:layout_below="@id/slip_line"
-                    android:layout_marginBottom="9.5dp"
-                    android:layout_marginLeft="28dp"
-                    android:layout_marginRight="28dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/text_jian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/b_0014_textsize_minus" />
+                        android:background="@null"
+                        android:src="@drawable/word_minus" />
 
-                    <SeekBar
+                    <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekBar_text"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="25.5dp"
                         android:layout_marginRight="25.5dp"
-                        android:maxHeight="3.15dp"
-                        android:minHeight="3.15dp"
-                        android:progressDrawable="@drawable/seek_drawable_textsize"
+                        android:maxHeight="@dimen/mofa_seekbar_height"
+                        android:minHeight="@dimen/mofa_seekbar_height"
+                        android:progressDrawable="@drawable/seek_bar_drawable"
                         android:thumb="@drawable/thumb"
                         android:thumbOffset="6dip" />
 
                     <ImageButton
                         android:id="@+id/text_jia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/b_0015_textsize_plus" />
+                        android:background="@null"
+                        android:src="@drawable/word_plus" />
                 </RelativeLayout>
                 <!--TouMingDu is not TMD-->
                 <RelativeLayout
                     android:id="@+id/relativeLayout_tmd"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:layout_below="@id/slip_line"
-                    android:layout_marginBottom="9.5dp"
-                    android:layout_marginLeft="28dp"
-                    android:layout_marginRight="28dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/jiantmd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/mofa__0007_reduce" />
+                        android:background="@null"
+                        android:src="@drawable/minus" />
 
                     <SeekBar
                         android:id="@+id/seekBartmd"
@@ -1448,19 +1497,20 @@
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="25.5dp"
                         android:layout_marginRight="25.5dp"
-                        android:maxHeight="3.15dp"
-                        android:minHeight="3.15dp"
-                        android:progressDrawable="@drawable/seek_drawable_tmd"
+                        android:maxHeight="@dimen/mofa_seekbar_height"
+                        android:minHeight="@dimen/mofa_seekbar_height"
+                        android:progressDrawable="@drawable/seek_bar_drawable"
                         android:thumb="@drawable/thumb"
                         android:thumbOffset="6dip" />
 
                     <ImageButton
                         android:id="@+id/jiatmd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/mofa__0008_plus" />
+                        android:background="@null"
+                        android:src="@drawable/plus" />
                 </RelativeLayout>
                 <!--color ScrollView-->
                 <HorizontalScrollView
@@ -1475,12 +1525,13 @@
                         android:id="@+id/lei_relativelayout_wrap_color_linearlayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:id="@+id/lei_linearlayout_color_up"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5.5dp"
                             android:layout_marginBottom="5.5dp"
+                            android:layout_marginTop="5.5dp"
                             android:orientation="horizontal">
 
                             <Button
@@ -1728,6 +1779,7 @@
                                 android:layout_marginLeft="30dp"
                                 android:background="@drawable/color35_button" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/lei_linearlayout_color_down"
                             android:layout_width="wrap_content"
@@ -1981,7 +2033,7 @@
                                 android:layout_marginLeft="30dp"
                                 android:background="@drawable/second_color35_button" />
                         </LinearLayout>
-                   </RelativeLayout>
+                    </RelativeLayout>
                 </HorizontalScrollView>
                 <!--shadow-->
                 <LinearLayout
@@ -1989,7 +2041,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@id/slip_line"
-                    android:layout_marginBottom="0.5dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone">
@@ -2004,7 +2055,7 @@
                         android:maxHeight="@dimen/mofa_seekbar_height"
                         android:minHeight="@dimen/mofa_seekbar_height"
                         android:progress="0"
-                        android:progressDrawable="@drawable/seek_drawable_contrast"
+                        android:progressDrawable="@drawable/seek_bar_drawable"
                         android:thumb="@drawable/mofa__0001_x" />
                     <!--shadow-Y-->
                     <com.unique.mofaforhackday.view.MoFaSeekBar
@@ -2016,7 +2067,7 @@
                         android:maxHeight="@dimen/mofa_seekbar_height"
                         android:minHeight="@dimen/mofa_seekbar_height"
                         android:progress="0"
-                        android:progressDrawable="@drawable/seek_drawable_contrast"
+                        android:progressDrawable="@drawable/seek_bar_drawable"
                         android:thumb="@drawable/mofa__0000_y" />
                     <!--shadow-size-->
                     <com.unique.mofaforhackday.view.MoFaSeekBar
@@ -2028,49 +2079,51 @@
                         android:maxHeight="@dimen/mofa_seekbar_height"
                         android:minHeight="@dimen/mofa_seekbar_height"
                         android:progress="0"
-                        android:progressDrawable="@drawable/seek_drawable_contrast"
+                        android:progressDrawable="@drawable/seek_bar_drawable"
                         android:thumb="@drawable/mofa__0002_s" />
                 </LinearLayout>
                 <!--move-->
                 <LinearLayout
                     android:id="@+id/linearlayout_move"
-                    android:layout_below="@id/slip_line"
-                    android:orientation="horizontal"
-                    android:layout_margin="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/slip_line"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
                     android:visibility="gone">
+
                     <ImageButton
                         android:id="@+id/imageButton_move_left"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:src="@drawable/word__translation_left"/>
-                    <ImageButton
-                        android:id="@+id/imageButton_move_right"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
                         android:background="@null"
-                        android:src="@drawable/word_move_right"/>
+                        android:src="@drawable/word__translation_left" />
+
                     <ImageButton
                         android:id="@+id/imageButton_move_up"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/word_move_up"
+                        android:layout_weight="1"
                         android:background="@null"
-                        />
+                        android:src="@drawable/word_move_up" />
+
                     <ImageButton
                         android:id="@+id/imageButton_move_down"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/word_move_down"
+                        android:layout_weight="1"
                         android:background="@null"
-                        />
-                    </LinearLayout>
+                        android:src="@drawable/word_move_down" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton_move_right"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:src="@drawable/word_move_right" />
+                </LinearLayout>
             </RelativeLayout>
             <!--filter-->
             <RelativeLayout
@@ -2104,6 +2157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
+
                 <LinearLayout
                     android:id="@+id/linearlayout_ensure_button"
                     android:layout_width="match_parent"
@@ -2128,6 +2182,7 @@
                         android:background="@drawable/button_selector"
                         android:src="@drawable/mofa__0001_ok" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/adjust_layout_three_button"
                     android:layout_width="match_parent"
@@ -2161,12 +2216,14 @@
                         android:background="@null"
                         android:src="@drawable/handle_detail_selector" />
                 </LinearLayout>
+
                 <View
                     android:id="@+id/line_in_adjust"
                     android:layout_width="fill_parent"
                     android:layout_height="0.8dp"
                     android:layout_below="@id/adjust_layout_three_button"
                     android:background="#80ffffff" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -2375,62 +2432,62 @@
                         </RelativeLayout>
 
                         <!--<RelativeLayout-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="0dp"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:gravity="center_vertical">-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center_vertical">-->
 
-                            <!--<TextView-->
-                                <!--android:id="@+id/textview_shadow"-->
-                                <!--android:layout_width="50dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_alignParentLeft="true"-->
-                                <!--android:layout_marginLeft="10dp"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="阴影"-->
-                                <!--android:textColor="#80ffffff" />-->
+                        <!--<TextView-->
+                        <!--android:id="@+id/textview_shadow"-->
+                        <!--android:layout_width="50dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="阴影"-->
+                        <!--android:textColor="#80ffffff" />-->
 
-                            <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
-                                <!--android:id="@+id/shadow_seekbar"-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_toRightOf="@id/textview_shadow"-->
-                                <!--android:max="127"-->
-                                <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
-                                <!--android:minHeight="@dimen/mofa_seekbar_height"-->
-                                <!--android:progress="63"-->
-                                <!--android:progressDrawable="@drawable/seek_drawable_contrast"-->
-                                <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
+                        <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
+                        <!--android:id="@+id/shadow_seekbar"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_toRightOf="@id/textview_shadow"-->
+                        <!--android:max="127"-->
+                        <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
+                        <!--android:minHeight="@dimen/mofa_seekbar_height"-->
+                        <!--android:progress="63"-->
+                        <!--android:progressDrawable="@drawable/seek_drawable_contrast"-->
+                        <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
                         <!--</RelativeLayout>-->
 
                         <!--<RelativeLayout-->
-                            <!--android:id="@+id/wenhudu_layout"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="0dp"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:gravity="center_vertical">-->
+                        <!--android:id="@+id/wenhudu_layout"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center_vertical">-->
 
-                            <!--<TextView-->
-                                <!--android:id="@+id/textview_wenhedu"-->
-                                <!--android:layout_width="50dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_alignParentLeft="true"-->
-                                <!--android:layout_marginLeft="10dp"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="温和度"-->
-                                <!--android:textColor="#80ffffff" />-->
+                        <!--<TextView-->
+                        <!--android:id="@+id/textview_wenhedu"-->
+                        <!--android:layout_width="50dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="温和度"-->
+                        <!--android:textColor="#80ffffff" />-->
 
-                            <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
-                                <!--android:id="@+id/wenhedu_seekbar"-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_toRightOf="@id/textview_wenhedu"-->
-                                <!--android:max="200"-->
-                                <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
-                                <!--android:minHeight="@dimen/mofa_seekbar_height"-->
-                                <!--android:progress="100"-->
-                                <!--android:progressDrawable="@drawable/seek_drawable_saturation"-->
-                                <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
+                        <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
+                        <!--android:id="@+id/wenhedu_seekbar"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_toRightOf="@id/textview_wenhedu"-->
+                        <!--android:max="200"-->
+                        <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
+                        <!--android:minHeight="@dimen/mofa_seekbar_height"-->
+                        <!--android:progress="100"-->
+                        <!--android:progressDrawable="@drawable/seek_drawable_saturation"-->
+                        <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
                         <!--</RelativeLayout>-->
                     </LinearLayout>
                 </RelativeLayout>
@@ -2480,8 +2537,8 @@
                     android:layout_below="@id/linearlayout_bainji"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/bianji_crop"
@@ -2571,25 +2628,27 @@
                                     android:textSize="10sp" />
 
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/Button_3_to_4"
                                 android:layout_width="50dp"
                                 android:layout_height="45dp"
                                 android:layout_marginLeft="@dimen/bianji_margin_left"
                                 android:orientation="vertical">
+
                                 <RelativeLayout
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_gravity="center_horizontal"
-                                    android:gravity="center"
-                                    >
+                                    android:gravity="center">
+
                                     <View
                                         android:layout_width="22.5dp"
                                         android:layout_height="30dp"
                                         android:layout_gravity="center_horizontal"
-                                        android:background="@drawable/rectangle"
-                                        />
-                                    </RelativeLayout>
+                                        android:background="@drawable/rectangle" />
+                                </RelativeLayout>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -2599,25 +2658,27 @@
                                     android:textColor="@color/bianji_text_color"
                                     android:textSize="10sp" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/Button_4_to_6"
                                 android:layout_width="50dp"
                                 android:layout_height="45dp"
                                 android:layout_marginLeft="@dimen/bianji_margin_left"
                                 android:orientation="vertical">
+
                                 <RelativeLayout
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_gravity="center_horizontal"
-                                    android:gravity="center"
-                                    >
+                                    android:gravity="center">
+
                                     <View
                                         android:layout_width="20dp"
                                         android:layout_height="30dp"
                                         android:layout_gravity="center_horizontal"
-                                        android:background="@drawable/rectangle"
-                                        />
+                                        android:background="@drawable/rectangle" />
                                 </RelativeLayout>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -2627,25 +2688,27 @@
                                     android:textColor="@color/bianji_text_color"
                                     android:textSize="10sp" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/Button_5_to_7"
                                 android:layout_width="50dp"
                                 android:layout_height="45dp"
                                 android:layout_marginLeft="@dimen/bianji_margin_left"
                                 android:orientation="vertical">
+
                                 <RelativeLayout
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_gravity="center_horizontal"
-                                    android:gravity="center"
-                                    >
+                                    android:gravity="center">
+
                                     <View
                                         android:layout_width="21.5dp"
                                         android:layout_height="30dp"
                                         android:layout_gravity="center_horizontal"
-                                        android:background="@drawable/rectangle"
-                                        />
+                                        android:background="@drawable/rectangle" />
                                 </RelativeLayout>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -2655,25 +2718,27 @@
                                     android:textColor="@color/bianji_text_color"
                                     android:textSize="10sp" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/Button_8_to_10"
                                 android:layout_width="50dp"
                                 android:layout_height="45dp"
                                 android:layout_marginLeft="@dimen/bianji_margin_left"
                                 android:orientation="vertical">
+
                                 <RelativeLayout
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_gravity="center_horizontal"
-                                    android:gravity="center"
-                                    >
+                                    android:gravity="center">
+
                                     <View
                                         android:layout_width="24dp"
                                         android:layout_height="30dp"
                                         android:layout_gravity="center_horizontal"
-                                        android:background="@drawable/rectangle"
-                                        />
+                                        android:background="@drawable/rectangle" />
                                 </RelativeLayout>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -2683,25 +2748,27 @@
                                     android:textColor="@color/bianji_text_color"
                                     android:textSize="10sp" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/Button_9_to_16"
                                 android:layout_width="50dp"
                                 android:layout_height="45dp"
                                 android:layout_marginLeft="@dimen/bianji_margin_left"
                                 android:orientation="vertical">
+
                                 <RelativeLayout
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_gravity="center_horizontal"
-                                    android:gravity="center"
-                                    >
+                                    android:gravity="center">
+
                                     <View
                                         android:layout_width="17dp"
                                         android:layout_height="30dp"
                                         android:layout_gravity="center_horizontal"
-                                        android:background="@drawable/rectangle"
-                                        />
+                                        android:background="@drawable/rectangle" />
                                 </RelativeLayout>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -2762,7 +2829,7 @@
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
-    </com.unique.mofaforhackday.view.WrapSlidingDrawer>
+    </com.unique.mofaforhackday.view.MoFaSlidingDrawer>
     <!--  \/  and  X-->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -2808,4 +2875,4 @@
             android:src="@drawable/back_selector" />
     </RelativeLayout>
 
-</RelativeLayout>
+</com.unique.mofaforhackday.view.MoFaRelativeLayout>

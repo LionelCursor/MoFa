@@ -1,6 +1,5 @@
 package com.unique.mofaforhackday.Activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -52,10 +51,11 @@ import com.unique.mofaforhackday.Utils.ImageAdjuster;
 import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.beans.ColorAdjuster;
 import com.unique.mofaforhackday.beans.Modifitation;
+import com.unique.mofaforhackday.view.MoFaRelativeLayout;
 import com.unique.mofaforhackday.view.MoFaSeekBar;
+import com.unique.mofaforhackday.view.MoFaSlidingDrawer;
 import com.unique.mofaforhackday.view.MoFaTextView;
 import com.unique.mofaforhackday.view.SwitchButton;
-import com.unique.mofaforhackday.view.WrapSlidingDrawer;
 import com.unique.mofaforhackday.view.cropper.CropImageView;
 import com.unique.mofaforhackday.view.photoview.PhotoViewAttacher;
 
@@ -97,7 +97,7 @@ public class HandleImageActivity extends Activity {
     /**
      * *******************************************************************************************
      */
-    private WrapSlidingDrawer wrapSlidingDrawer;
+    private MoFaSlidingDrawer wrapSlidingDrawer;
     /**
      * Main Work Station
      * A relativeLayout contains handledImage and BlurredBackground
@@ -589,6 +589,7 @@ public class HandleImageActivity extends Activity {
 
     }
 
+
     private void setShadow() {
         if (textView == null) {
             return;
@@ -610,6 +611,7 @@ public class HandleImageActivity extends Activity {
                     textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
                     textView.setAlpha(0);
                     mainLayout.addView(textView);
+                    textView.setDismissWhenFocusOnTouchOutside();
                 }
                 textView.setMoFaText(s);
                 textView.post(new Runnable() {
@@ -634,6 +636,7 @@ public class HandleImageActivity extends Activity {
                     textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
                     textView.setAlpha(0);
                     mainLayout.addView(textView);
+                    textView.setDismissWhenFocusOnTouchOutside();
                     textView.setMoFaText(s);
                     textView.post(new Runnable() {
                         @Override
@@ -641,17 +644,17 @@ public class HandleImageActivity extends Activity {
                             textView.SelfCenter();
                         }
                     });
-                }else{
+                } else {
                     textView = textView.copy();
                     mainLayout.addView(textView);
+                    textView.setDismissWhenFocusOnTouchOutside();
                     textView.post(new Runnable() {
                         @Override
                         public void run() {
-                             textView.CopyAnim();
+                            textView.CopyAnim();
                         }
                     });
                 }
-
             }
         });
     }
@@ -727,14 +730,6 @@ public class HandleImageActivity extends Activity {
 
     private void setRotate(float delta) {
         cropImageView.rotateImage((int) delta);
-//        if (mMainImageView== null){
-//            return;
-//        }
-//
-//        mMainImageView.setRotation(mRotateDegree+=delta);
-//        Matrix m = new Matrix();
-//        m.setRotate(mRotateDegree-=delta,mMainImageView.getWidth()/2f,mMainImageView.getHeight()/2f);
-//        mMainImageView.setImageMatrix(m);
     }
 
     private void setCropDetail() {
@@ -824,8 +819,8 @@ public class HandleImageActivity extends Activity {
             BrightnessseekBar.setProgress(80);
             ContrastseekBar.setProgress(70);
             SaturationseekBar.setProgress(100);
+            RuihuaSeekBar.setProgress(180);
         }
-
     }
 
     private void setWordCtrlLayout() {
@@ -886,6 +881,11 @@ public class HandleImageActivity extends Activity {
         cropImageView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * getDrawingCache of MainLayout. (the operating image)
+     *
+     * @return Bitmap
+     */
     private Bitmap getDrawingCache() {
         mainLayout.setDrawingCacheEnabled(true);
         Bitmap b = Bitmap.createBitmap(mainLayout.getDrawingCache());
@@ -902,10 +902,10 @@ public class HandleImageActivity extends Activity {
 
         int displayHeight, displayWidth;
         displayHeight = b.getHeight();
-        displayWidth = b.getWidth();
+        displayWidth  = b.getWidth();
         int newBitmapHeight, newBitmapWidth;
 
-        if (bitmapHeight>displayHeight||bitmapWidth>displayWidth) {
+        if (bitmapHeight > displayHeight || bitmapWidth > displayWidth) {
             float displayRadio = (float) displayHeight / displayWidth;
             float scaleRadio;
             if (bitmapRadio > displayRadio) {
@@ -917,13 +917,14 @@ public class HandleImageActivity extends Activity {
                 newBitmapWidth = displayWidth;
                 newBitmapHeight = (int) (scaleRadio * bitmapHeight);
             }
-        }else{
+        } else {
             newBitmapHeight = bitmapHeight;
             newBitmapWidth = bitmapWidth;
         }
+        //TODO-BUG-here resolve the bug of white line
         Bitmap result = Bitmap.createBitmap(b,
-                (b.getWidth() - newBitmapWidth) / 2, (b.getHeight() - newBitmapHeight) / 2,
-                newBitmapWidth, newBitmapHeight
+                (b.getWidth() - newBitmapWidth) / 2, (b.getHeight() - newBitmapHeight) / 2+1,
+                newBitmapWidth, newBitmapHeight-1
         );
         b.recycle();
         return result;
@@ -1117,7 +1118,7 @@ public class HandleImageActivity extends Activity {
                 if (BlurSeekBar.getProgress() == 0) {
                     //do nothing
                 } else {
-                    BlurSeekBar.setProgress(BlurSeekBar.getProgress() - 1);
+                    BlurSeekBar.setProgressAndDisplay(BlurSeekBar.getProgress() - 1);
                 }
             }
         });
@@ -1128,7 +1129,7 @@ public class HandleImageActivity extends Activity {
                 if (BlurSeekBar.getProgress() == 24) {
                     //do nothing.
                 } else {
-                    BlurSeekBar.setProgress(BlurSeekBar.getProgress() + 1);
+                    BlurSeekBar.setProgressAndDisplay(BlurSeekBar.getProgress() + 1);
                 }
             }
         });
@@ -1210,7 +1211,6 @@ public class HandleImageActivity extends Activity {
                 }
             }
         });
-
     }
 
     private void findGroup() {
@@ -1220,7 +1220,6 @@ public class HandleImageActivity extends Activity {
         rAdjustDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayoutAdjust);
         rXuhuaDetailLayout = (RelativeLayout) findViewById(R.id.xuhuaLayout);
         rBianjiDetailLayout = (RelativeLayout) findViewById(R.id.bianjiLayout);
-
 
         rFontDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_font);
         rTextSizeDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_textsize);
@@ -1233,7 +1232,6 @@ public class HandleImageActivity extends Activity {
     }
 
     private void setGroupTop() {
-
         GaussButton = (ImageButton) findViewById(R.id.gauss_layout_controller);
         wenziButton = (ImageButton) findViewById(R.id.adding_word_layout_controller);
 //        filterButton = (ImageButton) findViewById(R.id.image_filter_layout_controller);
@@ -1304,7 +1302,6 @@ public class HandleImageActivity extends Activity {
         button.setPressed(enable);
     }
 
-
     private void setUpButtonOnChoosenAndUnclickable(boolean enable) {
         imageButtonBackward.setPressed(enable);
         imageButtonForward.setPressed(enable);
@@ -1371,24 +1368,19 @@ public class HandleImageActivity extends Activity {
      */
     private void initMenuSelf() {
         final ImageButton handleSelector = (ImageButton) findViewById(R.id.handle_selector);
-        wrapSlidingDrawer = (WrapSlidingDrawer) findViewById(R.id.slidingDrawer1);
-
-//        wrapSlidingDrawer.animate();
+        wrapSlidingDrawer = (MoFaSlidingDrawer) findViewById(R.id.slidingDrawer1);
         wrapSlidingDrawer.animateOpen();
-
-        wrapSlidingDrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
-            @SuppressLint("NewApi")
+        wrapSlidingDrawer.setOnDrawerOpenListener(new MoFaSlidingDrawer.OnDrawerOpenListener() {
             @Override
             public void onDrawerOpened() {
-                handleSelector.setBackground(getResources().getDrawable(
+                handleSelector.setBackgroundDrawable(getResources().getDrawable(
                         R.drawable.mofa_down_down));
             }
         });
-        wrapSlidingDrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
-            @SuppressLint("NewApi")
+        wrapSlidingDrawer.setOnDrawerCloseListener(new MoFaSlidingDrawer.OnDrawerCloseListener() {
             @Override
             public void onDrawerClosed() {
-                handleSelector.setBackground(getResources().getDrawable(
+                handleSelector.setBackgroundDrawable(getResources().getDrawable(
                         R.drawable.mofa_up_down));
             }
         });
@@ -1404,6 +1396,7 @@ public class HandleImageActivity extends Activity {
         textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
         textView.setAlpha(0);
         mainLayout.addView(textView);
+        textView.setDismissWhenFocusOnTouchOutside();
     }
 
 
@@ -1773,7 +1766,7 @@ public class HandleImageActivity extends Activity {
         RelativeLayout youyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_youyuan);
         RelativeLayout changmeiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_changmei);
         RelativeLayout zhiyiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhiyi);
-//      //TODO-Image line gap
+//      TODO-Image line gap
         RelativeLayout zhongsongButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhongsong);
         RelativeLayout zhongyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhongyuan);
         RelativeLayout zhunyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zhunyuan);
@@ -1798,7 +1791,6 @@ public class HandleImageActivity extends Activity {
         boolean zhongyuanEnable = sharedPreferences.getBoolean(Config.zhongyuan, false);
         boolean zhunyuanEnable = sharedPreferences.getBoolean(Config.zhunyuan, false);
         boolean zongyiEnable = sharedPreferences.getBoolean(Config.zongyi, false);
-
 
         FontCtrlView(yingbiEnable, yingbiButton, Config.yingbi);
         FontCtrlView(fanyuanEnable, fanyuanButton, Config.fanyuan);
@@ -1834,14 +1826,26 @@ public class HandleImageActivity extends Activity {
                         , (ProgressBar) layout.getChildAt(2)));
                 return;
             }
-            layout.removeViews(1, 2);
-            layout.setOnClickListener(
-                    new FontClickListener(
-                            Typeface.createFromFile(
-                                    file
-                            )
-                    )
-            );
+            try {
+                layout.setOnClickListener(
+                        new FontClickListener(
+                                Typeface.createFromFile(
+                                        file
+                                )
+                        )
+                );
+                layout.removeViews(1, 2);
+            } catch (Exception e) {
+                e.printStackTrace();
+                sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(name, false);
+                editor.apply();
+                layout.setOnClickListener(new FontDownLoadClickListener(name
+                        , (ProgressBar) layout.getChildAt(2)));
+            }
+
+
         }
     }
 
@@ -1894,13 +1898,18 @@ public class HandleImageActivity extends Activity {
 
     // Ensure the bitmap created and displayed on the screen. When it has created,mSrcMap = bitmap
     private void CreateSrcBitmap() {
+        final DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
+                .imageScaleType(ImageScaleType.NONE)
+                .build();
         //Listener to ensure the bitmap created and displayed on the screen. When it has created,mSrcMap = bitmap
         ImageLoadinglistener = new SimpleImageLoadingListener() {
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 L.e(failReason.getType() + "");
                 if (failReason.getType().equals(FailReason.FailType.OUT_OF_MEMORY)) {
-                    ImageLoader.getInstance().displayImage(imageUri, (ImageView) view, ImageLoadinglistener);
+                    ImageLoader.getInstance().displayImage(imageUri, (ImageView) view, options, ImageLoadinglistener);
                 }
             }
 
@@ -1916,7 +1925,6 @@ public class HandleImageActivity extends Activity {
                 attacher.setZoomable(true);
                 mDrawMatrix = attacher.getDrawMatrix();
             }
-
         };
         mMainImageView = (ImageView) findViewById(R.id.handle_imageView);
         Intent intent = getIntent();
@@ -1926,11 +1934,7 @@ public class HandleImageActivity extends Activity {
         boolean isNetwork = intent.getBooleanExtra("network", false);
         boolean isFromCam = intent.getBooleanExtra("Cam", false);
         //TODO-progressbar in ImageLoader
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.ARGB_8888)
-                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-                .build();
+
         //if here use options maybe RGB_565 or any more makes.
         // the RenderScript shut down.
         // with the Error  Unsupported element type
@@ -2644,6 +2648,8 @@ public class HandleImageActivity extends Activity {
                 textView = new MoFaTextView(HandleImageActivity.this);
                 textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
                 mainLayout.addView(textView);
+                textView.setDismissWhenFocusOnTouchOutside();
+
             }
             if (fontString != null) {
                 textView.setTypeface(fontString);

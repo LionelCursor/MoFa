@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -123,6 +125,23 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         initActionBar();
 
         initData();
+    }
+
+    /**
+     * ensure the NetworkConnected
+     * @param context get net Message
+     * @return boolean
+     */
+    public static boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
     }
 
     private void initActionBar(){
@@ -370,14 +389,16 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            RelativeLayout relativeLayout  =(RelativeLayout)findViewById(R.id.relativeLayout_dialog_fullscreen);
-            if (relativeLayout.getVisibility()== View.VISIBLE){
+            RelativeLayout relativeLayout  = (RelativeLayout)findViewById(R.id.relativeLayout_dialog_fullscreen);
+            if (relativeLayout.getVisibility() == View.VISIBLE){
                 relativeLayout.setVisibility(View.GONE);
+                return true;
             }
-            return true;
+
+            finish();
+            overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
+
         }
-
-
         return super.onKeyDown(keyCode, event);
     }
 

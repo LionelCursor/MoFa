@@ -28,8 +28,10 @@ public class MoFaSeekBar extends SeekBar {
     }
 
     @Override
+
     public synchronized void setProgress(int progress) {
         super.setProgress(progress);
+
     }
 
     public void setProgressAndDisplay(int progress){
@@ -38,8 +40,6 @@ public class MoFaSeekBar extends SeekBar {
             mListener.onStopTrackingTouch(this);
         }
     }
-
-
     @Override
     public void setOnSeekBarChangeListener(OnSeekBarChangeListener l) {
         super.setOnSeekBarChangeListener(l);
