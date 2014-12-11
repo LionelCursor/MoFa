@@ -23,6 +23,9 @@
 
 
     </declare-styleable>
+    <declare-styleable name="MoFaTextButton">
+        <attr name="pressed_color" format="color|dimension"/>
+    </declare-styleable>
     <declare-styleable name="RoundedImageView">
         <attr name="corner_radius" format="dimension" />
         <attr name="border_width" format="dimension" />

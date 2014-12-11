@@ -98,6 +98,10 @@
             android:name="com.unique.mofaforhackday.Activity.ImageSelectedDetailActivity"
             android:label="@string/title_activity_image_selected_detail" >
         </activity>
+        <activity
+            android:name="com.unique.mofaforhackday.Activity.AboutUsActivity"
+             >
+        </activity>
     </application>
 
 </manifest>

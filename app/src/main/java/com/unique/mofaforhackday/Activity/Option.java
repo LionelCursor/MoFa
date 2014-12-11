@@ -65,11 +65,9 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
             back = (ImageButton) view.findViewById(R.id.back);
             TextView viceText = (TextView) view.findViewById(R.id.vice_text);
             viceText.getPaint().setFakeBoldText(true);
-//            Button confirm = (Button) view.findViewById(R.id.confirm);
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             actionBar.setCustomView(view, layout);
             viceText.setText("设置");
-//            confirm.setVisibility(View.GONE);
         }
     }
 
@@ -96,7 +94,9 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.option_back:
-                imitatePressHome(this);
+                //imitatePressHome(this);
+                startActivity(new Intent(this, AboutUsActivity.class));
+                overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
                 break;
             case R.id.option_feedback:
                 agent.startFeedbackActivity();

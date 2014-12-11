@@ -210,7 +210,7 @@ public class OkActivity extends Activity {
                         }
                     }
 
-                    ;
+
                 }.start();
                 new Thread(new Runnable() {
                     public void run() {

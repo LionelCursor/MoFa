@@ -8,8 +8,8 @@ android {
         applicationId "com.unique.mofaforhackday"
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 4
-        versionName "2.2"
+        versionCode 5
+        versionName "2.3"
         renderscriptSupportModeEnabled true
     }
     buildTypes {
