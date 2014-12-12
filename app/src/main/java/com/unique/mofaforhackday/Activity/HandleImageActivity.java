@@ -94,9 +94,7 @@ public class HandleImageActivity extends Activity {
      * The WrapSlidingDrawer global views                              *
      */
     private Modifitation mModifitation = null;
-    /**
-     * *******************************************************************************************
-     */
+
     private MoFaSlidingDrawer wrapSlidingDrawer;
     /**
      * Main Work Station
@@ -469,7 +467,31 @@ public class HandleImageActivity extends Activity {
     }
 
     private void setWordRotateDetail() {
-        ((MoFaSeekBar) findViewById(R.id.seekBar_word_rotate)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        final MoFaSeekBar rotateSeekBar = ((MoFaSeekBar) findViewById(R.id.seekBar_word_rotate));
+        ImageButton minus = (ImageButton) findViewById(R.id.text_rotate_counterclockwise);
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rotateSeekBar.getProgress() < 10) {
+                    rotateSeekBar.setProgress(0);
+                }else{
+                    rotateSeekBar.setProgress(rotateSeekBar.getProgress() - 10);
+                }
+            }
+        });
+
+        ImageButton plus = (ImageButton) findViewById(R.id.text_rotate_clockwise);
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rotateSeekBar.getProgress() > 244) {
+                    rotateSeekBar.setProgress(254);
+                }else{
+                    rotateSeekBar.setProgress(rotateSeekBar.getProgress() + 10);
+                }
+            }
+        });
+        rotateSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (textView == null) {
@@ -588,7 +610,6 @@ public class HandleImageActivity extends Activity {
         });
 
     }
-
 
     private void setShadow() {
         if (textView == null) {
@@ -1745,10 +1766,6 @@ public class HandleImageActivity extends Activity {
         font29Button.setOnClickListener(new FontClickListener("font/f29.ttf"));
         font30Button.setOnClickListener(new FontClickListener("font/f30.ttf"));
 
-        miaowuButton.setOnClickListener(new FontClickListener("font/miaowu.ttf"));
-        daofengButton.setOnClickListener(new FontClickListener("font/daofeng.ttf"));
-        shangheiButton.setOnClickListener(new FontClickListener("font/shanghei.ttf"));
-        yueheiButton.setOnClickListener(new FontClickListener("font/yuehei.ttf"));
 
         morenButton.setOnClickListener(new FontClickListener());
 
@@ -1773,6 +1790,17 @@ public class HandleImageActivity extends Activity {
         RelativeLayout zongyiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_zongyi);
 
         sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT, Context.MODE_PRIVATE);
+
+//        miaowuButton.setOnClickListener(new FontClickListener("font/miaowu.ttf"));
+//        daofengButton.setOnClickListener(new FontClickListener("font/daofeng.ttf"));
+//        shangheiButton.setOnClickListener(new FontClickListener("font/shanghei.ttf"));
+//        yueheiButton.setOnClickListener(new FontClickListener("font/yuehei.ttf"));
+        boolean miaowuEnable = sharedPreferences.getBoolean(Config.miaowu,false);
+        boolean daofengEnable = sharedPreferences.getBoolean(Config.daofeng,false);
+        boolean shangeheiEnable = sharedPreferences.getBoolean(Config.shanghei,false);
+        boolean yueheiEnable = sharedPreferences.getBoolean(Config.yuehei,false);
+
+
         boolean yingbiEnable = sharedPreferences.getBoolean(Config.yingbi, false);
         boolean fanyuanEnable = sharedPreferences.getBoolean(Config.fanyuan, false);
         boolean gutiEnable = sharedPreferences.getBoolean(Config.guti, false);
@@ -1792,6 +1820,10 @@ public class HandleImageActivity extends Activity {
         boolean zhunyuanEnable = sharedPreferences.getBoolean(Config.zhunyuan, false);
         boolean zongyiEnable = sharedPreferences.getBoolean(Config.zongyi, false);
 
+        FontCtrlView(miaowuEnable,miaowuButton,Config.miaowu);
+        FontCtrlView(yueheiEnable,yueheiButton,Config.yuehei);
+        FontCtrlView(shangeheiEnable,shangheiButton,Config.shanghei);
+        FontCtrlView(daofengEnable,daofengButton,Config.daofeng);
         FontCtrlView(yingbiEnable, yingbiButton, Config.yingbi);
         FontCtrlView(fanyuanEnable, fanyuanButton, Config.fanyuan);
         FontCtrlView(gutiEnable, gutiButton, Config.guti);
@@ -1872,29 +1904,32 @@ public class HandleImageActivity extends Activity {
             Ion.with(HandleImageActivity.this)
                     .load(Config.url + mName)
                     .progressBar(mProgressbar)
-                    .progress(new ProgressCallback() {
-                        @Override
-                        public void onProgress(long l, long l2) {
-                            L.e(l + "/" + l2);
-                        }
-                    })
                     .write(getBaseContext().getFileStreamPath(mName))
                     .setCallback(new FutureCallback<File>() {
                         @Override
                         public void onCompleted(Exception e, File result) {
-                            DownLoadCompleteToast(e);
-                            sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT, Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean(mName, true);
-                            editor.apply();
-                            ((RelativeLayout) v).removeViews(1, 2);
+                            Typeface face = null;
+                            try{
+                                face = Typeface.createFromFile(result);
+                                v.setOnClickListener(new FontClickListener(face));
+                                sharedPreferences = getSharedPreferences(Config.PREFERENCE_NAME_FONT, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean(mName, true);
+                                editor.apply();
+                                ((RelativeLayout) v).removeViews(1, 2);
+                                DownLoadCompleteToast(e);
+                            }catch (Exception fileError){
+                                fileError.printStackTrace();
+                                DownLoadCompleteToast(new Exception());
+                                ((ProgressBar)((RelativeLayout) v).getChildAt(2)).setProgress(0);
+                                v.setOnClickListener(FontDownLoadClickListener.this);
+                            }
                             v.setClickable(true);
-                            v.setOnClickListener(new FontClickListener(Typeface.createFromFile(result)));
+
                         }
                     });
         }
     }
-
 
     // Ensure the bitmap created and displayed on the screen. When it has created,mSrcMap = bitmap
     private void CreateSrcBitmap() {

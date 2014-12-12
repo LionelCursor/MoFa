@@ -10,7 +10,10 @@ public class Config {
     public final static String url_assets = "assets://temimage/";
     public final static String SDCARD_MOFA = "/sdcard/mofa/";
 
-
+    public final static String miaowu = "miaowu.ttf";
+    public final static String daofeng = "daofeng.ttf";
+    public final static String shanghei = "shanghei.ttf";
+    public final static String yuehei = "yuehei.ttf";
     public final static String yingbi = "yingbi.ttf";
     public final static String zongyi = "zongyi.ttf";
     public final static String zhongyuan = "zhongyuan.TTF";

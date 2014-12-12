@@ -194,7 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/mofa__0007_reduce" />
+                        android:background="@drawable/minus" />
 
                     <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekBar_blur"
@@ -215,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/mofa__0008_plus" />
+                        android:background="@drawable/plus" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -397,22 +397,44 @@
                 <RelativeLayout
                     android:id="@+id/relativeLayout_word_rotate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:layout_below="@id/slip_line"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
                     android:visibility="gone">
+
+                    <ImageButton
+                        android:id="@+id/text_rotate_counterclockwise"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:src="@drawable/minus" />
 
                     <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekBar_word_rotate"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/mofa_seekbar_margin_bottom"
-                        android:layout_marginTop="@dimen/mofa_seekbar_margin_top"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="25.5dp"
+                        android:layout_marginRight="25.5dp"
                         android:max="254"
+                        android:progress="127"
                         android:maxHeight="@dimen/mofa_seekbar_height"
                         android:minHeight="@dimen/mofa_seekbar_height"
-                        android:progress="127"
                         android:progressDrawable="@drawable/seek_bar_drawable"
-                        android:thumb="@drawable/mofa__0009_cursor_6" />
+                        android:thumb="@drawable/thumb"
+                        android:thumbOffset="6dip" />
+
+                    <ImageButton
+                        android:id="@+id/text_rotate_clockwise"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:src="@drawable/plus" />
                 </RelativeLayout>
                 <!--Text Align Horizontal or Vertical-->
                 <LinearLayout
@@ -447,7 +469,8 @@
                     android:layout_below="@id/slip_line"
                     android:visibility="gone">
 
-                    <com.unique.mofaforhackday.view.SwitchButton xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.unique.mofaforhackday.view.SwitchButton
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/switch_font"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -742,6 +765,23 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/miaowu" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar_font_miaowu"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:maxHeight="10dp"
+                                    android:minHeight="10dp" />
+
                             </RelativeLayout>
                             <!--<ImageButton-->
                             <!--android:id="@+id/imageButton_miaowu"-->
@@ -765,6 +805,23 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/daofeng" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar_font_daofeng"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:maxHeight="10dp"
+                                    android:minHeight="10dp" />
+
                             </RelativeLayout>
                             <!--<ImageButton-->
                             <!--android:id="@+id/imageButton_daofeng"-->
@@ -788,6 +845,23 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/shanghei" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar_font_shanghei"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:maxHeight="10dp"
+                                    android:minHeight="10dp" />
+
                             </RelativeLayout>
                             <!--<ImageButton-->
                             <!--android:id="@+id/imageButton_shanghei"-->
@@ -812,6 +886,22 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/yuehei" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:src="@drawable/mofa__0000_download" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar_font_yuehei"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:maxHeight="10dp"
+                                    android:minHeight="10dp" />
                             </RelativeLayout>
                             <!--<ImageButton-->
                             <!--android:id="@+id/imageButton_yuehei"-->
@@ -2024,6 +2114,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="30dp"
+                                android:layout_marginRight="15dp"
                                 android:background="@drawable/second_color34_button" />
 
                             <Button
@@ -2031,6 +2122,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="30dp"
+                                android:layout_marginRight="15dp"
                                 android:background="@drawable/second_color35_button" />
                         </LinearLayout>
                     </RelativeLayout>
