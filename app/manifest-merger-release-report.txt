@@ -201,6 +201,10 @@ ADDED from AndroidManifest.xml:97:9
 		ADDED from AndroidManifest.xml:99:13
 	android:name
 		ADDED from AndroidManifest.xml:98:13
+activity#com.unique.mofaforhackday.Activity.AboutUsActivity
+ADDED from AndroidManifest.xml:101:9
+	android:name
+		ADDED from AndroidManifest.xml:102:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from MoFa:SwipeBackLayout:unspecified:7:5

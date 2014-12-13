@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.unique.mofaforhackday.R;
+import com.unique.mofaforhackday.Utils.DefaultFontInflator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,11 +115,12 @@ public class AboutUsActivity extends SwipeBackActivity {
             View view = mInflater.inflate(R.layout.vice_actionbar, null);
             ImageButton back = (ImageButton) view.findViewById(R.id.back);
             viceText = (TextView) view.findViewById(R.id.vice_text);
-            viceText.getPaint().setFakeBoldText(true);
+//            viceText.getPaint().setFakeBoldText(true);
+            DefaultFontInflator.apply(this, viceText);
 //            Button confirm = (Button) view.findViewById(R.id.confirm);
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             actionBar.setCustomView(view, layout);
-            viceText.setText("About us");
+            viceText.setText("我们");
             viceText.setEms(10);
             viceText.setGravity(Gravity.CENTER);
             back.setOnClickListener(new View.OnClickListener() {

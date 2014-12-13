@@ -36,3 +36,4 @@ gradle
 #keystore
 keystore
 gradle.properties
+app/app-release.apk

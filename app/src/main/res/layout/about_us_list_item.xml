@@ -26,21 +26,21 @@
         android:layout_height="wrap_content"
         tools:ignore="RtlHardcoded">
 
-        <TextView
+        <com.unique.mofaforhackday.view.MoFaFontTextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#4886ba"/>
 
-        <TextView
+        <com.unique.mofaforhackday.view.MoFaFontTextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#4886ba"/>
 
-        <TextView
+        <com.unique.mofaforhackday.view.MoFaFontTextView
             android:id="@+id/text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

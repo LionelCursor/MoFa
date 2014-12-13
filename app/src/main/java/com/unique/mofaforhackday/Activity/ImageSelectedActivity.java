@@ -36,6 +36,7 @@ import com.unique.mofaforhackday.Adapter.ImageSelectedFragmentAdapter;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Fragment.*;
+import com.unique.mofaforhackday.Utils.DefaultFontInflator;
 import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.view.PagerSlidingTabStrip;
 
@@ -155,14 +156,14 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
             View view = mInflater.inflate(R.layout.vice_actionbar, null);
             ImageButton back = (ImageButton) view.findViewById(R.id.back);
             viceText = (TextView) view.findViewById(R.id.vice_text);
-            viceText.getPaint().setFakeBoldText(true);
+//            viceText.getPaint().setFakeBoldText(true);
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             actionBar.setCustomView(view, layout);
             viceText.setText(R.string.image_selected);
+            DefaultFontInflator.apply(this,viceText);
             viceText.setEms(10);
             viceText.setGravity(Gravity.CENTER);
             back.setOnClickListener(new BackClickListener());
-
         }
 
     }
@@ -367,7 +368,6 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         mPager.setAdapter(new ImageSelectedFragmentAdapter(getSupportFragmentManager(), this, fragmentList));
         mPager.setCurrentItem(0);//设置当前显示标签页为第一页
 
-
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setTextColor(0xFFFFFFFF);
         tabs.setDividerColor(0xFFFFFFFF);
@@ -377,8 +377,8 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         tabs.setDividerColor(0x00000000);
         tabs.setShouldExpand(true);
         tabs.setViewPager(mPager);
+        DefaultFontInflator.applyRecursive(this,tabs.getRoot());
     }
-
 
     public void returnClickedAlbum() {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().getFragments().get(2)).commit();

@@ -34,6 +34,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -427,7 +428,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		this.dividerColor = dividerColor;
 		invalidate();
 	}
-
+    public ViewGroup getRoot(){
+        return tabsContainer;
+    }
 	public void setDividerColorResource(int resId) {
 		this.dividerColor = getResources().getColor(resId);
 		invalidate();

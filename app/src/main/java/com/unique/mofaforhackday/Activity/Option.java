@@ -26,6 +26,7 @@ import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
+import com.unique.mofaforhackday.Utils.DefaultFontInflator;
 
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -92,7 +93,8 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
             View view = mInflater.inflate(R.layout.vice_actionbar, null);
             back = (ImageButton) view.findViewById(R.id.back);
             TextView viceText = (TextView) view.findViewById(R.id.vice_text);
-            viceText.getPaint().setFakeBoldText(true);
+            DefaultFontInflator.apply(this, viceText);
+//            viceText.getPaint().setFakeBoldText(true);
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             actionBar.setCustomView(view, layout);
             viceText.setText("设置");

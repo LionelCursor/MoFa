@@ -45,6 +45,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
+import com.unique.mofaforhackday.Utils.DefaultFontInflator;
 import com.unique.mofaforhackday.Utils.ImageAdjuster;
 import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.beans.ColorAdjuster;
@@ -1786,7 +1787,6 @@ public class HandleImageActivity extends Activity {
         font30Button.setOnClickListener(new FontClickListener("font/f30.ttf"));
 
 
-        morenButton.setOnClickListener(new FontClickListener());
 
         RelativeLayout yingbiButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_yingbi);
         RelativeLayout fanyuanButton = (RelativeLayout) findViewById(R.id.RelativeLayout_font_download_fanyuan);
@@ -1836,10 +1836,13 @@ public class HandleImageActivity extends Activity {
         boolean zhiyiEnable = sharedPreferences.getBoolean(Config.zhiyi, false);
         boolean zhongsongEnable = sharedPreferences.getBoolean(Config.zhongsong, false);
         boolean zhongyuanEnable = sharedPreferences.getBoolean(Config.zhongyuan, false);
-        boolean zhunyuanEnable = sharedPreferences.getBoolean(Config.zhunyuan, false);
+//        boolean zhunyuanEnable = sharedPreferences.getBoolean(Config.zhunyuan, false);
         boolean zongyiEnable = sharedPreferences.getBoolean(Config.zongyi, false);
 
-        FontCtrlView(miaowuEnable,miaowuButton,Config.miaowu);
+        morenButton.setOnClickListener(new FontClickListener());
+        zhunyuanButton.setOnClickListener(new FontClickListener("font/zhunyuan.ttf"));
+
+        FontCtrlView(miaowuEnable, miaowuButton, Config.miaowu);
         FontCtrlView(yueheiEnable,yueheiButton,Config.yuehei);
         FontCtrlView(shangeheiEnable,shangheiButton,Config.shanghei);
         FontCtrlView(daofengEnable,daofengButton,Config.daofeng);
@@ -1859,7 +1862,7 @@ public class HandleImageActivity extends Activity {
         FontCtrlView(zhiyiEnable, zhiyiButton, Config.zhiyi);
         FontCtrlView(zhongsongEnable, zhongsongButton, Config.zhongsong);
         FontCtrlView(zhongyuanEnable, zhongyuanButton, Config.zhongyuan);
-        FontCtrlView(zhunyuanEnable, zhunyuanButton, Config.zhunyuan);
+//        FontCtrlView(zhunyuanEnable, zhunyuanButton, Config.zhunyuan);
         FontCtrlView(zongyiEnable, zongyiButton, Config.zongyi);
     }
 
@@ -2065,6 +2068,7 @@ public class HandleImageActivity extends Activity {
                 LayoutInflater inflater = LayoutInflater.from(getBaseContext());
                 RelativeLayout layout = (RelativeLayout) inflater
                         .inflate(R.layout.layout_dialog, null);
+                DefaultFontInflator.applyRecursive(HandleImageActivity.this,layout);
                 final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
                 dialog.show();
                 dialog.getWindow().setContentView(layout);
@@ -2103,7 +2107,7 @@ public class HandleImageActivity extends Activity {
                 LayoutInflater inflater = LayoutInflater.from(getBaseContext());
                 RelativeLayout layout = (RelativeLayout) inflater
                         .inflate(R.layout.layout_dialog, null);
-
+                DefaultFontInflator.applyRecursive(HandleImageActivity.this,layout);
                 final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
                 dialog.show();
                 dialog.getWindow().setContentView(layout);
@@ -2125,6 +2129,7 @@ public class HandleImageActivity extends Activity {
                             mSrcBitmap.recycle();
                         }
                         finish();
+                        overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
                     }
                 });
 

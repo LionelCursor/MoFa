@@ -743,14 +743,47 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
                                     android:background="@null"
                                     android:src="@drawable/moren" />
                             </RelativeLayout>
-                            <!--<ImageButton-->
-                            <!--android:id="@+id/imageButton_moren"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:actionbar_background="@drawable/moren" />-->
+
+
+
+                            <RelativeLayout
+                                android:id="@+id/RelativeLayout_font_download_zhunyuan"
+                                android:layout_width="50dp"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="30dp"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginRight="3dp"
+                                    android:layout_marginTop="3dp"
+                                    android:background="@null"
+                                    android:src="@drawable/zhunyuan" />
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_alignParentRight="true"-->
+                                    <!--android:layout_alignParentTop="true"-->
+                                    <!--android:src="@drawable/mofa__0000_download" />-->
+
+                                <!--<ProgressBar-->
+                                    <!--style="?android:attr/progressBarStyleHorizontal"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_alignParentBottom="true"-->
+                                    <!--android:layout_centerHorizontal="true"-->
+                                    <!--android:maxHeight="10dp"-->
+                                    <!--android:minHeight="10dp" />-->
+                            </RelativeLayout>
+
                             <RelativeLayout
                                 android:id="@+id/imageButton_miaowu"
                                 android:layout_width="50dp"
@@ -827,12 +860,6 @@
                                     android:minHeight="10dp" />
 
                             </RelativeLayout>
-                            <!--<ImageButton-->
-                            <!--android:id="@+id/imageButton_daofeng"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginLeft="30dp"-->
-                            <!--android:actionbar_background="@drawable/daofeng" />-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_shanghei"
                                 android:layout_width="50dp"
@@ -868,13 +895,6 @@
                                     android:minHeight="10dp" />
 
                             </RelativeLayout>
-                            <!--<ImageButton-->
-                            <!--android:id="@+id/imageButton_shanghei"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginLeft="30dp"-->
-                            <!--android:src="@drawable/shanghei"-->
-                            <!--android:actionbar_background="@null"/>-->
                             <RelativeLayout
                                 android:id="@+id/imageButton_yuehei"
                                 android:layout_width="50dp"
@@ -909,13 +929,6 @@
                                     android:maxHeight="10dp"
                                     android:minHeight="10dp" />
                             </RelativeLayout>
-                            <!--<ImageButton-->
-                            <!--android:id="@+id/imageButton_yuehei"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginLeft="30dp"-->
-                            <!--android:src="@drawable/yuehei"-->
-                            <!--android:actionbar_background="@null"/>-->
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_yingbi"
                                 android:layout_width="50dp"
@@ -1455,39 +1468,6 @@
                                     android:minHeight="10dp" />
                             </RelativeLayout>
 
-                            <RelativeLayout
-                                android:id="@+id/RelativeLayout_font_download_zhunyuan"
-                                android:layout_width="50dp"
-                                android:layout_height="40dp"
-                                android:layout_marginLeft="30dp"
-                                android:clickable="true"
-                                android:focusable="true">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginRight="3dp"
-                                    android:layout_marginTop="3dp"
-                                    android:background="@null"
-                                    android:src="@drawable/zhunyuan" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_alignParentTop="true"
-                                    android:src="@drawable/mofa__0000_download" />
-
-                                <ProgressBar
-                                    style="?android:attr/progressBarStyleHorizontal"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:maxHeight="10dp"
-                                    android:minHeight="10dp" />
-                            </RelativeLayout>
 
                             <RelativeLayout
                                 android:id="@+id/RelativeLayout_font_download_zongyi"
