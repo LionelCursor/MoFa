@@ -10,7 +10,8 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/mofa__0006_introduction"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="260dp"
+        android:scaleType="centerInside"/>
 
     <ImageButton
         android:layout_above="@+id/option_feedback"
@@ -24,7 +25,7 @@
     <ImageButton
         android:layout_margin="15dp"
         android:id="@+id/option_feedback"
-        android:layout_above="@+id/option_back"
+        android:layout_above="@+id/option_about_us"
         android:background="@null"
         android:layout_centerHorizontal="true"
         android:src="@drawable/option_fb_selector"
@@ -32,11 +33,12 @@
         android:layout_height="wrap_content" />
 
     <ImageButton
-        android:id="@+id/option_back"
+        android:id="@+id/option_about_us"
         android:layout_alignParentBottom="true"
         android:background="@null"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/option_exit_selector"
+        android:src="@drawable/option_about_us_selector"
+        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>
