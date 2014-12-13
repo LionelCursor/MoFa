@@ -10,24 +10,20 @@
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:background="#000000" >
+        android:background="#4886ba" >
 
-        <Button
+        <ImageButton
             android:id="@+id/umeng_fb_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/umeng_fb_btn_bg_selector"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:text="@string/umeng_fb_back"
-            android:textColor="#ffffff" 
-            android:visibility="invisible" />        
-        
+            android:src="@drawable/back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/option_actionbar_back_shadow"
+            android:visibility="invisible"
+            android:contentDescription="back" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +64,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/umeng_fb_conversation_contact_entry"
-        android:background="@drawable/umeng_fb_conversation_bg" >
+        android:background="#eeeeee" >
 
         <ListView
             android:id="@+id/umeng_fb_reply_list"

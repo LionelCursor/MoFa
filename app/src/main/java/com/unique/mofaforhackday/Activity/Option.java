@@ -163,6 +163,7 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
             case R.id.option_share:
                 mController.openShare(this, false);
                 break;
+            default:
         }
     }
 

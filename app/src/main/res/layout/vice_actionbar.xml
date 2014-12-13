@@ -21,7 +21,6 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

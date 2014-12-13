@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:background="#000000" >
+        android:background="#4886ba" >
 
         <ImageView
             android:id="@+id/umeng_fb_back"
@@ -43,7 +43,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/umeng_fb_contact_header"
-        android:background="@drawable/umeng_fb_conversation_bg" >
+        android:background="#eeeeee" >
 
         <EditText
             android:id="@+id/umeng_fb_contact_info"
