@@ -9,15 +9,14 @@
         android:layout_alignParentTop="true"
         android:background="#50000000"/>
 
-    <com.unique.mofaforhackday.view.roundedimageview.RoundedImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ImageView
         android:id="@+id/about_us_head_icon"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"
-        android:scaleType="centerCrop"
-        app:corner_radius="36dp" />
+        android:scaleType="centerInside"
+        />
     <LinearLayout
         android:layout_toRightOf="@id/about_us_head_icon"
         android:layout_marginLeft="20dp"
@@ -31,21 +30,22 @@
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ff8fa1ff"/>
+            android:textSize="12sp"
+            android:textColor="#4886ba"/>
 
         <TextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ff8fa1ff"
-            />
+            android:textSize="12sp"
+            android:textColor="#4886ba"/>
 
         <TextView
             android:id="@+id/text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ff8fa1ff"
-            />
+            android:textSize="12sp"
+            android:textColor="#4886ba"/>
     </LinearLayout>
 
 </RelativeLayout>
