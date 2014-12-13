@@ -183,19 +183,20 @@
                 <RelativeLayout
                     android:id="@+id/blur_relativelayout"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="1.5dp"
-                    android:layout_marginLeft="28dp"
-                    android:layout_marginRight="28dp">
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp">
 
                     <ImageButton
                         android:id="@+id/jian"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/minus" />
+                        android:src="@drawable/minus"
+                        android:background="@null"/>
 
                     <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekBar_blur"
@@ -212,11 +213,12 @@
 
                     <ImageButton
                         android:id="@+id/jia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/plus" />
+                        android:src="@drawable/plus"
+                        android:background="@null"/>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -2501,7 +2503,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <RelativeLayout
                             android:id="@+id/R_layout"
