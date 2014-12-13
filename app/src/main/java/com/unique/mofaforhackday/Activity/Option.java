@@ -74,7 +74,18 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
         optionFeedback.setOnClickListener(this);
         optionShare.setOnClickListener(this);
         back.setOnClickListener(this);
+
+
+        reflect();
     }
+
+    /**
+     * I want to change Activity's onPostCreate() to make all Activity's statusBar blue.
+     */
+    private void reflect(){
+
+    }
+
     private void init() {
         optionOut = (ImageButton) findViewById(R.id.option_about_us);
         optionFeedback = (ImageButton) findViewById(R.id.option_feedback);

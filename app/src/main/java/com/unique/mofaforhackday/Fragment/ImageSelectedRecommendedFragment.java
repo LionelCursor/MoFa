@@ -1,6 +1,8 @@
 package com.unique.mofaforhackday.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -28,9 +31,11 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.unique.mofaforhackday.Activity.HandleImageActivity;
 import com.unique.mofaforhackday.Activity.ImageSelectedActivity;
+import com.unique.mofaforhackday.Activity.OkActivity;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
+import com.unique.mofaforhackday.Utils.DefaultFontInflator;
 import com.unique.mofaforhackday.Utils.L;
 
 import java.io.File;
@@ -86,7 +91,7 @@ public class ImageSelectedRecommendedFragment extends Fragment {
 
     private class MyOnClickListener implements AdapterView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
             String name = handleString((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
             boolean hasFile = hasFile(Config.SDCARD_MOFA + name);
             if (!hasFile) {
@@ -95,7 +100,36 @@ public class ImageSelectedRecommendedFragment extends Fragment {
                     f.mkdirs();
                 }
                 if (ImageSelectedActivity.isNetworkConnected(getActivity())) {
-                    DownLoadImageFilesWithIon((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
+                    if (ImageSelectedActivity.isWifi(getActivity())){
+                        DownLoadImageFilesWithIon((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
+                    }else{
+                        LayoutInflater inflater = LayoutInflater.from(getActivity());
+                        RelativeLayout layout = (RelativeLayout) inflater
+                                .inflate(R.layout.layout_dialog, null);
+                        DefaultFontInflator.applyRecursive(getActivity(), layout);
+                        final Dialog dialog = new AlertDialog.Builder(getActivity()).create();
+                        dialog.show();
+                        dialog.getWindow().setContentView(layout);
+                        ((TextView) layout.findViewById(R.id.dialog_text)).setText("现在不是WiFi状态，真下载吗？");
+                        // 取消按钮
+                        Button btnCancel = (Button) layout.findViewById(R.id.dialog_cancel);
+                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        // 确定按钮
+                        Button btnOK = (Button) layout.findViewById(R.id.dialog_ok);
+                        btnOK.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DownLoadImageFilesWithIon((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
+                            }
+                        });
+
+                    }
                 } else {
                     Toast.makeText(getActivity(), "美美的图片联网就可以下载哦~亲~~", Toast.LENGTH_SHORT).show();
                 }

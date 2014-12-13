@@ -2,6 +2,7 @@ package com.unique.mofaforhackday.Activity;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,9 +45,7 @@ public class AboutUsActivity extends SwipeBackActivity {
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setTintColor(Color.parseColor("#4886ba"));
         }
-
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +95,7 @@ public class AboutUsActivity extends SwipeBackActivity {
         list.add(mapLei);
         Map<String,Object> mapLiuChange = new HashMap<String, Object>();
         mapLiuChange.put("image",R.drawable.chang);
-        mapLiuChange.put("text1","新浪微博：@liuchanghcang");
+        mapLiuChange.put("text1","新浪微博：@liuchangchang");
         mapLiuChange.put("text2","Email:changliu@hustunique.com");
         mapLiuChange.put("text3","Android");
         list.add(mapLiuChange);

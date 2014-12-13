@@ -111,10 +111,6 @@ public class MoFaTextView extends TextView {
         ViewParent parent = getParent();
         //Now parent is a ViewGroup
         while (!((parent = parent.getParent()) instanceof MoFaRelativeLayout));
-//        parent = getParent();
-//            Log.e(TAG,parent.toString());
-//        parent  = getParent().getParent();
-//        Log.e(TAG,parent.toString());
         if (parent instanceof MoFaRelativeLayout){
             ((MoFaRelativeLayout) parent).addOnInterceptTouchListener(new MoFaRelativeLayout.OnInterceptTouchListener() {
                 @Override
@@ -314,8 +310,6 @@ public class MoFaTextView extends TextView {
         this.typeFace = Typeface.createFromAsset(assetManager, typeface);
         this.setTypeface(typeFace);
     }
-
-
 
     public void setHorizontal() {
         if (mOrientation == ORIENTATION.HORIZONTAL){

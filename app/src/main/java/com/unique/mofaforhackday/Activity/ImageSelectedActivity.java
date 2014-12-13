@@ -144,6 +144,22 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         }
         return false;
     }
+    /**
+     * 判断当前网络是否是wifi网络
+     * if(activeNetInfo.getType()==ConnectivityManager.TYPE_MOBILE) { //判断3G网
+     *
+     * @param context
+     * @return boolean
+     */
+    public static boolean isWifi(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetInfo != null
+                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI;
+    }
+
+
 
     private void initActionBar(){
         ActionBar actionBar = getActionBar();
@@ -394,10 +410,8 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
                 relativeLayout.setVisibility(View.GONE);
                 return true;
             }
-
             finish();
             overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
-
         }
         return super.onKeyDown(keyCode, event);
     }
