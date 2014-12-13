@@ -15,11 +15,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/background_blur"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -31,8 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            />
+            android:layout_centerVertical="true" />
 
         <com.unique.mofaforhackday.view.cropper.CropImageView
             android:id="@+id/crop_image_view"
@@ -420,9 +421,9 @@
                         android:layout_marginLeft="25.5dp"
                         android:layout_marginRight="25.5dp"
                         android:max="254"
-                        android:progress="127"
                         android:maxHeight="@dimen/mofa_seekbar_height"
                         android:minHeight="@dimen/mofa_seekbar_height"
+                        android:progress="127"
                         android:progressDrawable="@drawable/seek_bar_drawable"
                         android:thumb="@drawable/thumb"
                         android:thumbOffset="6dip" />
@@ -469,8 +470,7 @@
                     android:layout_below="@id/slip_line"
                     android:visibility="gone">
 
-                    <com.unique.mofaforhackday.view.SwitchButton
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.unique.mofaforhackday.view.SwitchButton xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/switch_font"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -765,6 +765,7 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/miaowu" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -805,6 +806,7 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/daofeng" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -845,6 +847,7 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/shanghei" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -886,6 +889,7 @@
                                     android:layout_marginTop="3dp"
                                     android:background="@null"
                                     android:src="@drawable/yuehei" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -2132,9 +2136,9 @@
                     android:id="@+id/linearLayout_shadow"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:layout_below="@id/slip_line"
                     android:layout_marginEnd="5dp"
                     android:layout_marginStart="5dp"
-                    android:layout_below="@id/slip_line"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone">
@@ -2229,7 +2233,8 @@
                 android:layout_marginRight="28dp"
                 android:visibility="gone">
 
-                <com.unique.mofaforhackday.view.SwitchButton xmlns:app="http://schemas.android.com/apk/res-auto"
+                <com.unique.mofaforhackday.view.SwitchButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/switch_quse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -2277,7 +2282,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/adjust_layout_three_button"
+                    android:id="@+id/adjust_layout_ctrl_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/linearlayout_ensure_button"
@@ -2285,140 +2290,211 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/adjust_tiaose"
+                    <com.unique.mofaforhackday.view.MoFaTextButton
+                        android:id="@+id/adjust_brightness"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/handle_tiaose_selector" />
+                        android:gravity="center"
+                        android:text="@string/brightness"
+                        android:textColor="#fff" />
 
-                    <ImageButton
-                        android:id="@+id/adjust_RGB"
+                    <com.unique.mofaforhackday.view.MoFaTextButton
+                        android:id="@+id/adjust_contrast"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/handleimage_rgb_selector" />
+                        android:gravity="center"
+                        android:text="@string/contrast"
+                        android:textColor="#fff" />
 
-                    <ImageButton
-                        android:id="@+id/adjust_detail"
+                    <com.unique.mofaforhackday.view.MoFaTextButton
+                        android:id="@+id/adjust_saturation"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@null"
-                        android:src="@drawable/handle_detail_selector" />
+                        android:gravity="center"
+                        android:text="@string/saturation"
+                        android:textColor="#fff" />
 
+                    <com.unique.mofaforhackday.view.MoFaTextButton
+                        android:id="@+id/adjust_rgb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/RGB"
+                        android:textColor="#fff"
+                        />
                 </LinearLayout>
 
                 <View
                     android:id="@+id/line_in_adjust"
                     android:layout_width="fill_parent"
                     android:layout_height="0.8dp"
-                    android:layout_below="@id/adjust_layout_three_button"
+                    android:layout_below="@id/adjust_layout_ctrl_button"
                     android:background="#80ffffff" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/line_in_adjust">
+                    android:layout_below="@id/line_in_adjust"
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:id="@+id/adjust_tiaose_detail_layout"
+                    <RelativeLayout
+                        android:id="@+id/adjust_layout_detail_brightness"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:orientation="vertical"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
                         android:visibility="gone">
 
-                        <RelativeLayout
+                        <com.unique.mofaforhackday.view.MoFaSeekBar
+                            android:id="@+id/brightness_seekbar"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:max="160"
+                            android:maxHeight="@dimen/mofa_seekbar_height"
+                            android:minHeight="@dimen/mofa_seekbar_height"
+                            android:progress="80"
+                            android:progressDrawable="@drawable/seek_drawable_brightness"
+                            android:thumb="@drawable/mofa__0009_cursor_6" />
+                    </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/textview_brightness"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="center"
-                                android:text="亮度"
-                                android:textColor="#80ffffff" />
+                    <RelativeLayout
+                        android:id="@+id/adjust_layout_detail_contrast"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-                            <com.unique.mofaforhackday.view.MoFaSeekBar
-                                android:id="@+id/brightness_seekbar"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/textview_brightness"
-                                android:max="160"
-                                android:maxHeight="@dimen/mofa_seekbar_height"
-                                android:minHeight="@dimen/mofa_seekbar_height"
-                                android:progress="80"
-                                android:progressDrawable="@drawable/seek_drawable_brightness"
-                                android:thumb="@drawable/mofa__0009_cursor_6" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/contrast_layout"
+                        <com.unique.mofaforhackday.view.MoFaSeekBar
+                            android:id="@+id/contrast_seekbar"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:max="140"
+                            android:maxHeight="@dimen/mofa_seekbar_height"
+                            android:minHeight="@dimen/mofa_seekbar_height"
+                            android:progress="70"
+                            android:progressDrawable="@drawable/seek_drawable_contrast"
+                            android:thumb="@drawable/mofa__0009_cursor_6" />
+                    </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/textview_contrast"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="center"
-                                android:text="对比度"
-                                android:textColor="#80ffffff" />
+                    <RelativeLayout
+                        android:id="@+id/adjust_layout_detail_saturation"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-                            <com.unique.mofaforhackday.view.MoFaSeekBar
-                                android:id="@+id/contrast_seekbar"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/textview_contrast"
-                                android:max="140"
-                                android:maxHeight="@dimen/mofa_seekbar_height"
-                                android:minHeight="@dimen/mofa_seekbar_height"
-                                android:progress="70"
-                                android:progressDrawable="@drawable/seek_drawable_contrast"
-                                android:thumb="@drawable/mofa__0009_cursor_6" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/saturation_layout"
+                        <com.unique.mofaforhackday.view.MoFaSeekBar
+                            android:id="@+id/Saturation_seekbar"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:max="200"
+                            android:maxHeight="@dimen/mofa_seekbar_height"
+                            android:minHeight="@dimen/mofa_seekbar_height"
+                            android:progress="100"
+                            android:progressDrawable="@drawable/seek_drawable_saturation"
+                            android:thumb="@drawable/mofa__0009_cursor_6" />
+                    </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/textview_saturation"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="center"
-                                android:text="饱和度"
-                                android:textColor="#80ffffff" />
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/adjust_tiaose_detail_layout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="120dp"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:visibility="gone">-->
 
-                            <com.unique.mofaforhackday.view.MoFaSeekBar
-                                android:id="@+id/Saturation_seekbar"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/textview_saturation"
-                                android:max="200"
-                                android:maxHeight="@dimen/mofa_seekbar_height"
-                                android:minHeight="@dimen/mofa_seekbar_height"
-                                android:progress="100"
-                                android:progressDrawable="@drawable/seek_drawable_saturation"
-                                android:thumb="@drawable/mofa__0009_cursor_6" />
-                        </RelativeLayout>
-                    </LinearLayout>
+                    <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_vertical">-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/textview_brightness"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="亮度"-->
+                    <!--android:textColor="#80ffffff" />-->
+
+                    <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
+                    <!--android:id="@+id/brightness_seekbar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_toRightOf="@id/textview_brightness"-->
+                    <!--android:max="160"-->
+                    <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
+                    <!--android:minHeight="@dimen/mofa_seekbar_height"-->
+                    <!--android:progress="80"-->
+                    <!--android:progressDrawable="@drawable/seek_drawable_brightness"-->
+                    <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
+                    <!--</RelativeLayout>-->
+
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/contrast_layout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_vertical">-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/textview_contrast"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="对比度"-->
+                    <!--android:textColor="#80ffffff" />-->
+
+                    <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
+                    <!--android:id="@+id/contrast_seekbar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_toRightOf="@id/textview_contrast"-->
+                    <!--android:max="140"-->
+                    <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
+                    <!--android:minHeight="@dimen/mofa_seekbar_height"-->
+                    <!--android:progress="70"-->
+                    <!--android:progressDrawable="@drawable/seek_drawable_contrast"-->
+                    <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
+                    <!--</RelativeLayout>-->
+
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/saturation_layout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_vertical">-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/textview_saturation"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="饱和度"-->
+                    <!--android:textColor="#80ffffff" />-->
+
+                    <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
+                    <!--android:id="@+id/Saturation_seekbar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_toRightOf="@id/textview_saturation"-->
+                    <!--android:max="200"-->
+                    <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
+                    <!--android:minHeight="@dimen/mofa_seekbar_height"-->
+                    <!--android:progress="100"-->
+                    <!--android:progressDrawable="@drawable/seek_drawable_saturation"-->
+                    <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
+                    <!--</RelativeLayout>-->
+                    <!--</LinearLayout>-->
 
                     <LinearLayout
                         android:id="@+id/adjust_RGB_detail_layout"
@@ -2465,7 +2541,6 @@
                                 android:progress="100"
                                 android:progressDrawable="@drawable/seek_drawable_adjust_rgb_g"
                                 android:thumb="@drawable/mofa__0011_green"
-
                                 />
                         </RelativeLayout>
 
@@ -2489,41 +2564,41 @@
                         </RelativeLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/adjust_detail_detail_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
+                    <!--<LinearLayout-->
+                        <!--android:id="@+id/adjust_detail_detail_layout"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="40dp"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:visibility="gone">-->
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical">
+                        <!--<RelativeLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center_vertical">-->
 
-                            <TextView
-                                android:id="@+id/textview_ruihua"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="center"
-                                android:text="色相"
-                                android:textColor="#80ffffff" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/textview_ruihua"-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_alignParentLeft="true"-->
+                                <!--android:layout_marginLeft="10dp"-->
+                                <!--android:gravity="center"-->
+                                <!--android:text="色相"-->
+                                <!--android:textColor="#80ffffff" />-->
 
-                            <com.unique.mofaforhackday.view.MoFaSeekBar
-                                android:id="@+id/ruihua_seekbar"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/textview_ruihua"
-                                android:max="360"
-                                android:maxHeight="@dimen/mofa_seekbar_height"
-                                android:minHeight="@dimen/mofa_seekbar_height"
-                                android:progress="180"
-                                android:progressDrawable="@drawable/seek_drawable_brightness"
-                                android:thumb="@drawable/mofa__0009_cursor_6" />
-                        </RelativeLayout>
+                            <!--<com.unique.mofaforhackday.view.MoFaSeekBar-->
+                                <!--android:id="@+id/ruihua_seekbar"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_toRightOf="@id/textview_ruihua"-->
+                                <!--android:max="360"-->
+                                <!--android:maxHeight="@dimen/mofa_seekbar_height"-->
+                                <!--android:minHeight="@dimen/mofa_seekbar_height"-->
+                                <!--android:progress="180"-->
+                                <!--android:progressDrawable="@drawable/seek_drawable_brightness"-->
+                                <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
+                        <!--</RelativeLayout>-->
 
                         <!--<RelativeLayout-->
                         <!--android:layout_width="match_parent"-->
@@ -2583,7 +2658,7 @@
                         <!--android:progressDrawable="@drawable/seek_drawable_saturation"-->
                         <!--android:thumb="@drawable/mofa__0009_cursor_6" />-->
                         <!--</RelativeLayout>-->
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
                 </RelativeLayout>
             </RelativeLayout>
             <!--xuhua-->

@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEEE"
     android:padding="20dp"
+    android:fitsSystemWindows="true"
     >
     <ImageView
         android:layout_centerHorizontal="true"

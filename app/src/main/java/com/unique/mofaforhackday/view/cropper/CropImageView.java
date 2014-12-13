@@ -425,6 +425,11 @@ public class CropImageView extends FrameLayout {
         mCropOverlayView.setFixedAspectRatio(fixAspectRatio);
     }
 
+
+    public void setCropRect(Rect rect){
+        mCropOverlayView.setBitmapRect(rect);
+    }
+
     /**
      * Sets the guidelines for the CropOverlayView to be either on, off, or to show when
      * resizing the application.

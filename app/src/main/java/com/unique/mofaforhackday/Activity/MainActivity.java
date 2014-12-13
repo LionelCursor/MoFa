@@ -86,6 +86,8 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,Option.class));
+                overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
+
             }
         });
     }

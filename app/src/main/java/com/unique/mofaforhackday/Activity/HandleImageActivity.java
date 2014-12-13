@@ -32,13 +32,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.ProgressCallback;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -51,9 +49,9 @@ import com.unique.mofaforhackday.Utils.ImageAdjuster;
 import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.beans.ColorAdjuster;
 import com.unique.mofaforhackday.beans.Modifitation;
-import com.unique.mofaforhackday.view.MoFaRelativeLayout;
 import com.unique.mofaforhackday.view.MoFaSeekBar;
 import com.unique.mofaforhackday.view.MoFaSlidingDrawer;
+import com.unique.mofaforhackday.view.MoFaTextButton;
 import com.unique.mofaforhackday.view.MoFaTextView;
 import com.unique.mofaforhackday.view.SwitchButton;
 import com.unique.mofaforhackday.view.cropper.CropImageView;
@@ -197,11 +195,19 @@ public class HandleImageActivity extends Activity {
     private MoFaSeekBar shadowSeekBar = null;
     private MoFaSeekBar wenheduSeekbar = null;
     private LinearLayout mAdjustDetailRGBLayout = null;
-    private LinearLayout mAdjustDetailTiaoseLayout = null;
-    private LinearLayout mAdjustDetailDetailLayout = null;
-    private ImageButton TiaoseButton = null;
-    private ImageButton RGBButton = null;
-    private ImageButton DetailButton = null;
+    private RelativeLayout mAdjustDetailBrightnessLayout;
+    private RelativeLayout mAdjustDetailContrastLayout;
+    private RelativeLayout mAdjustDetailSaturationLayout;
+
+    MoFaTextButton ButtonBrightness;
+    MoFaTextButton ButtonContrast;
+    MoFaTextButton ButtonSaturation;
+    MoFaTextButton ButtonRGB;
+//    private LinearLayout mAdjustDetailTiaoseLayout = null;
+//    private LinearLayout mAdjustDetailDetailLayout = null;
+//    private ImageButton TiaoseButton = null;
+//    private ImageButton RGBButton = null;
+//    private ImageButton DetailButton = null;
     private AdjustSeekBarChangeListener adjustseekbarChangeListener = null;
     /**
      * Blur
@@ -244,7 +250,6 @@ public class HandleImageActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     private void makeStep() {
@@ -444,8 +449,6 @@ public class HandleImageActivity extends Activity {
         setBlurDetail();
         setAdjustDetail();
         setBianjiDetail();
-
-
     }
 
     private void setWordDetail() {
@@ -806,10 +809,10 @@ public class HandleImageActivity extends Activity {
     }
 
     private void setDetailSeekBar() {
-        RuihuaSeekBar = (MoFaSeekBar) findViewById(R.id.ruihua_seekbar);
+//        RuihuaSeekBar = (MoFaSeekBar) findViewById(R.id.ruihua_seekbar);
 //        shadowSeekBar = (MoFaSeekBar) findViewById(R.id.shadow_seekbar);
 //        wenheduSeekbar = (MoFaSeekBar) findViewById(R.id.wenhedu_seekbar);
-        RuihuaSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
+//        RuihuaSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
 //        shadowSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
 //        wenheduSeekbar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
     }
@@ -840,7 +843,7 @@ public class HandleImageActivity extends Activity {
             BrightnessseekBar.setProgress(80);
             ContrastseekBar.setProgress(70);
             SaturationseekBar.setProgress(100);
-            RuihuaSeekBar.setProgress(180);
+//            RuihuaSeekBar.setProgress(180);
         }
     }
 
@@ -900,6 +903,8 @@ public class HandleImageActivity extends Activity {
         }
         cropImageView.setImageBitmap(b);
         cropImageView.setVisibility(View.VISIBLE);
+        //TODO-CropView shrink
+//        cropImageView.
     }
 
     /**
@@ -969,18 +974,32 @@ public class HandleImageActivity extends Activity {
     }
 
     private void setAdjustCtrlLayout() {
-        TiaoseButton = (ImageButton) findViewById(R.id.adjust_tiaose);
-        RGBButton = (ImageButton) findViewById(R.id.adjust_RGB);
-        DetailButton = (ImageButton) findViewById(R.id.adjust_detail);
+//        TiaoseButton = (ImageButton) findViewById(R.id.adjust_tiaose);
+//        RGBButton = (ImageButton) findViewById(R.id.adjust_RGB);
+//        DetailButton = (ImageButton) findViewById(R.id.adjust_detail);
 
-        mAdjustDetailTiaoseLayout = (LinearLayout) findViewById(R.id.adjust_tiaose_detail_layout);
+        ButtonBrightness = (MoFaTextButton) findViewById(R.id.adjust_brightness);
+        ButtonContrast = (MoFaTextButton) findViewById(R.id.adjust_contrast);
+        ButtonSaturation = (MoFaTextButton) findViewById(R.id.adjust_saturation);
+        ButtonRGB = (MoFaTextButton) findViewById(R.id.adjust_rgb);
+
+
+//        mAdjustDetailTiaoseLayout = (LinearLayout) findViewById(R.id.adjust_tiaose_detail_layout);
+        mAdjustDetailContrastLayout = (RelativeLayout) findViewById(R.id.adjust_layout_detail_contrast);
+        mAdjustDetailBrightnessLayout = (RelativeLayout) findViewById(R.id.adjust_layout_detail_brightness);
+        mAdjustDetailSaturationLayout = (RelativeLayout) findViewById(R.id.adjust_layout_detail_saturation);
         mAdjustDetailRGBLayout = (LinearLayout) findViewById(R.id.adjust_RGB_detail_layout);
-        mAdjustDetailDetailLayout = (LinearLayout) findViewById(R.id.adjust_detail_detail_layout);
-        AdjustClickListener listener = new AdjustClickListener();
-        TiaoseButton.setOnClickListener(listener);
-        RGBButton.setOnClickListener(listener);
-        DetailButton.setOnClickListener(listener);
+//        mAdjustDetailDetailLayout = (LinearLayout) findViewById(R.id.adjust_detail_detail_layout);
 
+
+        AdjustClickListener listener = new AdjustClickListener();
+//        TiaoseButton.setOnClickListener(listener);
+//        RGBButton.setOnClickListener(listener);
+//        DetailButton.setOnClickListener(listener);
+        ButtonBrightness.setOnClickListener(listener);
+        ButtonContrast.setOnClickListener(listener);
+        ButtonSaturation.setOnClickListener(listener);
+        ButtonRGB.setOnClickListener(listener);
         (findViewById(R.id.adjust_cancel)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2226,33 +2245,60 @@ public class HandleImageActivity extends Activity {
                 case R.id.B_seekbar:
                     ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 100, ADJUSTER_TYPE.BLUE_OFFSET, listener);
                     break;
-                case R.id.ruihua_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 180, ADJUSTER_TYPE.SATURATION, listener);
-                    break;
+//                case R.id.ruihua_seekbar:
+//                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 180, ADJUSTER_TYPE.SATURATION, listener);
+//                    break;
                 default:
             }
         }
     }
 
     private class AdjustClickListener implements View.OnClickListener {
+        private void allAdjustLayoutGONE(){
+//            mAdjustDetailDetailLayout.setVisibility(View.GONE);
+            mAdjustDetailRGBLayout.setVisibility(View.GONE);
+            mAdjustDetailBrightnessLayout.setVisibility(View.GONE);
+            mAdjustDetailContrastLayout.setVisibility(View.GONE);
+            mAdjustDetailSaturationLayout.setVisibility(View.GONE);
+//            mAdjustDetailTiaoseLayout.setVisibility(View.GONE);
+            ButtonColorReset();
+        }
+
+        private void ButtonColorReset(){
+            ButtonBrightness.colorReset();
+            ButtonRGB.colorReset();
+            ButtonContrast.colorReset();
+            ButtonSaturation.colorReset();
+        }
 
         @Override
         public void onClick(View v) {
+            allAdjustLayoutGONE();
             switch (v.getId()) {
-                case R.id.adjust_tiaose:
-                    mAdjustDetailDetailLayout.setVisibility(View.GONE);
-                    mAdjustDetailRGBLayout.setVisibility(View.GONE);
-                    mAdjustDetailTiaoseLayout.setVisibility(View.VISIBLE);
+                case R.id.adjust_brightness:
+                    mAdjustDetailBrightnessLayout.setVisibility(View.VISIBLE);
+                    ButtonBrightness.colorPressed();
+//                    mAdjustDetailDetailLayout.setVisibility(View.GONE);
+//                    mAdjustDetailRGBLayout.setVisibility(View.GONE);
+//                    mAdjustDetailTiaoseLayout.setVisibility(View.VISIBLE);
                     break;
-                case R.id.adjust_RGB:
-                    mAdjustDetailDetailLayout.setVisibility(View.GONE);
+                case R.id.adjust_contrast:
+                    mAdjustDetailContrastLayout.setVisibility(View.VISIBLE);
+                    ButtonContrast.colorPressed();
+//                    mAdjustDetailDetailLayout.setVisibility(View.GONE);
+//                    mAdjustDetailRGBLayout.setVisibility(View.VISIBLE);
+//                    mAdjustDetailTiaoseLayout.setVisibility(View.GONE);
+                    break;
+                case R.id.adjust_saturation:
+                    mAdjustDetailSaturationLayout.setVisibility(View.VISIBLE);
+                    ButtonSaturation.colorPressed();
+//                    mAdjustDetailDetailLayout.setVisibility(View.VISIBLE);
+//                    mAdjustDetailRGBLayout.setVisibility(View.GONE);
+//                    mAdjustDetailTiaoseLayout.setVisibility(View.GONE);
+                    break;
+                case R.id.adjust_rgb:
                     mAdjustDetailRGBLayout.setVisibility(View.VISIBLE);
-                    mAdjustDetailTiaoseLayout.setVisibility(View.GONE);
-                    break;
-                case R.id.adjust_detail:
-                    mAdjustDetailDetailLayout.setVisibility(View.VISIBLE);
-                    mAdjustDetailRGBLayout.setVisibility(View.GONE);
-                    mAdjustDetailTiaoseLayout.setVisibility(View.GONE);
+                    ButtonRGB.colorPressed();
                     break;
                 default:
             }

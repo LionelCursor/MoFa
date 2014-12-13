@@ -13,4 +13,9 @@
     <string name="title_activity_image_selected_detail">ImageSelectedDetailActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="brightness">亮度</string>
+    <string name="contrast">对比度</string>
+    <string name="saturation">饱和度</string>
+    <string name="RGB">RGB</string>
+
 </resources>
