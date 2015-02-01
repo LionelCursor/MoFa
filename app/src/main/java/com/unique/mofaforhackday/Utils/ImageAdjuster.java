@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.unique.mofaforhackday.beans.ColorAdjuster;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -76,7 +77,14 @@ public class ImageAdjuster {
         mAllColorMatrix = new ColorMatrix();
         mPaint = new Paint();
 
-        threadPool = Executors.newFixedThreadPool(4);
+        threadPool =
+        Executors.newScheduledThreadPool(4);
+//        This will change so slow
+//        Executors.newSingleThreadExecutor();
+//        a little slow
+//        Executors.newFixedThreadPool(4);
+//        this will skip frame
+//        Executors.newCachedThreadPool();
         mHandler = new DisplayHandler();
     }
 
@@ -100,14 +108,12 @@ public class ImageAdjuster {
     private class DisplayHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            L.e("handleMessage");
             switch (msg.what){
                 case MSG_FLAG_OK:
                     mImageView.setImageBitmap(mBitmapTemp);
                     listener.onAdjustingComplete(mImageView,mBitmapTemp);
                     break;
                 case MSG_FLAG_OK_WITH_NO_IMAGEVIEW:
-                    L.e("no imageView");
                     listener.onAdjustingComplete(null,mBitmapTemp);
                     break;
                 default:
@@ -121,7 +127,6 @@ public class ImageAdjuster {
             return;
         }
         this.listener = listener;
-        L.e("listener:"+this.listener.toString());
         threadPool.submit(new Runnable() {
             @Override
             public void run() {
@@ -191,7 +196,6 @@ public class ImageAdjuster {
     }
 
     public void displayImageAdjusted(final Bitmap bitmap,ImageView imageView, final int progress, final ADJUSTER_TYPE type, final ImageAdjustingListener listener){
-        L.e("displayImageAdjusted with imageView");
         if (bitmap==null||imageView==null){
             return;
         }else{

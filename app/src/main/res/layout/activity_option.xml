@@ -11,7 +11,8 @@
         android:src="@drawable/mofa__0006_introduction"
         android:layout_width="wrap_content"
         android:layout_height="260dp"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside"
+         />
 
     <ImageButton
         android:layout_above="@+id/option_feedback"

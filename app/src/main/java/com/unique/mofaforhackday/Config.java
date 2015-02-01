@@ -2,6 +2,7 @@ package com.unique.mofaforhackday;
 
 /**
  * Created by ldx on 2014/9/26.
+ * Here are some global config
  */
 public class Config {
 
@@ -35,6 +36,9 @@ public class Config {
 
     public final static String PREFERENCE_NAME_FONT = "font";
     public final static String PREFERENCE_NAME_IMAGE = "recommend_image";
+
+    public final static String JPG = ".jpg";
+    public final static String PNG = ".png";
 
 
 
@@ -77,7 +81,7 @@ public class Config {
     public final static String IMAGE_37 = url_assets + "tmofa37.jpg";
     public final static String IMAGE_38 = url_assets + "tmofa38.jpg";
     public final static String IMAGE_39 = url_assets + "tmofa39.jpg";
-    public final static String IMAGE_40 = url_assets + "tmofa40.jpg";
+    public final static String IMAGE_40 = url_assets + "tmofa40" + PNG;
     public final static String IMAGE_41 = url_assets + "tmofa41.jpg";
     public final static String IMAGE_42 = url_assets + "tmofa42.jpg";
     public final static String IMAGE_43 = url_assets + "tmofa43.jpg";
@@ -87,6 +91,17 @@ public class Config {
     public final static String IMAGE_47 = url_assets + "tmofa47.jpg";
     public final static String IMAGE_48 = url_assets + "tmofa48.jpg";
     public final static String IMAGE_49 = url_assets + "tmofa49.jpg";
+    public final static String IMAGE_50 = url_assets + "tmofa50.jpg";
+    public final static String IMAGE_51 = url_assets + "tmofa51" + JPG;
+    public final static String IMAGE_52 = url_assets + "tmofa52" + JPG;
+    public final static String IMAGE_53 = url_assets + "tmofa53" + JPG;
+    public final static String IMAGE_54 = url_assets + "tmofa54" + JPG;
+    public final static String IMAGE_55 = url_assets + "tmofa55" + JPG;
+    public final static String IMAGE_56 = url_assets + "tmofa56" + JPG;
+    public final static String IMAGE_57 = url_assets + "tmofa57" + JPG;
+    public final static String IMAGE_58 = url_assets + "tmofa58" + JPG;
+    public final static String IMAGE_59 = url_assets + "tmofa59" + JPG;
+    public final static String IMAGE_60 = url_assets + "tmofa60" + JPG;
 //    public final static String IMAGE_50 = url + "mofa50.jpg";
 
 

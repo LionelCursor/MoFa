@@ -3,12 +3,17 @@ package com.unique.mofaforhackday.Activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,14 +49,24 @@ import java.io.IOException;
 
 /**
  * Created by ldx on 2014/9/28.
+ * Screen after MainActivity
  */
 public class OkActivity extends Activity {
     private UMSocialService mController;
     private Bitmap mBitmapBlurBackground;
     private Bitmap mBitmapMain;
 
+    public static Bitmap mainCache;
+    public static Bitmap blurCache;
+
     private WallpaperManager wallpaperManager;
     private Handler mHandler;
+    private Uri SavedUri;
+    /**
+     * the format of saved photo's name
+     * with no .png
+     */
+    public String SAVE_NAME_MOFA = "mofa_%s";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +91,7 @@ public class OkActivity extends Activity {
                         Toast.makeText(getApplicationContext(),
                                 "成功保存到" + "mofa",
                                 Toast.LENGTH_SHORT).show();
-                        mController.setShareMedia(new UMImage(getBaseContext(), "/sdcard/mofa/" + mBitmapMain.toString() + ".png"));
+                        mController.setShareMedia(new UMImage(getBaseContext(), "/sdcard/mofa/" + getSavedPhotoName() + ".png"));
                         break;
                     case 33:
                         Toast.makeText(getApplicationContext(),
@@ -96,24 +111,59 @@ public class OkActivity extends Activity {
                 if (mBitmapMain == null)
                     return;
                 else
-                    saveMyBitmap(mBitmapMain, mBitmapMain.toString());
+                    saveMyBitmap(mBitmapMain, getSavedPhotoName());
             }
         }.start();
-
-
     }
+    private String wrapPNG(String nameWithNoPHG){
+        return nameWithNoPHG + ".png";
+    }
+    private void writeInContentProvider(String path){
+        ContentValues values = new ContentValues();
+        ContentResolver resolver = getBaseContext().getContentResolver();
+        values.put(MediaStore.Images.ImageColumns.DATA,path);
+        values.put(MediaStore.Images.ImageColumns.TITLE,wrapPNG(getSavedPhotoName()));
+        values.put(MediaStore.Images.ImageColumns.DISPLAY_NAME,wrapPNG(getSavedPhotoName()));
+        long time = getTime();
+        values.put(MediaStore.Images.ImageColumns.DATE_ADDED,time);
+        values.put(MediaStore.Images.ImageColumns.DATE_TAKEN,time*1000);
+        values.put(MediaStore.Images.ImageColumns.DATE_MODIFIED,time);
+        values.put(MediaStore.Images.ImageColumns.MIME_TYPE,"image/png");
 
+        SavedUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+    //can be used
+    private void scanFile(String path){
+        MediaScannerConnection.scanFile(
+                getApplicationContext(),
+                new String[]{path},
+                null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    @Override
+                    public void onScanCompleted(String path, Uri uri) {
+                        Toast.makeText(OkActivity.this, "DEBUG-This picture was added", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+    private String getSavedPhotoPath(){
+        return  "/sdcard/mofa/"+ wrapPNG(getSavedPhotoName());
+    }
+    private String getSavedPhotoName(){
+        String[] strings = mBitmapMain.toString().split("@");
+        return String.format(SAVE_NAME_MOFA,strings[strings.length-1]);
+    }
     private void setUmeng(){
         UMImage umImage = new UMImage(this,mBitmapMain);
         Log.LOG = true;
-        //TODO-UMeng has some bugs in QQ and QZone.
         mController = UMServiceFactory.getUMSocialService("com.umeng.share");
         mController.setShareContent("[来自mofa艺术]");
         mController.setShareImage(umImage);
-        mController.setAppWebSite("http://www.wandoujia.com/apps/com.unique.mofaforhackday");
+        mController.setAppWebSite(Config.SHARE_URL);
 
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
+        qqSsoHandler.addToSocialSDK();
 
         QQShareContent qqShareContent = new QQShareContent();
         qqShareContent.setShareImage(umImage);
@@ -121,7 +171,6 @@ public class OkActivity extends Activity {
         qqShareContent.setAppWebSite(Config.SHARE_URL);
         qqShareContent.setTitle("[来自mofa艺术]");
         mController.setShareMedia(qqShareContent);
-        qqSsoHandler.addToSocialSDK();
 
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
@@ -129,11 +178,12 @@ public class OkActivity extends Activity {
 
         QZoneShareContent qZone = new QZoneShareContent();
         qZone.setTitle("[来自mofa艺术]");
+        qZone.setShareImage(umImage);
         qZone.setTargetUrl(Config.SHARE_URL);
         qZone.setShareContent("Art is long, and time is fleeting. ");
         mController.setShareMedia(qZone);
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
-        mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
+        mController.getConfig() .setSsoHandler(new TencentWBSsoHandler());
 
 
         String appId = "wx07deedae03518a47";
@@ -180,6 +230,8 @@ public class OkActivity extends Activity {
             bitmap.compress(Bitmap.CompressFormat.PNG, 1, fOut);// 把100调低
             fOut.flush();
             fOut.close();
+            //Here write in content Provider
+            writeInContentProvider(getSavedPhotoPath());
             mHandler.sendEmptyMessage(22);
         } catch (FileNotFoundException e) {
             mHandler.sendEmptyMessage(33);
@@ -189,36 +241,43 @@ public class OkActivity extends Activity {
             e.printStackTrace();
         }
     }
-
     private void setStuffButton() {
         (findViewById(R.id.ok_share)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mController.openShare(OkActivity.this,false);
+                mController.openShare(OkActivity.this, false);
             }
         });
         (findViewById(R.id.ok_set_mobile_background)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread() {
-                    public void run() {
-                        try {
-                            wallpaperManager = WallpaperManager.getInstance(OkActivity.this);
-                            wallpaperManager.setBitmap(mBitmapMain);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                Intent intent = new Intent(OkActivity.this,SetWallpaperActivity.class);
+                mainCache = mBitmapMain;
+                startActivity(intent);
+//                Intent intent = new Intent(Intent.ACTION_SET_WALLPAPER);
+//                startActivityForResult(Intent.createChooser(intent, "Select Wallpaper"),REQUEST_PICK_WALLPAPER);
+
+//                new Thread() {
+//                    public void run() {
+                //TODO-without Test
+
+//                        try {
+//                            wallpaperManager = WallpaperManager.getInstance(OkActivity.this);
+//                            wallpaperManager.setBitmap(mBitmapMain);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
 
 
-                }.start();
-                new Thread(new Runnable() {
-                    public void run() {
-                        Message message = new Message();
-                        message.what = 1;
-                        mHandler.sendMessage(message);// 告诉主线程执行任务
-                    }
-                }).start();
+//                }.start();
+//                new Thread(new Runnable() {
+//                    public void run() {
+//                        Message message = new Message();
+//                        message.what = 1;
+//                        mHandler.sendMessage(message);// 告诉主线程执行任务
+//                    }
+//                }).start();
             }
         });
         (findViewById(R.id.ok_main_page)).setOnClickListener(new View.OnClickListener() {
@@ -228,7 +287,9 @@ public class OkActivity extends Activity {
             }
         });
     }
-
+    private long getTime(){
+        return System.currentTimeMillis()/1000;
+    }
     private void setBackground() {
         ((ImageView) (findViewById(R.id.ok_blur))).setImageBitmap(mBitmapBlurBackground);
     }

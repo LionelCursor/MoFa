@@ -9,7 +9,10 @@ import android.content.res.AssetManager;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.text.BoringLayout;
+import android.text.Layout;
 import android.util.AttributeSet;
+import android.util.FloatMath;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -24,6 +27,8 @@ import android.widget.TextView;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.gesturedetector.MoveGestureDetector;
 import com.unique.mofaforhackday.Utils.gesturedetector.RotateGestureDetector;
+
+import javax.security.auth.login.LoginException;
 
 /**
  * Created by ldx on 2014/9/2.
@@ -78,7 +83,7 @@ public class MoFaTextView extends TextView {
         this.context = context;
         this.setMoFaText("");
         this.setTextSize(50);
-        this.setPadding(15, 0, 15, 0);
+        //some fonts were cut. At first, I think it's the mistakes of padding ,so I change the padding. But It didn't work.
         this.setTextColor(0xffffffff);
         mBackgroundDrawable = context.getResources().getDrawable(R.drawable.textview_background);
         this.mOrientation = ORIENTATION.HORIZONTAL;
@@ -95,11 +100,6 @@ public class MoFaTextView extends TextView {
 
             }
         });
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
     }
 
     @Override
@@ -259,6 +259,8 @@ public class MoFaTextView extends TextView {
 
     public MoFaTextView copy(){
         MoFaTextView textNew = new MoFaTextView(context);
+        Log.e("Cursor","|"+getText()+"|");
+
         textNew.setMoFaText(getText());
         textNew.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize());
         textNew.setTextColor(this.getCurrentTextColor());
@@ -298,7 +300,13 @@ public class MoFaTextView extends TextView {
 
 
     public void setMoFaText(CharSequence text) {
-        super.setText(text);
+        if (text.length() != 0) {
+            if (text.charAt(0) != ' ')
+                text = " " + text;
+            if (text.charAt(text.length() - 1) != ' ')
+                text = text + " ";
+        }
+            super.setText(text);
         if (mOrientation == ORIENTATION.VERTICAL) {
             return;
         }

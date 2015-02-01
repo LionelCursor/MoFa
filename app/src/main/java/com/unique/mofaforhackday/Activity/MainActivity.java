@@ -2,6 +2,7 @@ package com.unique.mofaforhackday.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import java.net.URI;
 
 /**
  * Created by ldx at 2014/8/
+ * First Screen
  */
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
@@ -49,6 +51,16 @@ public class MainActivity extends Activity {
     private ImageButton mImageButtonFeedback;
 
     private FeedbackAgent agent;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences sp = getSharedPreferences(getString(R.string.action_settings),MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(getString(R.string.FIRST_IN),false);
+        editor.apply();
+        Log.i(TAG,"onDestroy");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

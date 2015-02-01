@@ -1853,6 +1853,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="30dp"
+                                android:layout_marginRight="10dp"
                                 android:background="@drawable/color35_button" />
                         </LinearLayout>
 
@@ -2100,7 +2101,6 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="30dp"
-                                android:layout_marginRight="15dp"
                                 android:background="@drawable/second_color34_button" />
 
                             <Button
@@ -2108,7 +2108,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="30dp"
-                                android:layout_marginRight="15dp"
+                                android:layout_marginRight="10dp"
                                 android:background="@drawable/second_color35_button" />
                         </LinearLayout>
                     </RelativeLayout>

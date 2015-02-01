@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
  * Created by ldx on 2014/8/29.
  */
 public class SquareLayout extends RelativeLayout {
+
     public SquareLayout(Context context) {
         super(context);
     }
@@ -22,7 +23,6 @@ public class SquareLayout extends RelativeLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         // For simple implementation, or internal size is always 0.
         // We depend on the container to specify the layout size of
         // our view. We can't really know what it is since we will be
@@ -38,14 +38,4 @@ public class SquareLayout extends RelativeLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-//
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-//    }
-//
-//    @Override
-//    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-//        super.onSizeChanged(w, w, oldw, oldh);
-//    }
 }

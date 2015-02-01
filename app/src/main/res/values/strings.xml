@@ -12,10 +12,14 @@
     <string name="bianji_1_t_2">1:2</string>
     <string name="title_activity_image_selected_detail">ImageSelectedDetailActivity</string>
     <string name="hello_world">Hello world!</string>
-
     <string name="brightness">亮度</string>
     <string name="contrast">对比度</string>
     <string name="saturation">饱和度</string>
     <string name="RGB">RGB</string>
+    <!-- sharedPreference first in -->
+    <string name="FIRST_IN">sp_first_in</string>
+    <string name="title_activity_set_wallpaper">SetWallpaperActivity</string>
+    <!--set wallpaper-->
+    <string name="set_wallpaper">设置壁纸</string>
 
 </resources>

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.SlidingDrawer;
 
 import com.unique.mofaforhackday.R;
 
@@ -415,7 +414,8 @@ public class MoFaSlidingDrawer extends ViewGroup {
             }
         }
 
-        return true;
+        //Here change the code by ldx-cursor. when do I consume the Event.
+        return mTracking || mAnimating || mExpanded || super.onTouchEvent(event);
     }
 
     private void animateClose(int position) {

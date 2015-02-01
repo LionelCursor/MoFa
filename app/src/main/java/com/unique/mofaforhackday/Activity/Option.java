@@ -17,6 +17,8 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.QQShareContent;
+import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
@@ -114,16 +116,29 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
 
     private void addShare() {
         mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-        mController.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～   http://www.wandoujia.com/apps/com.unique.mofaforhackday");
-//        mController.getConfig().removePlatform(/*SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE*/);
+        mController.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～");
+        mController.setAppWebSite("http://www.wandoujia.com/apps/com.unique.mofaforhackday");
 
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
+        QQShareContent qqShareContent = new QQShareContent();
+        qqShareContent.setTargetUrl(Config.SHARE_URL);
+        qqShareContent.setAppWebSite(Config.SHARE_URL);
+        qqShareContent.setTitle("[来自mofa艺术]");
+        qqShareContent.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～");
         qqSsoHandler.addToSocialSDK();
+        mController.setShareMedia(qqShareContent);
+
 
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, "1101518130",
                 "t1kIusoT4DwBin6X");
+        QZoneShareContent qZone = new QZoneShareContent();
+        qZone.setTitle("[来自mofa艺术]");
+        qZone.setTargetUrl(Config.SHARE_URL);
+        qZone.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～");
         qZoneSsoHandler.addToSocialSDK();
+        mController.setShareMedia(qZone);
+
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
 
@@ -140,10 +155,13 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
         //设置分享内容跳转URL
         weixinContent.setTargetUrl(Config.SHARE_URL);
         //设置分享图片
-        weixinContent.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～   http://www.wandoujia.com/apps/com.unique.mofaforhackday");
+        weixinContent.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～");
+
         mController.setShareMedia(weixinContent);
         // 支持微信朋友圈
+
         UMWXHandler wxCircleHandler = new UMWXHandler(this,appId,appSecret);
+
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
         //设置微信朋友圈分享内容
@@ -151,7 +169,7 @@ public class Option extends SwipeBackActivity implements View.OnClickListener {
         //设置朋友圈title
         circleMedia.setTitle("[来自mofa艺术]");
 //        circleMedia.setShareImage(umImage);
-        circleMedia.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～   http://www.wandoujia.com/apps/com.unique.mofaforhackday");
+        circleMedia.setShareContent("用mofa处理的图片效果好棒哦～快来应用市场下载试试吧～～");
         circleMedia.setTargetUrl(Config.SHARE_URL);
         mController.setShareMedia(circleMedia);
     }

@@ -10,19 +10,20 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <!-- 检测网络状态 -->
     <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
     <application
-        android:name="com.unique.mofaforhackday.MoFaApplication"
+        android:name=".MoFaApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.unique.mofaforhackday.Activity.MainActivity"
-            android:theme="@style/AppTheme.NoTranslucent"
-            android:label="@string/app_name" >
+            android:name=".Activity.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoTranslucent" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,17 +31,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.unique.mofaforhackday.Activity.ImageSelectedActivity"
-            android:label="@string/app_name"
-            />
-        <activity
-            android:name="com.unique.mofaforhackday.Activity.HandleImageActivity"
+            android:name=".Activity.ImageSelectedActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="com.unique.mofaforhackday.Activity.OkActivity"
+            android:name=".Activity.HandleImageActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="com.unique.mofaforhackday.Activity.Option"
+            android:name=".Activity.OkActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".Activity.Option"
             android:label="@string/app_name" />
         <!-- Umeng -->
         <activity
@@ -63,7 +63,7 @@
             android:theme="@style/Theme.UMDialog"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.unique.mofaforhackday.Activity.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -95,12 +95,14 @@
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name="com.unique.mofaforhackday.Activity.ImageSelectedDetailActivity"
+            android:name=".Activity.ImageSelectedDetailActivity"
             android:label="@string/title_activity_image_selected_detail" >
         </activity>
+        <activity android:name=".Activity.AboutUsActivity" >
+        </activity>
         <activity
-            android:name="com.unique.mofaforhackday.Activity.AboutUsActivity"
-             >
+            android:name=".Activity.SetWallpaperActivity"
+            android:label="@string/title_activity_set_wallpaper" >
         </activity>
     </application>
 

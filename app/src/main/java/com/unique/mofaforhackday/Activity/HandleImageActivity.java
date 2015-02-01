@@ -19,6 +19,7 @@ import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -65,6 +66,7 @@ import static com.unique.mofaforhackday.Utils.ImageAdjuster.ADJUSTER_TYPE;
 
 /**
  * Created by ldx on 2014/8/29.
+ * main Activity to operate image
  */
 public class HandleImageActivity extends Activity {
     private final static String TAG = "HandleImageActivity";
@@ -229,6 +231,7 @@ public class HandleImageActivity extends Activity {
 
     private Matrix mDrawMatrix;
     private Matrix mDisplayMatrix;
+    private boolean mCropping= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -723,6 +726,8 @@ public class HandleImageActivity extends Activity {
         });
     }
 
+
+
     private void setRotateDetail() {
         findViewById(R.id.button_bianji_left_rotate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -904,8 +909,28 @@ public class HandleImageActivity extends Activity {
         }
         cropImageView.setImageBitmap(b);
         cropImageView.setVisibility(View.VISIBLE);
+        mCropping =true;
+
         //TODO-CropView shrink
-//        cropImageView.
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                if (mCropping) {
+                    allTopLayoutGONE();
+                    undoFCropperTPhotoView();
+                    return true;
+                }
+
+            case KeyEvent.KEYCODE_HOME:
+                //pretend to click abandon button(the X button on the top on the screen)
+                abandon.performClick();
+                return true;
+            default:
+        }
+        return super.onKeyDown(keyCode,event);
     }
 
     /**
@@ -970,6 +995,7 @@ public class HandleImageActivity extends Activity {
 
     private void undoFCropperTPhotoView() {
         cropImageView.setVisibility(View.GONE);
+        mCropping =false;
         mMainImageView.setVisibility(View.VISIBLE);
         attacher.update();
     }
@@ -1134,7 +1160,7 @@ public class HandleImageActivity extends Activity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 BlurAsyncTask task = new BlurAsyncTask();
-                task.execute(mOperatingBitmap);
+                task.execute(mOperatingBitmap,seekBar.getProgress());
             }
 
             @Override
@@ -2029,10 +2055,10 @@ public class HandleImageActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (attacher != null) {
             attacher.cleanup();
         }
-        super.onDestroy();
     }
 
     //Use SrcBitmap from CreateSrcBitmap and Blur it for actionbar_background.
@@ -2223,23 +2249,15 @@ public class HandleImageActivity extends Activity {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
             switch (seekBar.getId()) {
                 case R.id.brightness_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 80, ADJUSTER_TYPE.BRIGHTNESS, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 80)*0.5), ADJUSTER_TYPE.BRIGHTNESS, listener);
                     break;
                 case R.id.contrast_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 70, ADJUSTER_TYPE.CONTRAST, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 70)*0.5), ADJUSTER_TYPE.CONTRAST, listener);
                     break;
                 case R.id.Saturation_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 100, ADJUSTER_TYPE.SATURATION, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 100)*0.5), ADJUSTER_TYPE.SATURATION, listener);
                     break;
                 case R.id.R_seekbar:
                     ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 100, ADJUSTER_TYPE.RED_OFFSET, listener);
@@ -2255,6 +2273,15 @@ public class HandleImageActivity extends Activity {
 //                    break;
                 default:
             }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
         }
     }
 
@@ -2375,17 +2402,19 @@ public class HandleImageActivity extends Activity {
         }
     }
 
-    private class BlurAsyncTask extends AsyncTask<Bitmap, Void, Bitmap> {
+    private class BlurAsyncTask extends AsyncTask<Object, Void, Bitmap> {
 
         @Override
-        protected Bitmap doInBackground(Bitmap... params) {
+        protected Bitmap doInBackground(Object... params) {
+            int progress_blur = (Integer)params[1];
             if (progress_blur == 0) {
-                return params[0];
+                return (Bitmap)params[0];
             }
             Matrix matrix = new Matrix();
             Matrix matrixEnlarge = new Matrix();
-            Bitmap bitmap = params[0];
+            Bitmap bitmap = (Bitmap)params[0];
             Bitmap bitmap_blurred;
+            Log.e(TAG,""+progress_blur);
 
             if (progress_blur < 5) {
                 matrix.postScale(0.5f, 0.5f); // 长和宽放大缩小的比例
@@ -2418,6 +2447,7 @@ public class HandleImageActivity extends Activity {
                 result.recycle();
 
             } else if (progress_blur < 23) {
+                Log.e(TAG,""+progress_blur);
                 matrix.postScale(0.25f, 0.25f); // 长和宽放大缩小的比例
                 Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0,
                         bitmap.getWidth(), bitmap.getHeight(), matrix, true);

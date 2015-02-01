@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -126,6 +127,7 @@ public class ImageSelectedRecommendedFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 DownLoadImageFilesWithIon((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
+                                dialog.dismiss();
                             }
                         });
 
@@ -163,6 +165,7 @@ public class ImageSelectedRecommendedFragment extends Fragment {
         final TextView textView = ((TextView) getActivity().findViewById(R.id.download_image_textView));
         final String name = handleString(url);
         url = Config.url + name;
+        Log.e("Cursor","ImageSelectedRecommendedFragment:"+url);
         Ion.with(this)
                 .load(url)
                 .progressBar((ProgressBar) getActivity().findViewById(R.id.download_image_progress_bar))

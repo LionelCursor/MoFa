@@ -2,7 +2,6 @@ package com.unique.mofaforhackday.Activity;
 
 import android.app.ActionBar;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;

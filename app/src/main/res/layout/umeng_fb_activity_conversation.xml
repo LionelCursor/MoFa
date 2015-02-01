@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/option_actionbar_back_shadow"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:contentDescription="back" />
 
         <TextView

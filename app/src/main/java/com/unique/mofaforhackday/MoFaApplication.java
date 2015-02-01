@@ -1,18 +1,16 @@
 package com.unique.mofaforhackday;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.view.Display;
-import android.view.WindowManager;
 
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.unique.mofaforhackday.Utils.MoFaFileUtils;
+
+import java.io.File;
 
 /**
  * Created by ldx on 2014/8/28.
@@ -20,6 +18,11 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
  */
 public class MoFaApplication extends Application{
     ImageLoaderConfiguration config;
+    /**
+     * indicating whether the app was launched at first time
+     * and will be applied to {@code false} when the MainActivity finished
+     */
+    boolean firstIn = false;
 
     public DisplayImageOptions getOptions() {
         return options;
@@ -29,6 +32,16 @@ public class MoFaApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        SharedPreferences sp = getSharedPreferences(getString(R.string.action_settings),MODE_PRIVATE);
+        firstIn = sp.getBoolean(getString(R.string.FIRST_IN),true);
+        File file = new File(Config.SDCARD_MOFA);
+        if (firstIn){
+            MoFaFileUtils.delRecommendedFiles();
+            file.mkdirs();
+        }
+        if (!file.exists()){
+            file.mkdirs();
+        }
 
         config = new ImageLoaderConfiguration.Builder(this)
 //                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
@@ -47,7 +60,6 @@ public class MoFaApplication extends Application{
 //                .memoryCache()
                 .cacheInMemory(true)
                 .considerExifParams(true)
-
 //                .resetViewBeforeLoading(true)
 //                .displayer(new FadeInBitmapDisplayer(100))
                 .bitmapConfig(Bitmap.Config.RGB_565)

@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.unique.mofaforhackday.Activity.SetWallpaperActivity">
+    <ImageView
+        android:id="@+id/set_wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
+    <Button
+        android:id="@+id/set_wallpaper_ok"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/black_translucent"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:text="@string/set_wallpaper"/>
+
+</RelativeLayout>
