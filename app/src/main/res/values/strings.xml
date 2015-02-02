@@ -19,7 +19,14 @@
     <!-- sharedPreference first in -->
     <string name="FIRST_IN">sp_first_in</string>
     <string name="title_activity_set_wallpaper">SetWallpaperActivity</string>
-    <!--set wallpaper-->
+    <!-- set wallpaper -->
     <string name="set_wallpaper">设置壁纸</string>
+    <string name="title_activity_wallpaper_test">wallpaperTest</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_test">test</string>
+    <string name="title_activity_crop_image">CropImage</string>
+    <string name="title_activity_wallpaper">Wallpaper</string>
+    <string name="title_activity_crop">CropActivity</string>
 
 </resources>

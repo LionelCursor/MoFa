@@ -71,10 +71,10 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
     private static void checkZoomLevels(float minZoom, float midZoom,
                                         float maxZoom) {
-        if (minZoom >= midZoom) {
+        if (minZoom > midZoom) {
             throw new IllegalArgumentException(
                     "MinZoom has to be less than MidZoom");
-        } else if (midZoom >= maxZoom) {
+        } else if (midZoom > maxZoom) {
             throw new IllegalArgumentException(
                     "MidZoom has to be less than MaxZoom");
         }

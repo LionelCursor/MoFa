@@ -104,6 +104,28 @@
             android:name=".Activity.SetWallpaperActivity"
             android:label="@string/title_activity_set_wallpaper" >
         </activity>
+        <activity
+            android:name=".Activity.wallpaperTest"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_wallpaper_test"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
+            android:name=".Activity.test"
+            android:label="@string/title_activity_test" >
+        </activity>
+        <activity
+            android:name=".Activity.CropImage"
+            android:label="@string/title_activity_crop_image" >
+        </activity>
+        <activity
+            android:name=".Activity.Wallpaper"
+            android:label="@string/title_activity_wallpaper" >
+        </activity>
+        <activity
+            android:name=".crop.CropActivity"
+            android:label="@string/title_activity_crop" >
+        </activity>
     </application>
 
 </manifest>

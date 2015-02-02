@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="SwitchButton">
-        <!-- Drawable of cursor, press status supported-->
+
+        <!-- Drawable of cursor, press status supported -->
         <attr name="cursor" format="reference" />
         <attr name="selectedBG" format="color" />
         <attr name="unselectedBG" format="color" />
@@ -14,17 +16,15 @@
             <enum name="OFF" value="0x01" />
         </attr>
 
-        <!-- about shadow-->
+        <!-- about shadow -->
         <attr name="shadowExpand" format="dimension" />
         <attr name="shadowXDiff" format="dimension" />
         <attr name="shadowYDiff" format="dimension" />
-        <!-- Drawable of cursor's shadow , Gradientdrawable recommend-->
+        <!-- Drawable of cursor's shadow , Gradientdrawable recommend -->
         <attr name="shadow" format="reference" />
-
-
     </declare-styleable>
     <declare-styleable name="MoFaTextButton">
-        <attr name="pressed_color" format="color|dimension"/>
+        <attr name="pressed_color" format="color|dimension" />
     </declare-styleable>
     <declare-styleable name="RoundedImageView">
         <attr name="corner_radius" format="dimension" />
@@ -35,19 +35,18 @@
         <attr name="android:scaleType" />
     </declare-styleable>
 
-    <!--CropImageView-->
+    <!-- CropImageView -->
     <declare-styleable name="CropImageView">
         <attr name="guidelines">
-            <enum name="on" value="2"/>
-            <enum name="onTouch" value="1"/>
-            <enum name="off" value="0"/>
+            <enum name="on" value="2" />
+            <enum name="onTouch" value="1" />
+            <enum name="off" value="0" />
         </attr>
-        <attr name="fixAspectRatio" format="boolean"/>
-        <attr name="aspectRatioX" format="integer"/>
-        <attr name="aspectRatioY" format= "integer"/>
-        <attr name="imageResource" format="reference"/>
+        <attr name="fixAspectRatio" format="boolean" />
+        <attr name="aspectRatioX" format="integer" />
+        <attr name="aspectRatioY" format="integer" />
+        <attr name="imageResource" format="reference" />
     </declare-styleable>
-
     <declare-styleable name="PagerSlidingTabStrip">
         <attr name="pstsIndicatorColor" format="color" />
         <attr name="pstsUnderlineColor" format="color" />
@@ -63,14 +62,18 @@
     </declare-styleable>
     <!-- Standard orientation constant. -->
     <attr name="orientation">
+
         <!-- Defines an horizontal widget. -->
         <enum name="horizontal" value="0" />
         <!-- Defines a vertical widget. -->
         <enum name="vertical" value="1" />
     </attr>
-    <!-- SlidingDrawer specific attributes. These attributes are used to configure
-      a SlidingDrawer from XML. -->
+    <!--
+      SlidingDrawer specific attributes. These attributes are used to configure
+      a SlidingDrawer from XML.
+    -->
     <declare-styleable name="SlidingDrawer">
+
         <!-- Identifier for the child that represents the drawer's handle. -->
         <attr name="handle" format="reference" />
         <!-- Identifier for the child that represents the drawer's content. -->
@@ -78,17 +81,24 @@
         <!-- Orientation of the SlidingDrawer. -->
         <attr name="orientation" />
         <!-- Extra offset for the handle at the bottom of the SlidingDrawer. -->
-        <attr name="bottomOffset" format="dimension"  />
+        <attr name="bottomOffset" format="dimension" />
         <!-- Extra offset for the handle at the top of the SlidingDrawer. -->
-        <attr name="topOffset" format="dimension"  />
-        <!-- Indicates whether the drawer can be opened/closed by a single tap
+        <attr name="topOffset" format="dimension" />
+        <!--
+             Indicates whether the drawer can be opened/closed by a single tap
              on the handle.  (If false, the user must drag or fling, or click
-             using the trackball, to open/close the drawer.)  Default is true. -->
+             using the trackball, to open/close the drawer.)  Default is true.
+        -->
         <attr name="allowSingleTap" format="boolean" />
-        <!-- Indicates whether the drawer should be opened/closed with an animation
-             when the user clicks the handle. Default is true. -->
+        <!--
+             Indicates whether the drawer should be opened/closed with an animation
+             when the user clicks the handle. Default is true.
+        -->
         <attr name="animateOnClick" format="boolean" />
     </declare-styleable>
-
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
+    </declare-styleable>
 
 </resources>

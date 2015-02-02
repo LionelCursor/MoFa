@@ -2155,7 +2155,7 @@ public class HandleImageActivity extends Activity {
                             mSrcBitmap.recycle();
                         }
                         finish();
-                        overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
+                        overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
                     }
                 });
 

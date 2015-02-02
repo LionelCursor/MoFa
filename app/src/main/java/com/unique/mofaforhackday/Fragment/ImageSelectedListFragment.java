@@ -52,11 +52,6 @@ public class ImageSelectedListFragment extends Fragment {
         this.SrcList = ImageSelectedActivity.dataList;
         AddNumKey();
     }
-
-
-
-
-
     private void AddNumKey(){
         int total =0;
         for (HashMap<String,Object> map:dataList){

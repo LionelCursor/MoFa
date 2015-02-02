@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--PagerSlidingTabStrip-->
-    <color name="background_tab_pressed">#6633B5E5</color>
-    <!--actionBar background-->
-    <color name="actionbar_background">#4886ba</color>
 
-    <!--Cropper-->
-    <!--ImageSelectedDialog-->
+    <!-- PagerSlidingTabStrip -->
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <!-- actionBar background -->
+    <color name="actionbar_background">#4886ba</color>
+    <color name="blue_selected">#2e6a9b</color>
+
+    <!-- Cropper -->
+    <!-- ImageSelectedDialog -->
     <color name="black_translucent">#e0000000</color>
-    <!--bianji-->
+    <!-- bianji -->
     <color name="bianji_text_color">#fff</color>
-    <!--dialog-->
+    <!-- dialog -->
     <drawable name="pressed">#ebebeb</drawable>
     <drawable name="nonpressed">#ffffff</drawable>
 
-
     <color name="text_shadow">#e6030303</color>
-
     <color name="black_background_image_select">#ff1f1f20</color>
     <color name="image_default_background">#ff363638</color>
     <color name="transparent">#90000000</color>
-
     <color name="switch_unselectedBG">#707070</color>
     <color name="switch_selectedBG">#67bf67</color>
     <color name="switch_selectedBG_zhong">#f36b63</color>
     <color name="switch_unselectedBG_ying">#62838d</color>
-
-
     <color name="color1">#ffffff</color>
     <color name="color2">#666d73</color>
     <color name="color3">#040605</color>
@@ -63,9 +60,7 @@
     <color name="color34">#84ccc9</color>
     <color name="color35">#13b5b1</color>
 
-
-
-    <!--second_color_from_Lei-->
+    <!-- second_color_from_Lei -->
 
     <color name="seccolor1">#d9dce1</color>
     <color name="seccolor2">#bdc2c8</color>
@@ -102,6 +97,6 @@
     <color name="seccolor33">#32b16c</color>
     <color name="seccolor34">#009944</color>
     <color name="seccolor35">#009e96</color>
-
+    <color name="black_overlay">#66000000</color>
 
 </resources>

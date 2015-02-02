@@ -421,7 +421,7 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
         tabs.setTextColor(0xFFFFFFFF);
         tabs.setDividerColor(0xFFFFFFFF);
         tabs.setIndicatorColor(0xFFFFFFFF);
-        tabs.setTextSize(45);
+        tabs.setTextSize(30);
         tabs.setIndicatorHeight(10);
         tabs.setDividerColor(0x00000000);
         tabs.setShouldExpand(true);

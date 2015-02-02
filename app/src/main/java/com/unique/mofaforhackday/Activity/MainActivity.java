@@ -57,9 +57,17 @@ public class MainActivity extends Activity {
         super.onDestroy();
         SharedPreferences sp = getSharedPreferences(getString(R.string.action_settings),MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(getString(R.string.FIRST_IN),false);
+        editor.putBoolean(getString(R.string.FIRST_IN), false);
         editor.apply();
-        Log.i(TAG,"onDestroy");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences sp = getSharedPreferences(getString(R.string.action_settings),MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(getString(R.string.FIRST_IN), false);
+        editor.apply();
     }
 
     @Override
@@ -99,7 +107,6 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,Option.class));
                 overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
-
             }
         });
     }
