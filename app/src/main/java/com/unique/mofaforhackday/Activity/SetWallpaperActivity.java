@@ -23,7 +23,7 @@ import com.unique.mofaforhackday.view.photoview.PhotoViewAttacher;
 import java.io.IOException;
 import java.util.List;
 
-public class SetWallpaperActivity extends Activity {
+public class SetWallpaperActivity extends BaseActivity {
     private Bitmap wallpaper;
     private ImageView image;
     private RelativeLayout button_ok;

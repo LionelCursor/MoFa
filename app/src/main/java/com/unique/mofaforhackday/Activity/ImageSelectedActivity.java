@@ -49,7 +49,7 @@ import java.util.HashMap;
  * In MoFa , GridView
  * In Album , First ListView ,After Click GridView. When you need to go back to ListView ,press KeyEvent.KEYCODE_BACK
  */
-public class ImageSelectedActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class ImageSelectedActivity extends BaseFragmentActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "ImageSelectedActivity";
     private static final boolean DEBUG = true;
@@ -529,7 +529,7 @@ public class ImageSelectedActivity extends FragmentActivity implements LoaderMan
 //                        mofaList.add(map);
 //                    }
 
-                    if ((index = haveMapValue(AlbumList, bucket_id)) < 0) {
+                    if ((index = haveMapValue(AlbumList, bucket_display_name )) < 0) {
                         AlbumList.add(map);
                     } else {
                         AlbumList.set(index, map);

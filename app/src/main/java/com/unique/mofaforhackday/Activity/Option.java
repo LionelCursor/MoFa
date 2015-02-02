@@ -33,7 +33,7 @@ import com.unique.mofaforhackday.Utils.DefaultFontInflator;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 
-public class Option extends SwipeBackActivity implements View.OnClickListener {
+public class Option extends BaseSwipeBackActivity implements View.OnClickListener {
     private ImageButton optionOut, optionFeedback, optionShare;
     private UMSocialService mController;
 

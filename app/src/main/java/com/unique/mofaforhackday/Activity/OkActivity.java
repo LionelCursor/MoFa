@@ -56,7 +56,7 @@ import java.util.List;
  * Created by ldx on 2014/9/28.
  * Screen after MainActivity
  */
-public class OkActivity extends Activity {
+public class OkActivity extends BaseActivity {
     private UMSocialService mController;
     private Bitmap mBitmapBlurBackground;
     private Bitmap mBitmapMain;
@@ -342,6 +342,13 @@ public class OkActivity extends Activity {
 
                     }
     }}
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
+    }
 
     private long getTime(){
         return System.currentTimeMillis()/1000;

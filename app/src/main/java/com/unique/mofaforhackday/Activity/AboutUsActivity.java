@@ -30,7 +30,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
  * Created by ldx on 2014/12/9.
  * @author ldx
  */
-public class AboutUsActivity extends SwipeBackActivity {
+public class AboutUsActivity extends BaseSwipeBackActivity {
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

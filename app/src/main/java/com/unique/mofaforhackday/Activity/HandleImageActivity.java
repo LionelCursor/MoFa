@@ -68,7 +68,7 @@ import static com.unique.mofaforhackday.Utils.ImageAdjuster.ADJUSTER_TYPE;
  * Created by ldx on 2014/8/29.
  * main Activity to operate image
  */
-public class HandleImageActivity extends Activity {
+public class HandleImageActivity extends BaseActivity {
     private final static String TAG = "HandleImageActivity";
     private ImageView mMainImageView;
     private PhotoViewAttacher attacher;
@@ -2113,13 +2113,16 @@ public class HandleImageActivity extends Activity {
                 btnOK.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(HandleImageActivity.this, OkActivity.class);
+                        final Intent intent = new Intent(HandleImageActivity.this, OkActivity.class);
                         //TODO-word add has error!!!!!!!
                         sBitmapMain = getCuttedDrawingCache();
                         sBitmapBlur = mBitmapBlur;
                         HandleImageActivity.this.startActivity(intent);
+
                         dialog.dismiss();
                         finish();
+                        overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
+
                     }
                 });
 
@@ -2155,7 +2158,7 @@ public class HandleImageActivity extends Activity {
                             mSrcBitmap.recycle();
                         }
                         finish();
-                        overridePendingTransition(R.anim.in_from_right,R.anim.ani_static);
+                        overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
                     }
                 });
 

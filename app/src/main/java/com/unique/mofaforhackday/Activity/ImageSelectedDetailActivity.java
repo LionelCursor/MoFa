@@ -24,7 +24,7 @@ import org.w3c.dom.Text;
 
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-public class ImageSelectedDetailActivity extends SwipeBackActivity{
+public class ImageSelectedDetailActivity extends BaseSwipeBackActivity{
     TextView viceText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.unique.mofaforhackday.R;
@@ -34,7 +36,7 @@ import java.net.URI;
  * Created by ldx at 2014/8/
  * First Screen
  */
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
     private static final boolean DEBUG = true;
 
@@ -84,6 +86,14 @@ public class MainActivity extends Activity {
         imageSelected();
 
         setOption();
+
+        //add Umeng statics
+        setUmeng();
+    }
+
+    private void setUmeng(){
+        MobclickAgent.updateOnlineConfig(this);
+        UmengUpdateAgent.update(this);
     }
 
     private void initContentView(){

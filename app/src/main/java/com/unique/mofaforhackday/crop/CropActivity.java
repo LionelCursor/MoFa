@@ -21,13 +21,14 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.unique.mofaforhackday.Activity.BaseActivity;
 import com.unique.mofaforhackday.Activity.OkActivity;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.view.cropper.CropImageView;
 
 import java.io.IOException;
 
-public class CropActivity extends Activity {
+public class CropActivity extends BaseActivity {
     public final String TAG = "CropActivity";
     private Bitmap raw_bitmap;
     private CropImageView cropImageView;
@@ -79,6 +80,14 @@ public class CropActivity extends Activity {
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
     }
 
     /**
