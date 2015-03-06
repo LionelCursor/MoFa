@@ -67,6 +67,8 @@ public class MoFaTextView extends TextView {
     private RotateGestureDetector mRotateDetector;
     private MoveGestureDetector mMoveDetector;
 
+    private OnDoubleClickListener mDoubleClickListener;
+
     private OnFocusedListener mFocusedListener;
 
     public MoFaTextView(Context context) {
@@ -94,10 +96,36 @@ public class MoFaTextView extends TextView {
         mMoveDetector = new MoveGestureDetector(context.getApplicationContext(), new MoveListener());
         this.setOnTouchListener(new OnTouchListener());
 
-        setOnFocusedListener(new OnFocusedListener() {
+        this.setOnFocusedListener(new OnFocusedListener() {
             @Override
             public void onFocused(View view) {
 
+            }
+        });
+
+        this.setOnDoubleClickListener(new OnDoubleClickListener() {
+            @Override
+            public void OnDoubleClick(final View view) {
+                view.animate().alpha(0).scaleX(3).scaleY(3).setDuration(300).setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                }).start();
             }
         });
     }
@@ -216,7 +244,6 @@ public class MoFaTextView extends TextView {
     }
 
 
-
     /**
      * make it on focused
      * invoked by TouchEvent DOWN
@@ -229,15 +256,32 @@ public class MoFaTextView extends TextView {
         this.mFocusedListener = listener;
     }
 
+    public interface OnDoubleClickListener{
+        public void OnDoubleClick(View view);
+    }
+
+    public void setOnDoubleClickListener(OnDoubleClickListener listener){
+        this.mDoubleClickListener = listener;
+    }
+
     public class OnTouchListener implements View.OnTouchListener {
+        MotionEvent preDownEvent = null;
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+
                     v.setBackgroundDrawable(mBackgroundDrawable);
                     if(mFocusedListener!=null){
                         mFocusedListener.onFocused(v);
                     }
+
+                    if (preDownEvent != null&&event.getEventTime() - preDownEvent.getEventTime()<300){
+                        mDoubleClickListener.OnDoubleClick(v);
+                    }
+
+                    //perform double click
+                    preDownEvent = event;
                     break;
                 case MotionEvent.ACTION_MOVE:
                     break;
