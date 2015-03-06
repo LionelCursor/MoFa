@@ -1,12 +1,10 @@
 package com.unique.mofaforhackday.Activity;
 
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -17,13 +15,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -37,7 +35,6 @@ import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Fragment.*;
 import com.unique.mofaforhackday.Utils.DefaultFontInflator;
-import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.view.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
@@ -383,8 +380,6 @@ public class ImageSelectedActivity extends BaseFragmentActivity implements Loade
         map.put(KEY_SRC_DATA_PATH, Config.IMAGE_60);
         recommendedList.add(map);
 
-//        map.put(KEY_SRC_DATA_PATH, Config.IMAGE_50);
-//        recommendedList.add(map);
     }
 
     private void initContentView() {
@@ -421,7 +416,10 @@ public class ImageSelectedActivity extends BaseFragmentActivity implements Loade
         tabs.setTextColor(0xFFFFFFFF);
         tabs.setDividerColor(0xFFFFFFFF);
         tabs.setIndicatorColor(0xFFFFFFFF);
-        tabs.setTextSize(30);
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float size = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30, dm);
+        tabs.setTextSize((int)size);
         tabs.setIndicatorHeight(10);
         tabs.setDividerColor(0x00000000);
         tabs.setShouldExpand(true);

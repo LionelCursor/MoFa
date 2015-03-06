@@ -642,12 +642,12 @@ public class HandleImageActivity extends BaseActivity {
                     textView.setDismissWhenFocusOnTouchOutside();
                 }
                 textView.setMoFaText(s);
-                textView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView.SelfCenter();
-                    }
-                });
+//                textView.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        textView.SelfCenter();
+//                    }
+//                });
             }
         });
 
