@@ -8,6 +8,8 @@
     <color name="actionbar_background">@color/mofa_blue</color>
     <color name="blue_selected">#2e6a9b</color>
 
+    <color name="translucent_setWallPaper_cropper_shadow_overlay">#5a000000</color>
+
     <!-- Cropper -->
     <!-- ImageSelectedDialog -->
     <color name="black_translucent">#e0000000</color>

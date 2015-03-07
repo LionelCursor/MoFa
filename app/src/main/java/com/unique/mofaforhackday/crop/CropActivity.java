@@ -102,6 +102,7 @@ public class CropActivity extends BaseActivity {
         int aspectY = intent.getIntExtra(CropExtras.KEY_ASPECT_Y,scaledPoint.y);
         cropImageView.setAspectRatio(aspectX, aspectY);
         cropImageView.setFixedAspectRatio(true);
+        cropImageView.setShadowOverlay(getResources().getColor(R.color.translucent_setWallPaper_cropper_shadow_overlay));
     }
 
     /**

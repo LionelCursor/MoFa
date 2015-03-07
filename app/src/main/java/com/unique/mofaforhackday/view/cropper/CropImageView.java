@@ -486,6 +486,10 @@ public class CropImageView extends FrameLayout {
         mCropOverlayView.setInitialAttributeValues(mGuidelines, mFixAspectRatio, mAspectRatioX, mAspectRatioY);
     }
 
+    public void setShadowOverlay(int color){
+        mCropOverlayView.setmBackgroundPaint(color);
+    }
+
     /**
      * Determines the specs for the onMeasure function. Calculates the width or height
      * depending on the mode.

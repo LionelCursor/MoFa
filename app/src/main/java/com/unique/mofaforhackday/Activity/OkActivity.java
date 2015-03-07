@@ -40,6 +40,7 @@ import com.umeng.socialize.utils.Log;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
+import com.unique.mofaforhackday.BuildConfig;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.crop.CropActivity;
@@ -230,11 +231,11 @@ public class OkActivity extends BaseActivity {
         }
         File f = new File("/sdcard/mofa/" + bitName + ".png");
 
-        FileOutputStream fOut = null;
+        FileOutputStream fOut;
         try {
             f.createNewFile();
             fOut = new FileOutputStream(f);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 1, fOut);// 把100调低
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);// 把100调低
             fOut.flush();
             fOut.close();
             //Here write in content Provider
@@ -259,7 +260,6 @@ public class OkActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 IntentCropAndSetWallpaper();
-                //解决方法二：自己写
 //                Intent intent = new Intent(OkActivity.this,SetWallpaperActivity.class);
 //                mainCache = mBitmapMain;
 //                new Thread() {
@@ -298,19 +298,20 @@ public class OkActivity extends BaseActivity {
     private static final String IMAGE_TYPE = "image/*";
     private void IntentCropAndSetWallpaper(){
         Intent cropAndSetWallpaperIntent;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    WallpaperManager wpm = WallpaperManager.getInstance(getApplicationContext());
-                    try {
-                        cropAndSetWallpaperIntent = wpm.getCropAndSetWallpaperIntent(SavedUri);
-                        startActivity(cropAndSetWallpaperIntent);
+//                if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)) {
+//                if () {
+//                    WallpaperManager wpm = WallpaperManager.getInstance(getApplicationContext());
+//                    try {
+//                        cropAndSetWallpaperIntent = wpm.getCropAndSetWallpaperIntent(SavedUri);
+//                        startActivity(cropAndSetWallpaperIntent);
 //                        finish();
-                        return;
-                    } catch (ActivityNotFoundException anfe) {
+//                        return;
+//                    } catch (ActivityNotFoundException anfe) {
+//                        ignored; fallthru to existing crop activity
+//                    } catch (IllegalArgumentException iae) {
                         // ignored; fallthru to existing crop activity
-                    } catch (IllegalArgumentException iae) {
-                        // ignored; fallthru to existing crop activity
-                    }
-                }else{
+//                    }
+//                }else{
 
                 int width = getWallpaperDesiredMinimumWidth();
                 int height = getWallpaperDesiredMinimumHeight();
@@ -341,7 +342,8 @@ public class OkActivity extends BaseActivity {
                         e.printStackTrace();
 
                     }
-    }}
+//    }
+}
 
     @Override
     public void onBackPressed() {

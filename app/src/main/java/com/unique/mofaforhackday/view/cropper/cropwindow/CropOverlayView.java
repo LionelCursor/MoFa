@@ -376,6 +376,10 @@ public class CropOverlayView extends View {
         mGuidelines = CropImageView.DEFAULT_GUIDELINES;
     }
 
+    public void setmBackgroundPaint(int color){
+        mBackgroundPaint.setColor(color);
+    }
+
     /**
      * Set the initial crop window size and position. This is dependent on the
      * size and position of the image being cropped.
