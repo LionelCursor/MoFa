@@ -18,13 +18,15 @@ public class DefaultFontInflator {
     public static void apply(Context c, View... views) {
         for (View view : views) {
             if (view instanceof TextView) {
-                apply((TextView) view, Typeface.createFromAsset(c.getAssets(), "font/zhunyuan.ttf"));
+                applyEffective(c , view);
             }
         }
     }
+    private static void applyEffective(Context c, View view){
+        apply((TextView) view, Typeface.createFromAsset(c.getAssets(), "font/zhunyuan.ttf"));
+    }
     public static void applyRecursive(Context c,final View v)
     {
-        try {
             if (v instanceof ViewGroup) {
                 ViewGroup vg = (ViewGroup) v;
                 for (int i = 0; i < vg.getChildCount(); i++) {
@@ -32,11 +34,7 @@ public class DefaultFontInflator {
                     applyRecursive(c,child);
                 }
             } else if (v instanceof TextView) {
-                apply(c,v);
+                applyEffective(c, v);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // ignore
-        }
     }
 }

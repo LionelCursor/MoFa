@@ -1,1 +1,1 @@
-include ':app', ':SwipeBackLayout'
+include ':app', ':SwipeBackLayout', ':niftyDialogEffects'

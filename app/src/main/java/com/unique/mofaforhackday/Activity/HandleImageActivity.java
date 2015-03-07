@@ -36,6 +36,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -725,8 +727,6 @@ public class HandleImageActivity extends BaseActivity {
             }
         });
     }
-
-
 
     private void setRotateDetail() {
         findViewById(R.id.button_bianji_left_rotate).setOnClickListener(new View.OnClickListener() {
@@ -2085,6 +2085,16 @@ public class HandleImageActivity extends BaseActivity {
         return result;
     }
 
+    private NiftyDialogBuilder buildDialog(View layout){
+        NiftyDialogBuilder dialog = NiftyDialogBuilder.getInstance(HandleImageActivity.this);
+        dialog.withTitle(null).withMessage(null).
+                isCancelableOnTouchOutside(true).
+                withDuration(300).withEffect(Effectstype.Slidetop).
+                setCustomView(layout,HandleImageActivity.this);
+        return dialog;
+    }
+
+
     //\/ and x is two image button on up of the window, which is save and abandon.
     private void SaveAndAbandonClickListener() {
         save = (ImageButton) findViewById(R.id.save);
@@ -2095,10 +2105,13 @@ public class HandleImageActivity extends BaseActivity {
                 RelativeLayout layout = (RelativeLayout) inflater
                         .inflate(R.layout.layout_dialog, null);
                 DefaultFontInflator.applyRecursive(HandleImageActivity.this,layout);
-                final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
-                dialog.show();
-                dialog.getWindow().setContentView(layout);
+                //Dialog
+                final NiftyDialogBuilder dialog = buildDialog(layout);
+
+//                final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
+//                dialog.getWindow().setContentView(layout);
                 ((TextView) layout.findViewById(R.id.dialog_text)).setText("确认保存吗？");
+                dialog.show();
                 // 取消按钮
                 Button btnCancel = (Button) layout.findViewById(R.id.dialog_cancel);
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -2137,9 +2150,10 @@ public class HandleImageActivity extends BaseActivity {
                 RelativeLayout layout = (RelativeLayout) inflater
                         .inflate(R.layout.layout_dialog, null);
                 DefaultFontInflator.applyRecursive(HandleImageActivity.this,layout);
-                final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
+//                final Dialog dialog = new AlertDialog.Builder(HandleImageActivity.this).create();
+                final Dialog dialog = buildDialog(layout);
                 dialog.show();
-                dialog.getWindow().setContentView(layout);
+//                dialog.getWindow().setContentView(layout);
                 // 取消按钮
                 Button btnCancel = (Button) layout.findViewById(R.id.dialog_cancel);
                 btnCancel.setOnClickListener(new View.OnClickListener() {

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="mofa_blue">#4886ba</color>
     <!-- PagerSlidingTabStrip -->
     <color name="background_tab_pressed">#6633B5E5</color>
     <!-- actionBar background -->
-    <color name="actionbar_background">#4886ba</color>
+    <color name="actionbar_background">@color/mofa_blue</color>
     <color name="blue_selected">#2e6a9b</color>
 
     <!-- Cropper -->

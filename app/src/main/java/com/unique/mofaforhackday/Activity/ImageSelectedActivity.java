@@ -418,7 +418,7 @@ public class ImageSelectedActivity extends BaseFragmentActivity implements Loade
         tabs.setIndicatorColor(0xFFFFFFFF);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float size = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30, dm);
+        float size = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15, dm);
         tabs.setTextSize((int)size);
         tabs.setIndicatorHeight(10);
         tabs.setDividerColor(0x00000000);
