@@ -10,6 +10,8 @@
 
     <color name="translucent_setWallPaper_cropper_shadow_overlay">#5a000000</color>
 
+    <color name="mofa_seekbar_background_color">#1affffff</color>
+
     <!-- Cropper -->
     <!-- ImageSelectedDialog -->
     <color name="black_translucent">#e0000000</color>

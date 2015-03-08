@@ -477,6 +477,7 @@ public class HandleImageActivity extends BaseActivity {
 
     private void setWordRotateDetail() {
         final MoFaSeekBar rotateSeekBar = ((MoFaSeekBar) findViewById(R.id.seekBar_word_rotate));
+        rotateSeekBar.setDrawCustomBackground(false);
         ImageButton minus = (ImageButton) findViewById(R.id.text_rotate_counterclockwise);
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -564,8 +565,11 @@ public class HandleImageActivity extends BaseActivity {
 
     private void setShadowDetail() {
         MoFaSeekBar SeekBarX = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_X);
+        SeekBarX.setDrawCustomBackground(false);
         MoFaSeekBar SeekBarY = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Y);
+        SeekBarY.setDrawCustomBackground(false);
         MoFaSeekBar SeekBarSize = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Size);
+        SeekBarSize.setDrawCustomBackground(false);
         SeekBarX.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -825,8 +829,11 @@ public class HandleImageActivity extends BaseActivity {
 
     private void setTiaoseSeekBar() {
         BrightnessseekBar = (MoFaSeekBar) findViewById(R.id.brightness_seekbar);
+        BrightnessseekBar.setDrawCustomBackground(true);
         ContrastseekBar = (MoFaSeekBar) findViewById(R.id.contrast_seekbar);
+        ContrastseekBar.setDrawCustomBackground(true);
         SaturationseekBar = (MoFaSeekBar) findViewById(R.id.Saturation_seekbar);
+        SaturationseekBar.setDrawCustomBackground(true);
         SaturationseekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
         ContrastseekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
         BrightnessseekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
@@ -834,8 +841,11 @@ public class HandleImageActivity extends BaseActivity {
 
     private void setRGBSeekBar() {
         RedSeekBar = (MoFaSeekBar) findViewById(R.id.R_seekbar);
+        RedSeekBar.setDrawCustomBackground(false);
         BlueSeekBar = (MoFaSeekBar) findViewById(R.id.B_seekbar);
+        BlueSeekBar.setDrawCustomBackground(false);
         GreenSeekBar = (MoFaSeekBar) findViewById(R.id.G_seekbar);
+        GreenSeekBar.setDrawCustomBackground(false);
         RedSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
         BlueSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
         GreenSeekBar.setOnSeekBarChangeListener(adjustseekbarChangeListener);
@@ -843,12 +853,12 @@ public class HandleImageActivity extends BaseActivity {
 
     private void AdjustSeekBarHoming() {
         if (RedSeekBar != null) {
-            RedSeekBar.setProgress(100);
-            BlueSeekBar.setProgress(100);
-            GreenSeekBar.setProgress(100);
-            BrightnessseekBar.setProgress(80);
-            ContrastseekBar.setProgress(70);
-            SaturationseekBar.setProgress(100);
+            RedSeekBar.setProgress(6);
+            BlueSeekBar.setProgress(6);
+            GreenSeekBar.setProgress(6);
+            BrightnessseekBar.setProgress(6);
+            ContrastseekBar.setProgress(6);
+            SaturationseekBar.setProgress(6);
 //            RuihuaSeekBar.setProgress(180);
         }
     }
@@ -1100,7 +1110,8 @@ public class HandleImageActivity extends BaseActivity {
     }
 
     private void setTextSizeDetail() {
-        final SeekBar textSeekBar = (SeekBar) findViewById(R.id.seekBar_text);
+        final MoFaSeekBar textSeekBar = (MoFaSeekBar) findViewById(R.id.seekBar_text);
+        textSeekBar.setDrawCustomBackground(false);
         textSeekBar.setMax(255);
         textSeekBar.setProgress(40);
 
@@ -1152,15 +1163,12 @@ public class HandleImageActivity extends BaseActivity {
     }
 
     private void setBlurDetail() {
-
         BlurSeekBar = (MoFaSeekBar) findViewById(R.id.seekBar_blur);
-        BlurSeekBar.setMax(24);
+        BlurSeekBar.setMax(12);
 
         BlurSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                BlurAsyncTask task = new BlurAsyncTask();
-                task.execute(mOperatingBitmap,seekBar.getProgress());
             }
 
             @Override
@@ -1170,7 +1178,9 @@ public class HandleImageActivity extends BaseActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
+                BlurAsyncTask task = new BlurAsyncTask();
                 progress_blur = progress;
+                task.execute(mOperatingBitmap,seekBar.getProgress());
             }
         });
 
@@ -2268,22 +2278,22 @@ public class HandleImageActivity extends BaseActivity {
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             switch (seekBar.getId()) {
                 case R.id.brightness_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 80)*0.5), ADJUSTER_TYPE.BRIGHTNESS, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 6)*6), ADJUSTER_TYPE.BRIGHTNESS, listener);
                     break;
                 case R.id.contrast_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 70)*0.5), ADJUSTER_TYPE.CONTRAST, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 6)*6), ADJUSTER_TYPE.CONTRAST, listener);
                     break;
                 case R.id.Saturation_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 100)*0.5), ADJUSTER_TYPE.SATURATION, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (int)((seekBar.getProgress() - 6)*8), ADJUSTER_TYPE.SATURATION, listener);
                     break;
                 case R.id.R_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 100, ADJUSTER_TYPE.RED_OFFSET, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (seekBar.getProgress() - 6)*16, ADJUSTER_TYPE.RED_OFFSET, listener);
                     break;
                 case R.id.G_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 100, ADJUSTER_TYPE.GREEN_OFFSET, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (seekBar.getProgress() - 6)*16, ADJUSTER_TYPE.GREEN_OFFSET, listener);
                     break;
                 case R.id.B_seekbar:
-                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 100, ADJUSTER_TYPE.BLUE_OFFSET, listener);
+                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, (seekBar.getProgress() - 6)*16, ADJUSTER_TYPE.BLUE_OFFSET, listener);
                     break;
 //                case R.id.ruihua_seekbar:
 //                    ImageAdjuster.getInstance().displayImageAdjusted(mOperatingBitmap, mMainImageView, seekBar.getProgress() - 180, ADJUSTER_TYPE.SATURATION, listener);
@@ -2423,7 +2433,7 @@ public class HandleImageActivity extends BaseActivity {
 
         @Override
         protected Bitmap doInBackground(Object... params) {
-            int progress_blur = (Integer)params[1];
+            int progress_blur = (Integer)params[1]*2;
             if (progress_blur == 0) {
                 return (Bitmap)params[0];
             }

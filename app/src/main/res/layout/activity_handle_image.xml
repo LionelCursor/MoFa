@@ -186,8 +186,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_height="45dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp">
+                    >
 
                     <ImageButton
                         android:id="@+id/jian"
@@ -204,13 +203,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_marginLeft="25.5dp"
-                        android:layout_marginRight="25.5dp"
-                        android:maxHeight="@dimen/mofa_seekbar_height"
-                        android:minHeight="@dimen/mofa_seekbar_height"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:maxHeight="1dp"
+                        android:minHeight="1dp"
                         android:progressDrawable="@drawable/seek_drawable"
                         android:thumb="@drawable/thumb"
-                        android:thumbOffset="6dip" />
+                        />
 
                     <ImageButton
                         android:id="@+id/jia"
@@ -2322,6 +2321,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_below="@id/line_in_adjust"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
@@ -2335,11 +2336,11 @@
                             android:id="@+id/brightness_seekbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:max="160"
+                            android:max="12"
                             android:maxHeight="@dimen/mofa_seekbar_height"
                             android:minHeight="@dimen/mofa_seekbar_height"
-                            android:progress="80"
-                            android:progressDrawable="@drawable/seek_drawable_brightness"
+                            android:progress="6"
+                            android:progressDrawable="@drawable/seek_drawable"
                             android:thumb="@drawable/mofa__0009_cursor_6" />
                     </RelativeLayout>
 
@@ -2355,11 +2356,11 @@
                             android:id="@+id/contrast_seekbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:max="140"
+                            android:max="12"
                             android:maxHeight="@dimen/mofa_seekbar_height"
                             android:minHeight="@dimen/mofa_seekbar_height"
-                            android:progress="70"
-                            android:progressDrawable="@drawable/seek_drawable_contrast"
+                            android:progress="6"
+                            android:progressDrawable="@drawable/seek_drawable"
                             android:thumb="@drawable/mofa__0009_cursor_6" />
                     </RelativeLayout>
 
@@ -2375,11 +2376,11 @@
                             android:id="@+id/Saturation_seekbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:max="200"
+                            android:max="12"
                             android:maxHeight="@dimen/mofa_seekbar_height"
                             android:minHeight="@dimen/mofa_seekbar_height"
-                            android:progress="100"
-                            android:progressDrawable="@drawable/seek_drawable_saturation"
+                            android:progress="6"
+                            android:progressDrawable="@drawable/seek_drawable"
                             android:thumb="@drawable/mofa__0009_cursor_6" />
                     </RelativeLayout>
 
@@ -2401,10 +2402,10 @@
                                 android:id="@+id/R_seekbar"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:max="200"
+                                android:max="12"
                                 android:maxHeight="@dimen/mofa_seekbar_height"
                                 android:minHeight="@dimen/mofa_seekbar_height"
-                                android:progress="100"
+                                android:progress="6"
                                 android:progressDrawable="@drawable/seek_drawable_adjust_rgb_r"
                                 android:thumb="@drawable/mofa__0010_red"
 
@@ -2422,10 +2423,10 @@
                                 android:id="@+id/G_seekbar"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:max="200"
+                                android:max="12"
                                 android:maxHeight="@dimen/mofa_seekbar_height"
                                 android:minHeight="@dimen/mofa_seekbar_height"
-                                android:progress="100"
+                                android:progress="6"
                                 android:progressDrawable="@drawable/seek_drawable_adjust_rgb_g"
                                 android:thumb="@drawable/mofa__0011_green"
                                 />
@@ -2442,10 +2443,10 @@
                                 android:id="@+id/B_seekbar"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:max="200"
+                                android:max="12"
                                 android:maxHeight="@dimen/mofa_seekbar_height"
                                 android:minHeight="@dimen/mofa_seekbar_height"
-                                android:progress="100"
+                                android:progress="6"
                                 android:progressDrawable="@drawable/seek_drawable_adjust_rgb_b"
                                 android:thumb="@drawable/mofa__0012_blue" />
                         </RelativeLayout>

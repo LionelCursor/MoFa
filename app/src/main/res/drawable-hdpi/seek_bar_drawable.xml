@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">                
 <!--  设置背景色  -->                   
 <item  android:id="@android:id/background" >                  
-<shape>    
-    <corners android:radius="5dip" />                   
+<shape >
+    <corners android:radius="5dip" />
         <gradient android:startColor="#7dffffff"
               android:endColor="#7dffffff" />
 </shape>                 
@@ -13,9 +13,9 @@
 <item  android:id="@android:id/progress" >                  
 <clip>                   
     <shape>                    
-        <corners android:radius="5dip" />                    
-    <gradient  android:startColor="#e96f74"                   
-           android:endColor="#e96f74" />                   
+        <corners android:radius="5dip" />
+    <gradient  android:startColor="#e96f74"
+           android:endColor="#e96f74" />
     </shape>                  
 </clip>                 
 </item>                

@@ -4,20 +4,16 @@
 <item  android:id="@android:id/background"  >
 <shape>
     <corners android:radius="5dip" />
-        <gradient android:startColor="#ffffff"
-              android:endColor="#ffffff" />
+    <solid android:color="@color/mofa_seekbar_background_color"/>
 </shape>
 </item>
     
 <!--  设置进度条颜色  -->                   
 <item  android:id="@android:id/progress" >                  
-<clip>                   
-    <shape>                    
-        <corners android:radius="5dip" />                    
-    <gradient  android:startColor="#67bf67"
-           android:endColor="#67bf67" />
-    </shape>                  
-</clip>                 
-</item>                
+    <shape>
+        <corners android:radius="5dip" />
+        <solid android:color="@color/mofa_seekbar_background_color"/>
+    </shape>
+</item>
     
 </layer-list>   

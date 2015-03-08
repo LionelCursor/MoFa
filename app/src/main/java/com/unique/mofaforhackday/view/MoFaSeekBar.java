@@ -56,7 +56,7 @@ public class MoFaSeekBar extends SeekBar {
 
 
     /** set if draw little circle for background*/
-    private void setDrawCustomBackground(boolean bool){
+    public void setDrawCustomBackground(boolean bool){
         isDrawCustomBackground = bool;
     }
 
@@ -84,17 +84,15 @@ public class MoFaSeekBar extends SeekBar {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-
-
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         if (isDrawCustomBackground){
             int width = getMeasuredWidth()-getPaddingLeft()-getPaddingRight();
             canvas.save();
             canvas.translate(getPaddingLeft(), getPaddingTop()+getMeasuredHeight()/2f);
-            for(int i= 0;i<10;i++){
+            for(int i= 0;i<getMax();i++){
                 canvas.drawCircle(0,0,10,mBackgroundLittleRoundDotPaint);
-                canvas.translate(width/10f,0);
+                canvas.translate(((float)width)/getMax(),0);
             }
             canvas.drawCircle(0,0,10,mBackgroundLittleRoundDotPaint);
             canvas.restore();
