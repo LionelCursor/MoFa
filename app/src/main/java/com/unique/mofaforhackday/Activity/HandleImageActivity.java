@@ -474,6 +474,10 @@ public class HandleImageActivity extends BaseActivity {
         setAlignHorOrVerDetailButton();
 
         setMoveDetail();
+
+
+        setClickableAllButtonInEditWord(false);
+        button_word_ensure.setClickable(true);
     }
 
     private void setWordRotateDetail() {
@@ -632,53 +636,48 @@ public class HandleImageActivity extends BaseActivity {
         textView.setShadowLayer(mShadowRadius, mShadowX, mShadowY, 0x5f000000);
 
     }
+    ImageButton button_word_ensure;
 
+    ImageButton button_ensure_add = null;
+    //hot-fix -- when  the first text view added in view tree, it should be SelfCenter() after setText();
+    @Deprecated private boolean firstText = true;
     private void editTextEnsureButton() {
         mEditTextInWord = (EditText) findViewById(R.id.adding_word_edit_text);
 
-        findViewById(R.id.button_word_ensure).setOnClickListener(new View.OnClickListener() {
+        button_word_ensure = (ImageButton)findViewById(R.id.button_word_ensure);
+        button_word_ensure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO-button_word_ensure_onClick
                 final String s = mEditTextInWord.getText().toString();
                 if (textView == null) {
-                    textView = new MoFaTextView(HandleImageActivity.this);
-                    textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
-                    textView.setAlpha(0);
-                    mainLayout.addView(textView);
-                    textView.setDismissWhenFocusOnTouchOutside();
+                    initTextView();
                 }
                 textView.setMoFaText(s);
-//                textView.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        textView.SelfCenter();
-//                    }
-//                });
-            }
-        });
-
-        findViewById(R.id.button_ensure_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO- ensure the word
-                //TODO- ListView to save reference of MoFaTextView
-                //TODO- bug- TextView can't center itself
-                // The logic is hard really
-                final String s = mEditTextInWord.getText().toString();
-                if (textView == null) {
-                    textView = new MoFaTextView(HandleImageActivity.this);
-                    textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
-                    textView.setAlpha(0);
-                    mainLayout.addView(textView);
-                    textView.setDismissWhenFocusOnTouchOutside();
-                    textView.setMoFaText(s);
+                if (firstText&&s.length()!=0){
                     textView.post(new Runnable() {
                         @Override
                         public void run() {
                             textView.SelfCenter();
                         }
                     });
+                    firstText = false;
+                    setClickableAllButtonInEditWord(true);
+                }
+            }
+        });
+
+        button_ensure_add = (ImageButton)findViewById(R.id.button_ensure_add);
+        button_ensure_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO- ensure the word
+                //TODO- ListView to save reference of MoFaTextView
+                // The logic is hard really
+                final String s = mEditTextInWord.getText().toString();
+//                Log.e("Cursor","ensure:"+button_ensure_add.isClickable());
+                if (textView == null) {
+                    initTextView();
                 } else {
                     textView = textView.copy();
                     mainLayout.addView(textView);
@@ -693,6 +692,19 @@ public class HandleImageActivity extends BaseActivity {
             }
         });
     }
+
+    private void setClickableAllButtonInEditWord(boolean bool){
+        button_ensure_add.setClickable(bool);
+        word_imageButton_color.setClickable(bool);
+        word_imageButton_font.setClickable(bool);
+        word_imageButton_hor_ver.setClickable(bool);
+        word_imageButton_move.setClickable(bool);
+        word_imageButton_rotate.setClickable(bool);
+        word_imageButton_textsize.setClickable(bool);
+        word_imageButton_tmd.setClickable(bool);
+        word_imageButton_shadow.setClickable(bool);
+    }
+
 
     private void setAdjustDetail() {
         setAdjustCtrlLayout();
@@ -1001,7 +1013,7 @@ public class HandleImageActivity extends BaseActivity {
         if (count > 3) {
             for (int i = count - 1; i > 2; i--) {
                 L.e(mainLayout.getChildAt(i) + "");
-                TextList.add((MoFaTextView) mainLayout.getChildAt(i));
+//                TextList.add((MoFaTextView) mainLayout.getChildAt(i));
                 mainLayout.removeViewAt(i);
             }
         }
@@ -1472,7 +1484,7 @@ public class HandleImageActivity extends BaseActivity {
 
     private void initTextView() {
         mMoFaTextViewOnFocusedListener = new MoFaTextViewOnFocusedListener();
-        TextList = new ArrayList<MoFaTextView>();
+//        TextList = new ArrayList<MoFaTextView>();
         textView = new MoFaTextView(this);
         textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
         textView.setAlpha(0);
@@ -2792,11 +2804,7 @@ public class HandleImageActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             if (textView == null) {
-                textView = new MoFaTextView(HandleImageActivity.this);
-                textView.setOnFocusedListener(mMoFaTextViewOnFocusedListener);
-                mainLayout.addView(textView);
-                textView.setDismissWhenFocusOnTouchOutside();
-
+                initTextView();
             }
             if (fontString != null) {
                 textView.setTypeface(fontString);

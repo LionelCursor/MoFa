@@ -303,7 +303,7 @@ public class MoFaTextView extends TextView {
 
     public MoFaTextView copy(){
         MoFaTextView textNew = new MoFaTextView(context);
-        Log.e("Cursor","|"+getText()+"|");
+//        Log.e("Cursor","|"+getText()+"|");
 
         textNew.setMoFaText(getText());
         textNew.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize());
@@ -350,7 +350,7 @@ public class MoFaTextView extends TextView {
             if (text.charAt(text.length() - 1) != ' ')
                 text = text + " ";
         }
-            super.setText(text);
+        super.setText(text);
         if (mOrientation == ORIENTATION.VERTICAL) {
             return;
         }
