@@ -264,24 +264,24 @@ public class MoFaTextView extends TextView {
         this.mDoubleClickListener = listener;
     }
 
+
     public class OnTouchListener implements View.OnTouchListener {
-        MotionEvent preDownEvent = null;
+        int i=0;
+        private long preDownEventTime ;
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-
                     v.setBackgroundDrawable(mBackgroundDrawable);
                     if(mFocusedListener!=null){
                         mFocusedListener.onFocused(v);
                     }
-
-                    if (preDownEvent != null&&event.getEventTime() - preDownEvent.getEventTime()<300){
+                    if (preDownEventTime != 0 &&
+                            event.getEventTime() - preDownEventTime<300){
                         mDoubleClickListener.OnDoubleClick(v);
                     }
-
                     //perform double click
-                    preDownEvent = event;
+                    preDownEventTime = event.getEventTime();
                     break;
                 case MotionEvent.ACTION_MOVE:
                     break;
