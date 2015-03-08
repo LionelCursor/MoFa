@@ -196,11 +196,12 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/minus"
+                        android:visibility="gone"
                         android:background="@null"/>
 
                     <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekBar_blur"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="25.5dp"
@@ -218,6 +219,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/plus"
+                        android:visibility="gone"
                         android:background="@null"/>
                 </RelativeLayout>
 
