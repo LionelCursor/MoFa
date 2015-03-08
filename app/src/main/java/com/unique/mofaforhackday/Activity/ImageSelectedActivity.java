@@ -59,6 +59,7 @@ public class ImageSelectedActivity extends BaseFragmentActivity implements Loade
     public static String KEY_SRC_NAME = MediaStore.Images.Media.DISPLAY_NAME;
     //    public static String KEY_SRC_ID = MediaStore.Images.Media._ID;
     public static String KEY_SRC_DATA_PATH = MediaStore.Images.Media.DATA;
+    public static String KEY_IS_PRIVATE = MediaStore.Images.Media.IS_PRIVATE;
 //    public static String KEY_THUMBNAIL_DATA_PATH = "Thumbnails_data_path";
 
     public static String MOFA_BUCKET_NAME = "mofa";
@@ -197,7 +198,7 @@ public class ImageSelectedActivity extends BaseFragmentActivity implements Loade
         setRecommendedList();
         getLoaderManager().initLoader(0, null, this);
     }
-
+    /**It's a very ungentle design pattern, which must be changed**/
     private void setRecommendedList() {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put(KEY_SRC_DATA_PATH, Config.IMAGE_1);
@@ -510,10 +511,12 @@ public class ImageSelectedActivity extends BaseFragmentActivity implements Loade
                 AlbumList.clear();
 //                mofaList.clear();
                 do {
+                    if ((bucket_display_name = data.getString(bucket_display_nameColumn)).startsWith(".")){
+                        continue;
+                    }
 //                    _id = data.getInt(_idColumn);
                     path = data.getString(dataColumn);
                     display_name = data.getString(display_nameColumn);
-                    bucket_display_name = data.getString(bucket_display_nameColumn);
                     bucket_id = data.getInt(bucket_idColumn);
 
                     map = new HashMap<String, Object>();
