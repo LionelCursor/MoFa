@@ -24,6 +24,7 @@ import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,12 +135,16 @@ public class CropImageView extends FrameLayout {
             super.onRestoreInstanceState(state);
         }
     }
+    //hot-fix-size-change
+    private Bitmap preBitmap = null;
+    public void setPreBitmap(Bitmap bitmap){
+        preBitmap = bitmap;
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-
-        if (mBitmap != null) {
-            final Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, this);
+        if ((preBitmap!=null?preBitmap:mBitmap) != null) {
+            final Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside((preBitmap!=null?preBitmap:mBitmap), this);
             mCropOverlayView.setBitmapRect(bitmapRect);
         } else {
             mCropOverlayView.setBitmapRect(EMPTY_RECT);
@@ -154,14 +159,14 @@ public class CropImageView extends FrameLayout {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        if (mBitmap != null) {
+        if ((preBitmap!=null?preBitmap:mBitmap) != null) {
 
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
             // Bypasses a baffling bug when used within a ScrollView, where
             // heightSize is set to 0.
             if (heightSize == 0)
-                heightSize = mBitmap.getHeight();
+                heightSize = (preBitmap!=null?preBitmap:mBitmap).getHeight();
 
             int desiredWidth;
             int desiredHeight;
@@ -170,11 +175,11 @@ public class CropImageView extends FrameLayout {
             double viewToBitmapHeightRatio = Double.POSITIVE_INFINITY;
 
             // Checks if either width or height needs to be fixed
-            if (widthSize < mBitmap.getWidth()) {
-                viewToBitmapWidthRatio = (double) widthSize / (double) mBitmap.getWidth();
+            if (widthSize < (preBitmap!=null?preBitmap:mBitmap).getWidth()) {
+                viewToBitmapWidthRatio = (double) widthSize / (double) (preBitmap!=null?preBitmap:mBitmap).getWidth();
             }
-            if (heightSize < mBitmap.getHeight()) {
-                viewToBitmapHeightRatio = (double) heightSize / (double) mBitmap.getHeight();
+            if (heightSize < (preBitmap!=null?preBitmap:mBitmap).getHeight()) {
+                viewToBitmapHeightRatio = (double) heightSize / (double) (preBitmap!=null?preBitmap:mBitmap).getHeight();
             }
 
             // If either needs to be fixed, choose smallest ratio and calculate
@@ -182,10 +187,10 @@ public class CropImageView extends FrameLayout {
             if (viewToBitmapWidthRatio != Double.POSITIVE_INFINITY || viewToBitmapHeightRatio != Double.POSITIVE_INFINITY) {
                 if (viewToBitmapWidthRatio <= viewToBitmapHeightRatio) {
                     desiredWidth = widthSize;
-                    desiredHeight = (int) (mBitmap.getHeight() * viewToBitmapWidthRatio);
+                    desiredHeight = (int) ((preBitmap!=null?preBitmap:mBitmap).getHeight() * viewToBitmapWidthRatio);
                 } else {
                     desiredHeight = heightSize;
-                    desiredWidth = (int) (mBitmap.getWidth() * viewToBitmapHeightRatio);
+                    desiredWidth = (int) ((preBitmap!=null?preBitmap:mBitmap).getWidth() * viewToBitmapHeightRatio);
                 }
             }
 
@@ -193,8 +198,8 @@ public class CropImageView extends FrameLayout {
             // width is
             // simply picture size
             else {
-                desiredWidth = mBitmap.getWidth();
-                desiredHeight = mBitmap.getHeight();
+                desiredWidth = (preBitmap!=null?preBitmap:mBitmap).getWidth();
+                desiredHeight = (preBitmap!=null?preBitmap:mBitmap).getHeight();
             }
 
             int width = getOnMeasureSpec(widthMode, widthSize, desiredWidth);
@@ -203,8 +208,8 @@ public class CropImageView extends FrameLayout {
             mLayoutWidth = width;
             mLayoutHeight = height;
 
-            final Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap.getWidth(),
-                                                                            mBitmap.getHeight(),
+            final Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside((preBitmap!=null?preBitmap:mBitmap).getWidth(),
+                    (preBitmap!=null?preBitmap:mBitmap).getHeight(),
                                                                             mLayoutWidth,
                                                                             mLayoutHeight);
             mCropOverlayView.setBitmapRect(bitmapRect);
@@ -213,7 +218,6 @@ public class CropImageView extends FrameLayout {
             setMeasuredDimension(mLayoutWidth, mLayoutHeight);
 
         } else {
-
             mCropOverlayView.setBitmapRect(EMPTY_RECT);
             setMeasuredDimension(widthSize, heightSize);
         }

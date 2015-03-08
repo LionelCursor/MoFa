@@ -259,7 +259,11 @@ public class OkActivity extends BaseActivity {
         (findViewById(R.id.ok_set_mobile_background)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentCropAndSetWallpaper();
+                if (mBitmapMain.getHeight() >= 40 && mBitmapMain.getWidth() >= 40){
+                    IntentCropAndSetWallpaper();
+                }else{
+                    Toast.makeText(OkActivity.this,"图片太小啦~",Toast.LENGTH_SHORT).show();
+                }
 //                Intent intent = new Intent(OkActivity.this,SetWallpaperActivity.class);
 //                mainCache = mBitmapMain;
 //                new Thread() {

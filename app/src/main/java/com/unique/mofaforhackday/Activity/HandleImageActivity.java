@@ -12,6 +12,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -719,6 +720,7 @@ public class HandleImageActivity extends BaseActivity {
                 mOperatingBitmap = cropImageView.getCroppedImage();
                 mMainImageView.setImageBitmap(mOperatingBitmap);
                 wrapSlidingDrawer.toggle();
+                allTopLayoutGONE();
                 undoFCropperTPhotoView();
             }
         });
@@ -727,7 +729,6 @@ public class HandleImageActivity extends BaseActivity {
             public void onClick(View v) {
                 allTopLayoutGONE();
                 undoFCropperTPhotoView();
-
             }
         });
     }
@@ -917,8 +918,11 @@ public class HandleImageActivity extends BaseActivity {
             Toast.makeText(this, "出错了。。。", Toast.LENGTH_SHORT).show();
             return;
         }
-        cropImageView.setImageBitmap(b);
         cropImageView.setVisibility(View.VISIBLE);
+        /**only added for hot-fix, not gentle.*/
+        /**this bitmap is used to measure size*/
+        cropImageView.setPreBitmap(mOperatingBitmap);
+        cropImageView.setImageBitmap(b);
         mCropping =true;
 
         //TODO-CropView shrink

@@ -19,6 +19,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -217,7 +218,6 @@ public class CropOverlayView extends View {
      * @param bitmap the Bitmap to set
      */
     public void resetCropOverlayView() {
-
         if (initializedCropWindow) {
             initCropWindow(mBitmapRect);
             invalidate();
