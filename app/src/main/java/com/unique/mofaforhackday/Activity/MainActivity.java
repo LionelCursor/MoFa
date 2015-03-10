@@ -3,47 +3,33 @@ package com.unique.mofaforhackday.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.ImageCaptureUtils;
-import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.view.MoFaButton;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 
 /**
  * Created by ldx at 2014/8/
  * First Screen
  */
 public class MainActivity extends BaseActivity {
-    private static final String TAG = "MainActivity";
-    private static final boolean DEBUG = true;
 
     private static final int LOAD_IMAGE = 1;
 
-    private Uri mImageUri;
-    File photo;
     private String mCurrentPicturePath;
 
     private MoFaButton mImageButtonPic;

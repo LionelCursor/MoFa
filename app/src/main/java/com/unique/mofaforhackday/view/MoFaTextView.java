@@ -3,23 +3,19 @@ package com.unique.mofaforhackday.view;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.text.BoringLayout;
-import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.FloatMath;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
@@ -28,7 +24,6 @@ import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.gesturedetector.MoveGestureDetector;
 import com.unique.mofaforhackday.Utils.gesturedetector.RotateGestureDetector;
 
-import javax.security.auth.login.LoginException;
 
 /**
  * Created by ldx on 2014/9/2.
@@ -308,6 +303,7 @@ public class MoFaTextView extends TextView {
         textNew.setMoFaText(getText());
         textNew.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize());
         textNew.setTextColor(this.getCurrentTextColor());
+        textNew.setShadowLayer(this.getShadowRadius(),getShadowDx(),getShadowDy(),getShadowColor());
         textNew.mOrientation = mOrientation;
         //setRotate has to be used before setX
         //there is a setX()&setY() in display() in setRotate();

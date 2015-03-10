@@ -1204,6 +1204,9 @@ public class HandleImageActivity extends BaseActivity {
         BlurSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                BlurAsyncTask task = new BlurAsyncTask();
+                progress_blur = seekBar.getProgress();
+                task.execute(mOperatingBitmap,seekBar.getProgress());
             }
 
             @Override
@@ -1213,9 +1216,7 @@ public class HandleImageActivity extends BaseActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                BlurAsyncTask task = new BlurAsyncTask();
-                progress_blur = progress;
-                task.execute(mOperatingBitmap,seekBar.getProgress());
+
             }
         });
 
