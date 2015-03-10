@@ -59,7 +59,6 @@ public class ImageSelectedActivity extends BaseFragmentActivity implements Loade
     public static String KEY_SRC_NAME = MediaStore.Images.Media.DISPLAY_NAME;
     //    public static String KEY_SRC_ID = MediaStore.Images.Media._ID;
     public static String KEY_SRC_DATA_PATH = MediaStore.Images.Media.DATA;
-    public static String KEY_IS_PRIVATE = MediaStore.Images.Media.IS_PRIVATE;
 //    public static String KEY_THUMBNAIL_DATA_PATH = "Thumbnails_data_path";
 
     public static String MOFA_BUCKET_NAME = "mofa";

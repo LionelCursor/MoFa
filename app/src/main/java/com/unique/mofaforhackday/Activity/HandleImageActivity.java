@@ -477,7 +477,9 @@ public class HandleImageActivity extends BaseActivity {
 
 
         setClickableAllButtonInEditWord(false);
+        setAllButtonPressedInEditWord(true);
         button_word_ensure.setClickable(true);
+        button_word_ensure.setPressed(false);
     }
 
     private void setWordRotateDetail() {
@@ -663,6 +665,7 @@ public class HandleImageActivity extends BaseActivity {
                     });
                     firstText = false;
                     setClickableAllButtonInEditWord(true);
+                    setAllButtonPressedInEditWord(false);
                 }
             }
         });
@@ -691,6 +694,19 @@ public class HandleImageActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void setAllButtonPressedInEditWord(boolean bool){
+        button_ensure_add.setPressed(bool);
+        word_imageButton_color.setPressed(bool);
+        word_imageButton_font.setPressed(bool);
+        word_imageButton_hor_ver.setPressed(bool);
+        word_imageButton_move.setPressed(bool);
+        word_imageButton_rotate.setPressed(bool);
+        word_imageButton_textsize.setPressed(bool);
+        word_imageButton_tmd.setPressed(bool);
+        word_imageButton_shadow.setPressed(bool);
+
     }
 
     private void setClickableAllButtonInEditWord(boolean bool){
