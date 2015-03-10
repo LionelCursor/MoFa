@@ -569,13 +569,16 @@ public class HandleImageActivity extends BaseActivity {
             }
         });
     }
+    MoFaSeekBar SeekBarX;
+    MoFaSeekBar SeekBarY;
+    MoFaSeekBar SeekBarSize;
 
     private void setShadowDetail() {
-        MoFaSeekBar SeekBarX = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_X);
+        SeekBarX = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_X);
         SeekBarX.setDrawCustomBackground(false);
-        MoFaSeekBar SeekBarY = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Y);
+        SeekBarY = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Y);
         SeekBarY.setDrawCustomBackground(false);
-        MoFaSeekBar SeekBarSize = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Size);
+        SeekBarSize = (MoFaSeekBar) findViewById(R.id.seekbar_word_shadow_Size);
         SeekBarSize.setDrawCustomBackground(false);
         SeekBarX.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -2421,6 +2424,15 @@ public class HandleImageActivity extends BaseActivity {
             setButtonOnChoosenAndUnclickable(word_imageButton_move, false);
         }
 
+        private boolean firstShadow = true;
+        private void initShadow(){
+            if(SeekBarX==null||SeekBarY==null||SeekBarSize==null){
+                return;
+            }
+            SeekBarX.setProgress(SeekBarX.getMax()/2);
+            SeekBarY.setProgress(SeekBarY.getMax()/2);
+            SeekBarSize.setProgress(SeekBarSize.getMax()/2);
+        }
         @Override
         public void onClick(View v) {
             wordLayoutAllGONE();
@@ -2430,6 +2442,10 @@ public class HandleImageActivity extends BaseActivity {
                     rColorDetailLayout.setVisibility(View.VISIBLE);
                     break;
                 case R.id.word_imageButton_shadow:
+                    if(firstShadow){
+                        initShadow();
+                        firstShadow = false;
+                    }
 //                    setButtonOnChoosenAndUnclickable(v,true);
                     rShadowDetailLayout.setVisibility(View.VISIBLE);
                     break;
