@@ -659,6 +659,9 @@ public class HandleImageActivity extends BaseActivity {
                     initTextView();
                 }
                 textView.setMoFaText(s);
+                if (textView.getVisibility()==View.GONE){
+                    textView.appearWithAnimation();
+                }
                 if (firstText&&s.length()!=0){
                     textView.post(new Runnable() {
                         @Override

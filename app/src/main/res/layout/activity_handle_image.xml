@@ -2120,8 +2120,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@id/slip_line"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone">

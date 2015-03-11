@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
@@ -101,7 +102,14 @@ public class MoFaTextView extends TextView {
         this.setOnDoubleClickListener(new OnDoubleClickListener() {
             @Override
             public void OnDoubleClick(final View view) {
-                view.animate().alpha(0).scaleX(3).scaleY(3).setDuration(300).setListener(new Animator.AnimatorListener() {
+                deleteWithAnimation();
+            }
+        });
+    }
+
+    public void deleteWithAnimation(){
+        this.animate().alpha(0).scaleX(3).scaleY(3).setDuration(300)
+                .setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
 
@@ -109,7 +117,7 @@ public class MoFaTextView extends TextView {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        view.setVisibility(View.GONE);
+                        MoFaTextView.this.setVisibility(GONE);
                     }
 
                     @Override
@@ -119,10 +127,34 @@ public class MoFaTextView extends TextView {
 
                     @Override
                     public void onAnimationRepeat(Animator animation) {
+
                     }
                 }).start();
-            }
-        });
+    }
+
+    public void appearWithAnimation(){
+        this.animate().alpha(mAlpha).scaleX(1).scaleY(1).setDuration(300)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        MoFaTextView.this.setVisibility(VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                }).start();
     }
 
     @Override
@@ -296,14 +328,27 @@ public class MoFaTextView extends TextView {
         return super.onTouchEvent(event);
     }
 
+
+    private float mRadius;
+    private float mDx;
+    private float mDy;
+    private int mShadowColor;
+    @Override
+    public void setShadowLayer(float radius, float dx, float dy, int color) {
+        super.setShadowLayer(radius, dx, dy, color);
+        mRadius = radius;
+        mDx = dx;
+        mDy = dy;
+        mShadowColor= color;
+    }
+
     public MoFaTextView copy(){
         MoFaTextView textNew = new MoFaTextView(context);
-//        Log.e("Cursor","|"+getText()+"|");
 
         textNew.setMoFaText(getText());
         textNew.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize());
         textNew.setTextColor(this.getCurrentTextColor());
-        textNew.setShadowLayer(this.getShadowRadius(),getShadowDx(),getShadowDy(),getShadowColor());
+        textNew.setShadowLayer(mRadius,mDx,mDy,mShadowColor);
         textNew.mOrientation = mOrientation;
         //setRotate has to be used before setX
         //there is a setX()&setY() in display() in setRotate();
