@@ -30,12 +30,12 @@ import com.koushikdutta.ion.ProgressCallback;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.unique.mofaforhackday.activity.HandleImageActivity;
-import com.unique.mofaforhackday.activity.ImageSelectedActivity;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.DefaultFontInflator;
+import com.unique.mofaforhackday.activity.HandleImageActivity;
+import com.unique.mofaforhackday.activity.ImageSelectedActivity;
 
 import java.io.File;
 import java.text.NumberFormat;
@@ -92,15 +92,15 @@ public class ImageSelectedRecommendedFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
             String name = handleString((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
             boolean hasFile = hasFile(Config.SDCARD_MOFA + name);
-            if (!hasFile) {
+            if (!hasFile||!isFile(Config.SDCARD_MOFA + name)) {
                 if (!hasFile(Config.SDCARD_MOFA)) {
                     File f = new File(Config.SDCARD_MOFA);
                     f.mkdirs();
                 }
                 if (ImageSelectedActivity.isNetworkConnected(getActivity())) {
-                    if (ImageSelectedActivity.isWifi(getActivity())){
+                    if (ImageSelectedActivity.isWifi(getActivity())) {
                         DownLoadImageFilesWithIon((String) dataList.get(position).get(ImageSelectedActivity.KEY_SRC_DATA_PATH));
-                    }else{
+                    } else {
                         LayoutInflater inflater = LayoutInflater.from(getActivity());
                         RelativeLayout layout = (RelativeLayout) inflater
                                 .inflate(R.layout.layout_dialog, null);
@@ -156,13 +156,27 @@ public class ImageSelectedRecommendedFragment extends Fragment {
         return true;
     }
 
+
+    private boolean isFile(String url) {
+        try {
+            File f = new File(url);
+            if (!f.exists() || !f.isFile()) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+
+    }
+
     public void DownLoadImageFilesWithIon(String url) {
         showDialog();
         showTempImage(url);
         final TextView textView = ((TextView) getActivity().findViewById(R.id.download_image_textView));
         final String name = handleString(url);
         url = Config.url + name;
-        Log.e("Cursor","ImageSelectedRecommendedFragment:"+url);
+        Log.e("Cursor", "ImageSelectedRecommendedFragment:" + url);
         Ion.with(this)
                 .load(url)
                 .progressBar((ProgressBar) getActivity().findViewById(R.id.download_image_progress_bar))
