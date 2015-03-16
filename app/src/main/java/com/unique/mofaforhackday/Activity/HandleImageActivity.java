@@ -1,7 +1,5 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +10,6 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -37,6 +35,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cursor.common.logger.Logger;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.koushikdutta.async.future.FutureCallback;
@@ -54,6 +53,7 @@ import com.unique.mofaforhackday.Utils.ImageAdjuster;
 import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.beans.ColorAdjuster;
 import com.unique.mofaforhackday.beans.Modifitation;
+import com.unique.mofaforhackday.ui.DoubleClickDeleteGuideHandler;
 import com.unique.mofaforhackday.view.MoFaSeekBar;
 import com.unique.mofaforhackday.view.MoFaSlidingDrawer;
 import com.unique.mofaforhackday.view.MoFaTextButton;
@@ -64,6 +64,8 @@ import com.unique.mofaforhackday.view.photoview.PhotoViewAttacher;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import butterknife.ButterKnife;
 
 import static com.unique.mofaforhackday.Utils.ImageAdjuster.ADJUSTER_TYPE;
 
@@ -236,15 +238,16 @@ public class HandleImageActivity extends BaseActivity {
     private Matrix mDisplayMatrix;
     private boolean mCropping= false;
 
+    private boolean firstIn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.gc();
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);// 去标题栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);// 去掉信息栏
         setContentView(R.layout.activity_handle_image);
-
+        init();
         CreateSrcBitmap();
         SaveAndAbandonClickListener();
         makeStep();
@@ -252,6 +255,13 @@ public class HandleImageActivity extends BaseActivity {
         initTextView();
         setWrapSlidingMenu();
 
+    }
+
+    public void init(){
+        ButterKnife.inject(this);
+
+        SharedPreferences sp = getSharedPreferences(getString(R.string.action_settings),MODE_PRIVATE);
+        firstIn = sp.getBoolean(getString(R.string.FIRST_IN),true);
     }
 
     @Override
@@ -655,6 +665,13 @@ public class HandleImageActivity extends BaseActivity {
             public void onClick(View v) {
                 //TODO-button_word_ensure_onClick
                 final String s = mEditTextInWord.getText().toString();
+                if (s ==null||s.length()==0){
+                    return;
+                }
+                InputMethodManager imm = (InputMethodManager)
+                        getBaseContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(button_word_ensure.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                 if (textView == null) {
                     initTextView();
                 }
@@ -662,7 +679,7 @@ public class HandleImageActivity extends BaseActivity {
                 if (textView.getVisibility()==View.GONE){
                     textView.appearWithAnimation();
                 }
-                if (firstText&&s.length()!=0){
+                if (firstText){
                     textView.post(new Runnable() {
                         @Override
                         public void run() {
@@ -673,6 +690,14 @@ public class HandleImageActivity extends BaseActivity {
                     setClickableAllButtonInEditWord(true);
                     setAllButtonPressedInEditWord(false);
                 }
+                if (firstIn){
+                    textView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            new DoubleClickDeleteGuideHandler().handle(HandleImageActivity.this, textView);
+                        }
+                    },100);
+                }
             }
         });
 
@@ -680,11 +705,8 @@ public class HandleImageActivity extends BaseActivity {
         button_ensure_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO- ensure the word
-                //TODO- ListView to save reference of MoFaTextView
                 // The logic is hard really
                 final String s = mEditTextInWord.getText().toString();
-//                Log.e("Cursor","ensure:"+button_ensure_add.isClickable());
                 if (textView == null) {
                     initTextView();
                 } else {
@@ -810,6 +832,10 @@ public class HandleImageActivity extends BaseActivity {
         findViewById(R.id.Button_5_to_7).setOnClickListener(listener);
         findViewById(R.id.Button_8_to_10).setOnClickListener(listener);
         findViewById(R.id.Button_9_to_16).setOnClickListener(listener);
+    }
+
+    public MoFaTextView getMoFaTextViwReference() {
+        return textView;
     }
 
     private class CropDetailOnClickListener implements View.OnClickListener {
@@ -1514,7 +1540,6 @@ public class HandleImageActivity extends BaseActivity {
         mainLayout.addView(textView);
         textView.setDismissWhenFocusOnTouchOutside();
     }
-
 
     private class MoFaTextViewOnFocusedListener implements MoFaTextView.OnFocusedListener {
         @Override
@@ -2368,6 +2393,7 @@ public class HandleImageActivity extends BaseActivity {
             ButtonContrast.colorReset();
             ButtonSaturation.colorReset();
         }
+
 
         @Override
         public void onClick(View v) {

@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.unique.mofaforhackday.Activity.HandleImageActivity;
-import com.unique.mofaforhackday.Activity.ImageSelectedActivity;
+import com.unique.mofaforhackday.activity.HandleImageActivity;
+import com.unique.mofaforhackday.activity.ImageSelectedActivity;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
 

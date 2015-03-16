@@ -1,4 +1,4 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by ldx on 2014/12/9.

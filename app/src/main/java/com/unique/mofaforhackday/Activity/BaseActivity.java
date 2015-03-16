@@ -1,6 +1,7 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -21,5 +22,9 @@ public class BaseActivity extends Activity{
         super.onPause();
         MobclickAgent.onPause(this);
     }
-    
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 }

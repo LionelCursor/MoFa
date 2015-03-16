@@ -5,11 +5,8 @@ import android.graphics.Typeface;
 import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
-import com.unique.mofaforhackday.Activity.HandleImageActivity;
-import com.unique.mofaforhackday.R;
 
 import java.io.File;
-import java.util.concurrent.FutureTask;
 
 /**
  * Created by ldx on 2014/9/28.

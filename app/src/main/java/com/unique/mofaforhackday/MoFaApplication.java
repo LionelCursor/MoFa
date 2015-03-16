@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
+import com.cursor.common.CommonApplication;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -16,7 +17,7 @@ import java.io.File;
  * Created by ldx on 2014/8/28.
  *
  */
-public class MoFaApplication extends Application{
+public class MoFaApplication extends CommonApplication{
     ImageLoaderConfiguration config;
     /**
      * indicating whether the app was launched at first time
@@ -36,8 +37,8 @@ public class MoFaApplication extends Application{
         firstIn = sp.getBoolean(getString(R.string.FIRST_IN),true);
         File file = new File(Config.SDCARD_MOFA);
         if (firstIn){
-            MoFaFileUtils.delRecommendedFiles();
-            file.mkdirs();
+//            MoFaFileUtils.delRecommendedFiles();
+//            file.mkdirs();
         }
         if (!file.exists()){
             file.mkdirs();
@@ -65,4 +66,5 @@ public class MoFaApplication extends Application{
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
     }
+
 }

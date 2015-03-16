@@ -1,9 +1,7 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.WallpaperManager;
-import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -40,7 +38,6 @@ import com.umeng.socialize.utils.Log;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
-import com.unique.mofaforhackday.BuildConfig;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.crop.CropActivity;
@@ -264,20 +261,6 @@ public class OkActivity extends BaseActivity {
                 }else{
                     Toast.makeText(OkActivity.this,"图片太小啦~",Toast.LENGTH_SHORT).show();
                 }
-//                Intent intent = new Intent(OkActivity.this,SetWallpaperActivity.class);
-//                mainCache = mBitmapMain;
-//                new Thread() {
-//                    public void run() {
-//                        try {
-//                            wallpaperManager = WallpaperManager.getInstance(OkActivity.this);
-//                            wallpaperManager.setBitmap(mBitmapMain);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-
-
-//                }.start();
             }
         });
         (findViewById(R.id.ok_main_page)).setOnClickListener(new View.OnClickListener() {

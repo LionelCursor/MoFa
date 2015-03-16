@@ -8,7 +8,7 @@
     <ImageView
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/mofa__0006_introduction"
+        android:src="@drawable/settings_icon"
         android:layout_width="wrap_content"
         android:layout_height="260dp"
         android:scaleType="centerInside"

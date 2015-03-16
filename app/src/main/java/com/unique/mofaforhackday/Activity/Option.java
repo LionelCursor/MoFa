@@ -1,4 +1,4 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -29,8 +29,6 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.DefaultFontInflator;
-
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 
 public class Option extends BaseSwipeBackActivity implements View.OnClickListener {

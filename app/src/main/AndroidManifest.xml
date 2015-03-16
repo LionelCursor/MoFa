@@ -21,7 +21,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoTranslucent" >
             <intent-filter>
@@ -31,16 +31,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.ImageSelectedActivity"
+            android:name=".activity.ImageSelectedActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".Activity.HandleImageActivity"
+            android:name=".activity.HandleImageActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".Activity.OkActivity"
+            android:name=".activity.OkActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".Activity.Option"
+            android:name=".activity.Option"
             android:label="@string/app_name" />
         <!-- Umeng -->
         <activity
@@ -53,7 +53,7 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="53f6c239fd98c57c62000919" />
-         <meta-data android:value="meizu" android:name="UMENG_CHANNEL"/>
+         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
         <service
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService" >
@@ -100,13 +100,13 @@
             android:process=":DownloadingService" />
 
         <activity
-            android:name=".Activity.ImageSelectedDetailActivity"
+            android:name=".activity.ImageSelectedDetailActivity"
             android:label="@string/title_activity_image_selected_detail" >
         </activity>
-        <activity android:name=".Activity.AboutUsActivity" >
+        <activity android:name=".activity.AboutUsActivity" >
         </activity>
         <activity
-            android:name=".Activity.SetWallpaperActivity"
+            android:name=".activity.SetWallpaperActivity"
             android:label="@string/title_activity_set_wallpaper" >
         </activity>
         <activity

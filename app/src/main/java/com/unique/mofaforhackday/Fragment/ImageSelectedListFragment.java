@@ -1,18 +1,13 @@
 package com.unique.mofaforhackday.Fragment;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,13 +19,11 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.tencent.connect.avatar.ImageActivity;
-import com.unique.mofaforhackday.Activity.ImageSelectedActivity;
-import com.unique.mofaforhackday.Activity.ImageSelectedDetailActivity;
+import com.unique.mofaforhackday.activity.ImageSelectedActivity;
+import com.unique.mofaforhackday.activity.ImageSelectedDetailActivity;
 import com.unique.mofaforhackday.MoFaApplication;
 import com.unique.mofaforhackday.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

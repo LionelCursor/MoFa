@@ -1,14 +1,11 @@
 package com.unique.mofaforhackday.crop;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,8 +18,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.unique.mofaforhackday.Activity.BaseActivity;
-import com.unique.mofaforhackday.Activity.OkActivity;
+import com.unique.mofaforhackday.activity.BaseActivity;
+import com.unique.mofaforhackday.activity.OkActivity;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.view.cropper.CropImageView;
 

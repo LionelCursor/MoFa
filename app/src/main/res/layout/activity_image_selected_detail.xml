@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@android:color/white"
-    tools:context="com.unique.mofaforhackday.Activity.ImageSelectedDetailActivity">
+    tools:context="com.unique.mofaforhackday.activity.ImageSelectedDetailActivity">
     <fragment
         android:id="@+id/fragment_image_selected_detail"
         android:layout_width="match_parent"

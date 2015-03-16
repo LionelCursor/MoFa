@@ -1,4 +1,4 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -52,10 +52,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPreferences sp = getSharedPreferences(getString(R.string.action_settings),MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(getString(R.string.FIRST_IN), false);
-        editor.apply();
     }
 
     @Override

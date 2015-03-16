@@ -21,9 +21,11 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.cursor.common.logger.Logger;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.gesturedetector.MoveGestureDetector;
 import com.unique.mofaforhackday.Utils.gesturedetector.RotateGestureDetector;
+import com.unique.mofaforhackday.ui.Handler;
 
 
 /**
@@ -195,7 +197,7 @@ public class MoFaTextView extends TextView {
     }
 
     public void SelfCenter() {
-        animate().setDuration(100).alpha(0).setListener(new Animator.AnimatorListener() {
+        animate().setDuration(50).alpha(0).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
             }

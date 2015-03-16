@@ -1,13 +1,11 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
-import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +18,6 @@ import android.widget.RelativeLayout;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.view.photoview.PhotoViewAttacher;
 
-import java.io.IOException;
 import java.util.List;
 
 public class SetWallpaperActivity extends BaseActivity {

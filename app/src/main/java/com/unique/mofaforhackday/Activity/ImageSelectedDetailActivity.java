@@ -1,4 +1,4 @@
-package com.unique.mofaforhackday.Activity;
+package com.unique.mofaforhackday.activity;
 
 
 import android.app.ActionBar;

@@ -12,6 +12,8 @@
 
     <color name="mofa_seekbar_background_color">#1affffff</color>
 
+    <color name="guide_background">#9a1b1b1b</color>
+
     <!-- Cropper -->
     <!-- ImageSelectedDialog -->
     <color name="black_translucent">#e0000000</color>

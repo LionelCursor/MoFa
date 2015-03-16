@@ -2933,4 +2933,7 @@
             android:src="@drawable/back_selector" />
     </RelativeLayout>
 
+    <include
+        layout="@layout/guide_window_in_handle_image_activity"/>
+
 </com.unique.mofaforhackday.view.MoFaRelativeLayout>
