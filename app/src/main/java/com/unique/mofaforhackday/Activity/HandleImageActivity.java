@@ -10,6 +10,8 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -690,7 +692,7 @@ public class HandleImageActivity extends BaseActivity {
                     setClickableAllButtonInEditWord(true);
                     setAllButtonPressedInEditWord(false);
                 }
-                if (firstIn){
+                if (firstIn&&firstText){
                     textView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -1047,11 +1049,22 @@ public class HandleImageActivity extends BaseActivity {
             newBitmapHeight = bitmapHeight;
             newBitmapWidth = bitmapWidth;
         }
-        //TODO-BUG-here resolve the bug of white line
+
+        RectF rect = attacher.getDisplayRect();
+//        Bitmap result = Bitmap.createBitmap(b,
+//                (b.getWidth() - newBitmapWidth) / 2, (b.getHeight() - newBitmapHeight) / 2+1,
+//                newBitmapWidth, newBitmapHeight-1
+//        );
+        Logger.e("b:"+b.getHeight()+";"+b.getWidth());
+        Logger.e("rect:"+rect.left+";"+rect.top+";"+rect.right+";"+rect.bottom);
+        int left = rect.left>0 ? (int)rect.left+1: 0;//left can less than zero.
+        int top = rect.top>0 ? (int)rect.top+1 : 0;
+        int right = rect.right<=b.getWidth() ? (int)rect.right : b.getWidth();
+        int bottom = rect.bottom<=b.getHeight() ? (int) rect.bottom : b.getHeight();
         Bitmap result = Bitmap.createBitmap(b,
-                (b.getWidth() - newBitmapWidth) / 2, (b.getHeight() - newBitmapHeight) / 2+1,
-                newBitmapWidth, newBitmapHeight-1
-        );
+                left,top,
+                right-left,bottom-top
+                );
         b.recycle();
         return result;
     }

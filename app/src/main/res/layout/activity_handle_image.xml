@@ -324,6 +324,40 @@
                             android:layout_marginRight="10dp"
                             android:background="@null"
                             android:src="@drawable/word_color_selector" />
+                        <ImageButton
+                            android:id="@+id/word_imageButton_textsize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/word_button_margin_left"
+                            android:layout_marginRight="10dp"
+                            android:background="@null"
+                            android:src="@drawable/word_size_selector" />
+
+                        <ImageButton
+                            android:id="@+id/word_imageButton_font"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/word_button_margin_left"
+                            android:layout_marginRight="10dp"
+                            android:background="@null"
+                            android:src="@drawable/word_word_selector" />
+                        <ImageButton
+                            android:id="@+id/word_imageButton_move"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/word_button_margin_left"
+                            android:layout_marginRight="10dp"
+                            android:background="@null"
+                            android:src="@drawable/word_move_selector" />
+
+                       <ImageButton
+                            android:id="@+id/word_imageButton_rotate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/word_button_margin_left"
+                            android:layout_marginRight="10dp"
+                            android:background="@null"
+                            android:src="@drawable/word_rotate_selector" />
 
                         <ImageButton
                             android:id="@+id/word_imageButton_shadow"
@@ -343,23 +377,6 @@
                             android:background="@null"
                             android:src="@drawable/mofa_alpha_selector" />
 
-                        <ImageButton
-                            android:id="@+id/word_imageButton_textsize"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/word_button_margin_left"
-                            android:layout_marginRight="10dp"
-                            android:background="@null"
-                            android:src="@drawable/word_size_selector" />
-
-                        <ImageButton
-                            android:id="@+id/word_imageButton_font"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/word_button_margin_left"
-                            android:layout_marginRight="10dp"
-                            android:background="@null"
-                            android:src="@drawable/word_word_selector" />
 
                         <ImageButton
                             android:id="@+id/word_imageButton_hor_ver"
@@ -369,25 +386,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@null"
                             android:src="@drawable/mofa_align_selector" />
-
-                        <ImageButton
-                            android:id="@+id/word_imageButton_move"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/word_button_margin_left"
-                            android:layout_marginRight="10dp"
-                            android:background="@null"
-                            android:src="@drawable/word_move_selector" />
-
-                        <ImageButton
-                            android:id="@+id/word_imageButton_rotate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/word_button_margin_left"
-                            android:layout_marginRight="10dp"
-                            android:background="@null"
-                            android:src="@drawable/word_rotate_selector" />
-                    </LinearLayout>
+                   </LinearLayout>
 
                 </HorizontalScrollView>
                 <!--last line-->

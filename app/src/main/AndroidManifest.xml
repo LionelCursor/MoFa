@@ -18,10 +18,12 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="landscape"
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoTranslucent" >
             <intent-filter>
@@ -32,9 +34,11 @@
         </activity>
         <activity
             android:name=".activity.ImageSelectedActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".activity.HandleImageActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".activity.OkActivity"

@@ -43,8 +43,17 @@ public class ImageSelectedListFragment extends Fragment {
 
     @SuppressLint("ValidFragment")
     public ImageSelectedListFragment() {
-        this.dataList = ImageSelectedActivity.AlbumList;
-        this.SrcList = ImageSelectedActivity.dataList;
+        if(ImageSelectedActivity.AlbumList==null||ImageSelectedActivity.AlbumList.isEmpty()){
+            this.dataList = new ArrayList<HashMap<String, Object>>(0);
+        }else{
+            this.dataList = ImageSelectedActivity.AlbumList;
+        }
+
+        if (ImageSelectedActivity.dataList==null||ImageSelectedActivity.dataList.isEmpty()){
+            this.SrcList = new ArrayList<HashMap<String, Object>>(0);
+        }else{
+            this.SrcList = ImageSelectedActivity.dataList;
+        }
         AddNumKey();
     }
 
@@ -94,6 +103,7 @@ public class ImageSelectedListFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ImageSelectedDetailActivity.class);
             intent.putExtra("folder", (String) dataList.get(position).get(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
             startActivity(intent);
+            getActivity().finish();
             getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
 
 //            Fragment f= new ImageSelectedGridViewFragment();
