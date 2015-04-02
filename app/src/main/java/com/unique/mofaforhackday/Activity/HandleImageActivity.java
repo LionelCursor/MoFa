@@ -37,7 +37,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cursor.common.logger.Logger;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.koushikdutta.async.future.FutureCallback;
@@ -55,6 +54,7 @@ import com.unique.mofaforhackday.Utils.ImageAdjuster;
 import com.unique.mofaforhackday.Utils.L;
 import com.unique.mofaforhackday.beans.ColorAdjuster;
 import com.unique.mofaforhackday.beans.Modifitation;
+import com.unique.mofaforhackday.controllers.ShotOnXXMoBileController;
 import com.unique.mofaforhackday.ui.DoubleClickDeleteGuideHandler;
 import com.unique.mofaforhackday.view.MoFaSeekBar;
 import com.unique.mofaforhackday.view.MoFaSlidingDrawer;
@@ -241,6 +241,8 @@ public class HandleImageActivity extends BaseActivity {
     private boolean mCropping= false;
 
     private boolean firstIn = false;
+
+    ShotOnXXMoBileController controller = new ShotOnXXMoBileController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1055,8 +1057,6 @@ public class HandleImageActivity extends BaseActivity {
 //                (b.getWidth() - newBitmapWidth) / 2, (b.getHeight() - newBitmapHeight) / 2+1,
 //                newBitmapWidth, newBitmapHeight-1
 //        );
-        Logger.e("b:"+b.getHeight()+";"+b.getWidth());
-        Logger.e("rect:"+rect.left+";"+rect.top+";"+rect.right+";"+rect.bottom);
         int left = rect.left>0 ? (int)rect.left+1: 0;//left can less than zero.
         int top = rect.top>0 ? (int)rect.top+1 : 0;
         int right = rect.right<=b.getWidth() ? (int)rect.right : b.getWidth();
@@ -1393,6 +1393,25 @@ public class HandleImageActivity extends BaseActivity {
         AdjustButton = (ImageButton) findViewById(R.id.adjust_layout_controller);
 //        xuhuaButton = (ImageButton) findViewById(R.id.xuhua);
         editButton = (ImageButton) findViewById(R.id.bianji);
+
+        findViewById(R.id.bianji2).setOnClickListener(new View.OnClickListener() {
+            private int i = 0;
+            @Override
+            public void onClick(View v) {
+                if (i%2 ==0){
+                    //TODO-Here can be bug
+                    //TODO-firstly, I use bitmapNow indicate the operating bitmap
+                    //TODO- bug it was null
+                    controller.attach(mSrcBitmap,attacher);
+                    controller.attachShotFrame();
+                    i++;
+                }else{
+                    controller.detachShotFrame();
+                    i++;
+                }
+
+            }
+        });
 
 
 //        filterButton.setOnClickListener(new View.OnClickListener() {

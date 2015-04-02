@@ -1,7 +1,6 @@
 package com.cursor.common;
 
 import android.app.Application;
-import android.util.DisplayMetrics;
 
 /**
  * USER: ldx

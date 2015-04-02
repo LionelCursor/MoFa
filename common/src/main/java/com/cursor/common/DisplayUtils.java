@@ -26,8 +26,16 @@ public class DisplayUtils {
         return sFullScreenHeight;
     }
 
+    public static int getsFullScreenHeightInDp(){
+        return px2dip(sFullScreenHeight);
+    }
+
     public static int getsFullScreenWidthInPixels(){
         return sFullScreenWidth;
+    }
+
+    public static int getsFullScreenWidthInDp(){
+        return px2dip(sFullScreenWidth);
     }
 
     public static float getsDensity(){

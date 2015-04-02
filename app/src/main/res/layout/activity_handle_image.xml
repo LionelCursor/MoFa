@@ -167,6 +167,18 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:src="@drawable/bianji_selector" />
+
+                 <ImageButton
+                    android:id="@+id/bianji2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
+                    android:layout_marginLeft="@dimen/handle_image_activity_top_button_margin_left"
+                    android:layout_marginRight="@dimen/handle_image_activity_top_button_margin_right"
+                    android:layout_marginTop="@dimen/handle_image_activity_top_button_margin_top"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:src="@drawable/bianji_selector" />
             </LinearLayout>
 
             <View

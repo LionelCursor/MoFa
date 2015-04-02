@@ -6,12 +6,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.cursor.common.DisplayUtils;
-import com.cursor.common.logger.Logger;
 import com.unique.mofaforhackday.activity.HandleImageActivity;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.view.MoFaTextView;
-import com.unique.mofaforhackday.view.interpolator.EaseInOutQuintInterpolator;
-import com.unique.mofaforhackday.view.interpolator.easeOutElasticInterpolator;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -37,8 +34,6 @@ public class DoubleClickDeleteGuideHandler extends Handler {
         ButterKnife.inject(view, activity);
 //        moFaTextView = activity.getMoFaTextViwReference();
         float targetBottom = moFaTextView.getY() + moFaTextView.getHeight();
-        Logger.e("Y:" + moFaTextView.getY());
-        Logger.e("getHeight:" + moFaTextView.getHeight());
         int height = DisplayUtils.getsFullScreenHeightInPixels();
 
         //Indicator

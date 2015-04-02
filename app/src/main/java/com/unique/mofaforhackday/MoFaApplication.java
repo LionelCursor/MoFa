@@ -9,6 +9,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.orhanobut.logger.Logger;
 import com.unique.mofaforhackday.Utils.MoFaFileUtils;
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class MoFaApplication extends CommonApplication{
     @Override
     public void onCreate() {
         super.onCreate();
+        initLog();
         SharedPreferences sp = getSharedPreferences(getString(R.string.action_settings),MODE_PRIVATE);
         firstIn = sp.getBoolean(getString(R.string.FIRST_IN),true);
         File file = new File(Config.SDCARD_MOFA);
@@ -65,6 +67,10 @@ public class MoFaApplication extends CommonApplication{
 //                .displayer(new FadeInBitmapDisplayer(100))
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
+    }
+
+    private void initLog(){
+        Logger.init("MOFA").hideThreadInfo();
     }
 
 }

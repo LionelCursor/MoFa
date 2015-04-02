@@ -17,16 +17,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
-import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
-import com.cursor.common.logger.Logger;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.Utils.gesturedetector.MoveGestureDetector;
 import com.unique.mofaforhackday.Utils.gesturedetector.RotateGestureDetector;
-import com.unique.mofaforhackday.ui.Handler;
-
 
 /**
  * Created by ldx on 2014/9/2.
