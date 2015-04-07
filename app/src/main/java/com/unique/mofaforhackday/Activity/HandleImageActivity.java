@@ -513,6 +513,39 @@ public class HandleImageActivity extends BaseActivity {
             case R.id.imageBtn_shot_on_xiaomi:
                 shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.XIAOMI);
                 break;
+            case R.id.imageBtn_shot_on_htc:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.HTC);
+                break;
+            case R.id.imageBtn_shot_on_lg:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.LG);
+                break;
+            case R.id.imageBtn_shot_on_nokia:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.NOKIA);
+                break;
+            case R.id.imageBtn_shot_on_moto:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.MOTO);
+                break;
+            case R.id.imageBtn_shot_on_oneplus:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.ONEPLUS);
+                break;
+            case R.id.imageBtn_shot_on_blackberry:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.BLACKBERRY);
+                break;
+            case R.id.imageBtn_shot_on_meizu:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.MEIZU);
+                break;
+            case R.id.imageBtn_shot_on_huawei:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.HUAWEI);
+                break;
+            case R.id.imageBtn_shot_on_samsung:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.SAMSUNG);
+                break;
+            case R.id.imageBtn_shot_on_sony:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.SONY);
+                break;
+            case R.id.imageBtn_shot_on_vivo:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.VIVO);
+                break;
             default:
         }
     }

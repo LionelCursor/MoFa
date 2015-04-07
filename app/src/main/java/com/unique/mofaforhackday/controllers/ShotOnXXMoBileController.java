@@ -290,7 +290,16 @@ public class ShotOnXXMoBileController extends BaseController {
 
         XIAOMI(
                 R.drawable.xiaomi,
-                R.drawable.xiaomi_slogan);
+                R.drawable.xiaomi_slogan),
+
+        ONEPLUS(
+                R.drawable.oneplus,
+                R.drawable.oneplus_slogan),
+        BLACKBERRY(
+                R.drawable.blackberry,
+                R.drawable.blackberry_slogan
+        );
+
 
         MB_TYPE(int ResId_1, int ResId_2) {
             type = new Mobile(ResId_1, ResId_2);
