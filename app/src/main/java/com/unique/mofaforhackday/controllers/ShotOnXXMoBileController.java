@@ -230,9 +230,7 @@ public class ShotOnXXMoBileController extends BaseController {
      * @param type mobile type
      */
     public void setMobileTYPE(MB_TYPE type){
-        Logger.e("drawLayout:"+mIsFrameOn);
         if(!mIsFrameOn ||null==mCanvas||null==mRectBottom||null==mImageView) return;
-        Logger.e("drawLayout:"+mIsFrameOn);
         drawBottomLayout(mCanvas,mRectBottom,type);
         mImageView.invalidate();
     }

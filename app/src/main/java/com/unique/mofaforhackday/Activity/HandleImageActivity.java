@@ -491,8 +491,8 @@ public class HandleImageActivity extends BaseActivity {
                 bitmapStepNow = mOperatingBitmap = mSrcBitmap = shotOnXXMoBileController.ensureChange();
                 SUM_STEP_SAVE =0;
                 NOW_STEP_DISPLAY =0;
-
                 allTopLayoutGONE();
+                allMainCtrlButtonUnClickable(false);
             }
         });
 
@@ -501,6 +501,7 @@ public class HandleImageActivity extends BaseActivity {
             public void onClick(View v) {
                 shotOnXXMoBileController.backforwardChange();
                 allTopLayoutGONE();
+                allMainCtrlButtonUnClickable(false);
             }
         });
     }
@@ -1499,7 +1500,6 @@ public class HandleImageActivity extends BaseActivity {
 
         undoFCropperTPhotoView();
         setUpButtonOnChoosenAndUnclickable(false);
-//        allMainCtrlButtonClickable();
     }
 
     public void setButtonOnChoosenAndUnclickable(View button, boolean enable) {
@@ -1528,11 +1528,12 @@ public class HandleImageActivity extends BaseActivity {
 
     }
 
-    private void allMainCtrlButtonClickable() {
-        setButtonOnChoosenAndUnclickable(editButton, true);
-        setButtonOnChoosenAndUnclickable(AdjustButton, true);
-        setButtonOnChoosenAndUnclickable(GaussButton, true);
-        setButtonOnChoosenAndUnclickable(wenziButton, true);
+    private void allMainCtrlButtonUnClickable(boolean enable) {
+        setButtonOnChoosenAndUnclickable(wenziButton, enable);
+        setButtonOnChoosenAndUnclickable(AdjustButton, enable);
+        setButtonOnChoosenAndUnclickable(GaussButton, enable);
+        setButtonOnChoosenAndUnclickable(editButton, enable);
+        setButtonOnChoosenAndUnclickable(shotOnButton, enable);
     }
 
     private void xuhuaVISIBLE() {
@@ -1559,6 +1560,8 @@ public class HandleImageActivity extends BaseActivity {
 
     private void shotOnVISIBLE(){
         allTopLayoutGONE();
+        allMainCtrlButtonUnClickable(true);
+        setButtonOnChoosenAndUnclickable(shotOnButton,false);
         if (!shotOnXXMoBileController.isAttached()){
             shotOnXXMoBileController.attach(attacher);
         }
@@ -2316,6 +2319,7 @@ public class HandleImageActivity extends BaseActivity {
                         if (mSrcBitmap != null) {
                             mSrcBitmap.recycle();
                         }
+                        dialog.dismiss();
                         finish();
                         overridePendingTransition(R.anim.ani_static,R.anim.out_to_right);
                     }

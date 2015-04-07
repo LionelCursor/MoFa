@@ -103,7 +103,6 @@ public class ImageSelectedListFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ImageSelectedDetailActivity.class);
             intent.putExtra("folder", (String) dataList.get(position).get(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
             startActivity(intent);
-            getActivity().finish();
             getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.ani_static);
 
 //            Fragment f= new ImageSelectedGridViewFragment();
