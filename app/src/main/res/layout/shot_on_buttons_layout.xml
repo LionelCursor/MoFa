@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_apple"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_xiaomi"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_xiaomi_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_htc"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_blackberry"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_meizu"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button"
+        android:layout_gravity="center_vertical" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_huawei"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_lg"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_moto"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_nokia"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_oneplus"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_samsung"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_sony"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+    <ImageButton
+        android:id="@+id/imageBtn_shot_on_vivo"
+        style="@style/NullBackgroundImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ShotOnLogoChangeButtonListenerFunction"
+        android:src="@drawable/selector_apple_button" />
+
+</LinearLayout>

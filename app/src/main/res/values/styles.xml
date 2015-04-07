@@ -74,4 +74,10 @@
 
     <style name="ButtonBarButton" />
 
+    <style name="ImageButtonRoot"/>
+
+    <style name="NullBackgroundImageButton">
+        <item name="android:background">@null</item>
+    </style>
+
 </resources>

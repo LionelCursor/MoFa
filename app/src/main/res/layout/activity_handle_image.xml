@@ -169,7 +169,7 @@
                     android:src="@drawable/bianji_selector" />
 
                  <ImageButton
-                    android:id="@+id/bianji2"
+                    android:id="@+id/shoton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/handle_image_activity_top_button_margin_bottom"
@@ -199,17 +199,6 @@
                     android:layout_height="45dp"
                     android:layout_alignParentBottom="true"
                     >
-
-                    <ImageButton
-                        android:id="@+id/jian"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/minus"
-                        android:visibility="gone"
-                        android:background="@null"/>
-
                     <com.unique.mofaforhackday.view.MoFaSeekBar
                         android:id="@+id/seekBar_blur"
                         android:layout_width="match_parent"
@@ -222,16 +211,6 @@
                         android:progressDrawable="@drawable/seek_drawable"
                         android:thumb="@drawable/thumb"
                         />
-
-                    <ImageButton
-                        android:id="@+id/jia"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/plus"
-                        android:visibility="gone"
-                        android:background="@null"/>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -2561,11 +2540,11 @@
                 </RelativeLayout>
             </RelativeLayout>
             <!--xuhua-->
-            <RelativeLayout
-                android:id="@+id/xuhuaLayout"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:visibility="gone"></RelativeLayout>
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/xuhuaLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:visibility="gone"/>-->
             <!--bianji-->
             <RelativeLayout
                 android:id="@+id/bianjiLayout"
@@ -2896,6 +2875,55 @@
                         </LinearLayout>
                     </HorizontalScrollView>
                 </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlayout_shot_on"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:visibility="gone">
+
+                <HorizontalScrollView
+                    android:id="@+id/shot_on_horizontalScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentBottom="true"
+                    android:scrollbars="none">
+                    <include
+                        layout="@layout/shot_on_buttons_layout"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        />
+
+                </HorizontalScrollView>
+
+                <LinearLayout
+                    android:id="@+id/shot_on_ensure_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/shot_on_horizontalScrollView"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/shot_on__cancel"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_selector"
+                        android:src="@drawable/mofa__0000_cancel" />
+
+                    <ImageButton
+                        android:id="@+id/shot_on_sure"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_selector"
+                        android:src="@drawable/mofa__0001_ok" />
+                </LinearLayout>
+
             </RelativeLayout>
         </LinearLayout>
     </com.unique.mofaforhackday.view.MoFaSlidingDrawer>

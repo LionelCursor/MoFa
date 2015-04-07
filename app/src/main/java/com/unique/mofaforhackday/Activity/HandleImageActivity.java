@@ -10,7 +10,6 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -117,6 +116,10 @@ public class HandleImageActivity extends BaseActivity {
 
     ImageView background;
     Bitmap mBitmapBlur;
+    /**
+     * Just used for send message for nextActivity
+     * So never mind and don't use it
+     */
     static Bitmap sBitmapBlur;
     static Bitmap sBitmapMain;
 
@@ -126,6 +129,8 @@ public class HandleImageActivity extends BaseActivity {
     private ImageButton AdjustButton;
     private ImageButton xuhuaButton;
     private ImageButton editButton;
+    private ImageButton shotOnButton;
+
 
     ImageButton word_imageButton_color;
     ImageButton word_imageButton_font;
@@ -181,6 +186,7 @@ public class HandleImageActivity extends BaseActivity {
     private RelativeLayout rAdjustDetailLayout;
     private RelativeLayout rXuhuaDetailLayout;
     private RelativeLayout rBianjiDetailLayout;
+    private RelativeLayout rShotOnDetailLayout;
     /**
      * EditText Details
      */
@@ -242,7 +248,7 @@ public class HandleImageActivity extends BaseActivity {
 
     private boolean firstIn = false;
 
-    ShotOnXXMoBileController controller = new ShotOnXXMoBileController(this);
+    ShotOnXXMoBileController shotOnXXMoBileController = new ShotOnXXMoBileController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,7 +264,6 @@ public class HandleImageActivity extends BaseActivity {
         initMain();
         initTextView();
         setWrapSlidingMenu();
-
     }
 
     public void init(){
@@ -470,7 +475,48 @@ public class HandleImageActivity extends BaseActivity {
         setBlurDetail();
         setAdjustDetail();
         setBianjiDetail();
+        setShotOnDetail();
     }
+
+    ImageButton shotOnEnsure;
+    ImageButton shotOnBackspace;
+
+    private void setShotOnDetail(){
+        shotOnEnsure = (ImageButton) findViewById(R.id.shot_on_sure);
+        shotOnBackspace = (ImageButton) findViewById(R.id.shot_on__cancel);
+
+        shotOnEnsure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bitmapStepNow = mOperatingBitmap = mSrcBitmap = shotOnXXMoBileController.ensureChange();
+                SUM_STEP_SAVE =0;
+                NOW_STEP_DISPLAY =0;
+
+                allTopLayoutGONE();
+            }
+        });
+
+        shotOnBackspace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shotOnXXMoBileController.backforwardChange();
+                allTopLayoutGONE();
+            }
+        });
+    }
+
+    public void ShotOnLogoChangeButtonListenerFunction(View view){
+        switch(view.getId()){
+            case R.id.imageBtn_shot_on_apple:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.APPLE);
+                break;
+            case R.id.imageBtn_shot_on_xiaomi:
+                shotOnXXMoBileController.setMobileTYPE(ShotOnXXMoBileController.MB_TYPE.XIAOMI);
+                break;
+            default:
+        }
+    }
+
 
     private void setWordDetail() {
         //TODO-forward and backward no wrote   WORD
@@ -1263,31 +1309,6 @@ public class HandleImageActivity extends BaseActivity {
         });
 
 
-        ImageButton MinusBlur = (ImageButton) findViewById(R.id.jian);
-        ImageButton AddBlur = (ImageButton) findViewById(R.id.jia);
-
-        MinusBlur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (BlurSeekBar.getProgress() == 0) {
-                    //do nothing
-                } else {
-                    BlurSeekBar.setProgressAndDisplay(BlurSeekBar.getProgress() - 1);
-                }
-            }
-        });
-
-        AddBlur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (BlurSeekBar.getProgress() == 24) {
-                    //do nothing.
-                } else {
-                    BlurSeekBar.setProgressAndDisplay(BlurSeekBar.getProgress() + 1);
-                }
-            }
-        });
 
         ((ImageButton) findViewById(R.id.blur_sure)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1373,8 +1394,8 @@ public class HandleImageActivity extends BaseActivity {
         rBlurDetailLayout = (RelativeLayout) findViewById(R.id.rlayout_gauss);
         rFilterDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_quse);
         rAdjustDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayoutAdjust);
-        rXuhuaDetailLayout = (RelativeLayout) findViewById(R.id.xuhuaLayout);
         rBianjiDetailLayout = (RelativeLayout) findViewById(R.id.bianjiLayout);
+        rShotOnDetailLayout = (RelativeLayout) findViewById(R.id.rlayout_shot_on);
 
         rFontDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_font);
         rTextSizeDetailLayout = (RelativeLayout) findViewById(R.id.relativeLayout_textsize);
@@ -1386,6 +1407,7 @@ public class HandleImageActivity extends BaseActivity {
         rChineseFontTypeLayout = (HorizontalScrollView) findViewById(R.id.scrollView_font_Chinese);
     }
 
+
     private void setGroupTop() {
         GaussButton = (ImageButton) findViewById(R.id.gauss_layout_controller);
         wenziButton = (ImageButton) findViewById(R.id.adding_word_layout_controller);
@@ -1393,33 +1415,14 @@ public class HandleImageActivity extends BaseActivity {
         AdjustButton = (ImageButton) findViewById(R.id.adjust_layout_controller);
 //        xuhuaButton = (ImageButton) findViewById(R.id.xuhua);
         editButton = (ImageButton) findViewById(R.id.bianji);
-
-        findViewById(R.id.bianji2).setOnClickListener(new View.OnClickListener() {
-            private int i = 0;
+        shotOnButton = (ImageButton) findViewById(R.id.shoton);
+        shotOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (i%2 ==0){
-                    //TODO-Here can be bug
-                    //TODO-firstly, I use bitmapNow indicate the operating bitmap
-                    //TODO- bug it was null
-                    controller.attach(mSrcBitmap,attacher);
-                    controller.attachShotFrame();
-                    i++;
-                }else{
-                    controller.detachShotFrame();
-                    i++;
-                }
-
+                shotOnVISIBLE();
             }
         });
 
-
-//        filterButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                quseVISIBLE();
-//            }
-//        });
         wenziButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1438,12 +1441,6 @@ public class HandleImageActivity extends BaseActivity {
                 adjustVISIBLE();
             }
         });
-//        xuhuaButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                xuhuaVISIBLE();
-//            }
-//        });
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1451,6 +1448,7 @@ public class HandleImageActivity extends BaseActivity {
             }
         });
     }
+
 
     private void allTopLayoutGONE() {
         rEditTextLayout.setVisibility(View.GONE);
@@ -1463,8 +1461,8 @@ public class HandleImageActivity extends BaseActivity {
         rAdjustDetailLayout.setVisibility(View.GONE);
         AdjustSeekBarHoming();
 
-        rXuhuaDetailLayout.setVisibility(View.GONE);
         rBianjiDetailLayout.setVisibility(View.GONE);
+        rShotOnDetailLayout.setVisibility(View.GONE);
 
         undoFCropperTPhotoView();
         setUpButtonOnChoosenAndUnclickable(false);
@@ -1506,7 +1504,6 @@ public class HandleImageActivity extends BaseActivity {
 
     private void xuhuaVISIBLE() {
         allTopLayoutGONE();
-        rXuhuaDetailLayout.setVisibility(View.VISIBLE);
     }
 
     private void adjustVISIBLE() {
@@ -1525,6 +1522,15 @@ public class HandleImageActivity extends BaseActivity {
         allTopLayoutGONE();
         rEditTextLayout.setVisibility(View.VISIBLE);
 //        setButtonOnChoosenAndUnclickable(wenziButton,true);
+    }
+
+    private void shotOnVISIBLE(){
+        allTopLayoutGONE();
+        if (!shotOnXXMoBileController.isAttached()){
+            shotOnXXMoBileController.attach(attacher);
+        }
+        shotOnXXMoBileController.attachShotFrame(mSrcBitmap);
+        rShotOnDetailLayout.setVisibility(View.VISIBLE);
     }
 
     private void quseVISIBLE() {

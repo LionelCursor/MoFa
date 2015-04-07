@@ -6,23 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.cursor.common.AppData;
 import com.cursor.common.DisplayUtils;
 import com.orhanobut.logger.Logger;
 import com.unique.mofaforhackday.R;
 import com.unique.mofaforhackday.view.photoview.PhotoViewAttacher;
-
-import java.util.ResourceBundle;
-
-import static android.widget.RelativeLayout.CENTER_IN_PARENT;
-import static android.widget.RelativeLayout.LayoutParams;
 
 /**
  * USER: ldx
@@ -35,6 +26,16 @@ public class ShotOnXXMoBileController extends BaseController {
      * Bitmap want to be displayed
      */
     private Bitmap mBitmapRaw;
+
+    private Canvas mCanvas;
+
+    private Rect mRectBitmap;
+
+    private Rect mRectBottom;
+
+    private Bitmap BITMAP_TEMP = null;
+    private int BITMAP_NEW_HEIGHT =0;
+    private int BITMAP_NEW_WIDTH=0;
 
 
     /**
@@ -74,7 +75,13 @@ public class ShotOnXXMoBileController extends BaseController {
     /**
      * flag to show is the imageView was changed by this controller and easy to undo.
      */
+    private boolean mIsFrameOn = false;
+
     private boolean mIsAttached = false;
+
+    public boolean isAttached(){
+        return mIsAttached;
+    }
 
 
     /**
@@ -93,14 +100,13 @@ public class ShotOnXXMoBileController extends BaseController {
     /**
      * init the attach bitmap and imageView
      *
-     * @param bitmap            param
      * @param imageViewAttacher param
      */
-    public void attach(Bitmap bitmap, PhotoViewAttacher imageViewAttacher) {
-        this.mBitmapRaw = bitmap;
+    public void attach(PhotoViewAttacher imageViewAttacher) {
         this.attacher = imageViewAttacher;
         this.mImageView = imageViewAttacher.getImageView();
         init();
+        mIsAttached = true;
     }
 
     void init(){
@@ -108,31 +114,17 @@ public class ShotOnXXMoBileController extends BaseController {
     }
 
 
-//    ImageView mImageViewFrameMain;
-//    ImageView mImageViewSlogan;
-//    ImageView mImageViewLogo;
-
     /**
      * add shot on xx mobile frame
      */
-    public void attachShotFrame() {
-        if (mIsAttached) return;
-
-        Bitmap bitmap = generateBitmap();
-        mImageView.setImageBitmap(bitmap);
+    public void attachShotFrame(Bitmap bitmap) {
+        if (mIsFrameOn) return;
+        mBitmapRaw = bitmap;
+        mBitmapWithFrame = generateBitmap();
+        mImageView.setImageBitmap(mBitmapWithFrame);
         attacher.update();
-
-//        wipeOutPhotoView();
-//        BitmapDrawable d = (BitmapDrawable) mImageView.getDrawable();
-//        changeImageViewContent();
-//        mImageViewFrameMain = (ImageView) mFrameRoot.findViewById(R.id.frame_main_image);
-//        mImageViewFrameMain.setImageDrawable(d);
-//        mImageViewLogo      = (ImageView) mFrameRoot.findViewById(R.id.frame_logo);
-//        mImageViewSlogan    = (ImageView) mFrameRoot.findViewById(R.id.frame_slogan);
-//        adjustLayout(d);
-        mIsAttached = true;
+        mIsFrameOn = true;
     }
-
 
     private Bitmap generateBitmap() {
         int width = mBitmapRaw.getWidth();
@@ -157,18 +149,21 @@ public class ShotOnXXMoBileController extends BaseController {
             newHeight = (int) (ratio * height);
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(newWidth+mPadding*2,newHeight+mPadding+mBottomLayoutHeight, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawColor(mColorBackground);
-        Rect bitmapRect = new Rect(mPadding,mPadding,mPadding+newWidth,mPadding+newHeight);
-        canvas.drawBitmap(mBitmapRaw,null,bitmapRect,null);
-        Rect rect = new Rect(mPadding,mPadding+bitmapRect.height(),mPadding+ bitmapRect.width(),bitmap.getHeight());
-        drawBottomLayout(canvas,rect,MB_TYPE.APPLE);
+        if (null==BITMAP_TEMP||BITMAP_NEW_HEIGHT !=newHeight|| BITMAP_NEW_WIDTH!=newWidth){
+             BITMAP_TEMP = Bitmap.createBitmap(newWidth+mPadding*2,newHeight+mPadding+mBottomLayoutHeight, Bitmap.Config.ARGB_8888);
+        }
+        Bitmap bitmap = BITMAP_TEMP;
+        mCanvas = new Canvas(bitmap);
+        mCanvas.drawColor(mColorBackground);
+        mRectBitmap = new Rect(mPadding,mPadding,mPadding+newWidth,mPadding+newHeight);
+        mCanvas.drawBitmap(mBitmapRaw, null, mRectBitmap, null);
+        mRectBottom = new Rect(mPadding,mPadding+ mRectBitmap.height(),mPadding+ mRectBitmap.width(),bitmap.getHeight());
+        drawBottomLayout(mCanvas, mRectBottom,MB_TYPE.APPLE);
         return bitmap;
     }
 
     private void drawBottomLayout(Canvas canvas,Rect rect,MB_TYPE type){
-        freshBottom(canvas,rect);
+        emptyBottom(canvas, rect);
         Resources resources= mContext.getResources();
         Drawable logo = resources.getDrawable(type.type.logo);
         Drawable slogan = resources.getDrawable(type.type.slogan);
@@ -195,7 +190,6 @@ public class ShotOnXXMoBileController extends BaseController {
                 generateCenterTop(rect.height(),byMofa.getIntrinsicHeight(),rect)+byMofa.getIntrinsicHeight()
         );
         byMofa.draw(canvas);
-
     }
 
     private int generateCenterTop(int containerLong, int objectLong, Rect rect){
@@ -206,18 +200,19 @@ public class ShotOnXXMoBileController extends BaseController {
         return rect.left+ (containerLong- objectLong)/2;
     }
 
-    private void freshBottom(Canvas canvas,Rect rect){
+    private void emptyBottom(Canvas canvas, Rect rect){
         canvas.drawRect(rect,mPaintBackground);
     }
-
 
     /**
      * delete shot on xx mobile frame
      * and all return past pattern
      */
     public void detachShotFrame() {
+        if (!mIsFrameOn) return;
         attacher.setZoomable(true);
         mImageView.setImageBitmap(mBitmapRaw);
+        mIsFrameOn = false;
     }
 
     /**
@@ -227,6 +222,29 @@ public class ShotOnXXMoBileController extends BaseController {
      */
     public void setPadding(int padding) {
         mPadding = DisplayUtils.dip2px(padding);
+    }
+
+
+    /**
+     * change the bottom layout of logo and slogan
+     * @param type mobile type
+     */
+    public void setMobileTYPE(MB_TYPE type){
+        Logger.e("drawLayout:"+mIsFrameOn);
+        if(!mIsFrameOn ||null==mCanvas||null==mRectBottom||null==mImageView) return;
+        Logger.e("drawLayout:"+mIsFrameOn);
+        drawBottomLayout(mCanvas,mRectBottom,type);
+        mImageView.invalidate();
+    }
+
+    public Bitmap ensureChange(){
+        mBitmapRaw.recycle();
+        mIsFrameOn = false;
+        return mBitmapWithFrame;
+    }
+
+    public void backforwardChange(){
+        detachShotFrame();
     }
 
     public enum MB_TYPE {
