@@ -4,11 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
-import com.unique.mofaforhackday.Fragment.ImageSelectedListFragment;
 import com.unique.mofaforhackday.R;
 
 import java.util.ArrayList;

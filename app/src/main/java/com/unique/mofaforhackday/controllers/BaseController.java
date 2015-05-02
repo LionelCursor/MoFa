@@ -6,5 +6,5 @@ package com.unique.mofaforhackday.controllers;
  * PROJECT_NAME: mofaforhackday
  * DATE: 2015/3/30
  */
-public class BaseController {
+public abstract class BaseController {
 }

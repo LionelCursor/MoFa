@@ -1,9 +1,4 @@
-package com.unique.mofaforhackday.Fragment;
-
-import android.annotation.SuppressLint;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+package com.unique.mofaforhackday.ui.Fragment;
 
 /**
  * Created by ldx on 2014/8/25.

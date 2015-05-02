@@ -1,4 +1,4 @@
-package com.unique.mofaforhackday.Fragment;
+package com.unique.mofaforhackday.ui.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

@@ -1,4 +1,4 @@
-package com.unique.mofaforhackday.Fragment;
+package com.unique.mofaforhackday.ui.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

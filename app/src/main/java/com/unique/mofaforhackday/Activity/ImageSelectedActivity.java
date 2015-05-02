@@ -33,7 +33,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.unique.mofaforhackday.Adapter.ImageSelectedFragmentAdapter;
 import com.unique.mofaforhackday.Config;
 import com.unique.mofaforhackday.R;
-import com.unique.mofaforhackday.Fragment.*;
+import com.unique.mofaforhackday.ui.Fragment.*;
 import com.unique.mofaforhackday.Utils.DefaultFontInflator;
 import com.unique.mofaforhackday.view.PagerSlidingTabStrip;
 
